@@ -6,6 +6,7 @@ Date: 22.05.2023
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:xam_shoes_app/core/providers/session_service/session_service.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/ui/views/login/components/login_email_field.dart';
 import 'package:xam_shoes_app/ui/views/login/components/login_login_button.dart';
@@ -33,10 +34,11 @@ class _LoginFormState extends State<LoginForm> {
           const LoginPasswordField(),
           const LoginRememberMeCheckbox(),
           LoginLoginButton(
-            onTap: () {
-              if (BaseController.authController.formKey.currentState!
-                  .validate()) {
+            onTap: () async {
+              if (BaseController.authController.formKey.currentState!.validate()) {
                 HapticFeedback.lightImpact();
+                final service = await Get.find<SessionService>().init("123");
+                print("Session: ${service.session} | Merchant: ${service.merchantId}");
                 Get.offAll(
                   () => const NavigationScreen(),
                 );

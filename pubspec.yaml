@@ -23,12 +23,16 @@ dependencies:
   sticky_grouped_list: ^3.1.0
   carousel_slider: ^4.2.1
   rxdart: ^0.27.7
+  flutter_dotenv: ^5.1.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
   flutter_launcher_icons: ^0.13.1
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -42,6 +46,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - .env
   fonts:
     - family: SFUIDisplay
       fonts:

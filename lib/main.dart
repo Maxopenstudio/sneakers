@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-
 import 'package:xam_shoes_app/core/constants/string_constants.dart';
 import 'package:xam_shoes_app/core/constants/theme_constants.dart';
 import 'package:xam_shoes_app/core/controllers/auth/auth_controller.dart';
@@ -16,11 +16,14 @@ import 'package:xam_shoes_app/core/controllers/search/search_shoe_controller.dar
 import 'package:xam_shoes_app/core/controllers/settings/settings_controller.dart';
 import 'package:xam_shoes_app/core/controllers/theme/theme_controller.dart';
 import 'package:xam_shoes_app/core/controllers/track_location/track_location_controller.dart';
+import 'package:xam_shoes_app/core/providers/session_service/session_service.dart';
 import 'package:xam_shoes_app/core/translations/languages.dart';
 import 'package:xam_shoes_app/ui/views/splash/splash_screen.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
   Get
+    ..put(SessionService())
     ..put(AuthController())
     ..put(NavigationController())
     ..put(HomeController())
