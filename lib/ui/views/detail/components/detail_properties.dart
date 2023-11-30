@@ -6,7 +6,7 @@ Date: 30.05.2023
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/models/shoe_model.dart';
+import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
@@ -87,8 +87,7 @@ class _DetailPropertiesState extends State<DetailProperties> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: GestureDetector(
                   onTap: () {
-                    BaseController.detailController.showDetails.value =
-                        !BaseController.detailController.showDetails.value;
+                    BaseController.detailController.showDetails.value = !BaseController.detailController.showDetails.value;
                   },
                   child: Text(
                     "... ${TranslationKeys.details.tr}",

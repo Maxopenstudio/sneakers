@@ -4,8 +4,7 @@ Date: 24.05.2023
 */
 
 import 'package:get/get.dart';
-
-import 'package:xam_shoes_app/core/models/shoe_model.dart';
+import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 
 class CartItem {
   int? id;

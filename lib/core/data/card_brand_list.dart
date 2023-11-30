@@ -3,8 +3,8 @@ Author: XamDesign
 Date: 24.05.2023
 */
 
-import 'package:xam_shoes_app/core/models/card_brand_model.dart';
-import 'package:xam_shoes_app/core/models/colorful_icon_model.dart';
+import 'package:xam_shoes_app/core/models/content/card_brand_model.dart';
+import 'package:xam_shoes_app/core/models/content/colorful_icon_model.dart';
 
 const List<CardBrandModel> cardBrandList = [
   CardBrandModel(

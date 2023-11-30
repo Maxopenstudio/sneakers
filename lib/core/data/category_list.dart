@@ -3,7 +3,7 @@ Author: XamDesign
 Date: 24.05.2023
 */
 
-import 'package:xam_shoes_app/core/models/category_model.dart';
+import 'package:xam_shoes_app/core/models/content/category_model.dart';
 
 List<Category> categoryList = [
   Category(

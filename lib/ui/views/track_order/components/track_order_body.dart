@@ -5,7 +5,8 @@ Date: 7.06.2023
 
 import 'package:flutter/material.dart';
 
-import 'package:xam_shoes_app/core/models/order_model.dart';
+import 'package:xam_shoes_app/core/models/content/order_model.dart';
+
 import 'package:xam_shoes_app/ui/views/track_order/components/track_order_info.dart';
 import 'package:xam_shoes_app/ui/views/track_order/components/track_order_location_info.dart';
 import 'package:xam_shoes_app/ui/views/track_order/components/track_order_title.dart';

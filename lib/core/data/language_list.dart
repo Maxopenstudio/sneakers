@@ -5,7 +5,7 @@ Date: 15.06.2023
 
 import 'dart:ui';
 
-import 'package:xam_shoes_app/core/models/language_model.dart';
+import 'package:xam_shoes_app/core/models/content/language_model.dart';
 
 const List<Language> languageList = [
   Language(

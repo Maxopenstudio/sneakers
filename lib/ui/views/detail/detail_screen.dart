@@ -5,7 +5,7 @@ Date: 29.05.2023
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:xam_shoes_app/core/models/shoe_model.dart';
+import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/ui/views/detail/components/detail_add_to_cart_button.dart';
 import 'package:xam_shoes_app/ui/views/detail/components/detail_app_bar.dart';
@@ -37,12 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
         duration: const Duration(milliseconds: 800),
         child: DetailAddToCartButton(
           shoeId: widget.shoe.id,
-          retailPrice: widget.shoe.discountRate != null
-              ? BaseController.homeController
-                  .calculateDiscount(
-                      widget.shoe.retailPrice, widget.shoe.discountRate!)
-                  .toStringAsFixed(2)
-              : widget.shoe.retailPrice.toString(),
+          retailPrice: widget.shoe.discountRate != null ? BaseController.homeController.calculateDiscount(widget.shoe.retailPrice, widget.shoe.discountRate!).toStringAsFixed(2) : widget.shoe.retailPrice.toString(),
         ),
       ),
     );

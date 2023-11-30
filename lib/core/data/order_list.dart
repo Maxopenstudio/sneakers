@@ -4,12 +4,11 @@ Date: 7.06.2023
 */
 
 import 'package:latlong2/latlong.dart';
-
-import 'package:xam_shoes_app/core/enums/order_status_enum.dart';
-import 'package:xam_shoes_app/core/models/order_location_model.dart';
-import 'package:xam_shoes_app/core/models/order_model.dart';
 import 'package:xam_shoes_app/core/data/order_supplier_list.dart';
 import 'package:xam_shoes_app/core/data/shoe_list.dart';
+import 'package:xam_shoes_app/core/enums/order_status_enum.dart';
+import 'package:xam_shoes_app/core/models/content/order_location_model.dart';
+import 'package:xam_shoes_app/core/models/content/order_model.dart';
 
 List<Order> orderList = [
   Order(

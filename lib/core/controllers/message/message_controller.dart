@@ -7,12 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 import 'package:xam_shoes_app/core/data/message_list.dart';
-import 'package:xam_shoes_app/core/models/message_model.dart';
+import 'package:xam_shoes_app/core/models/content/message_model.dart';
 
 class MessageController extends GetxController {
   final TextEditingController messageEditController = TextEditingController();
-  final GroupedItemScrollController scrollController =
-      GroupedItemScrollController();
+  final GroupedItemScrollController scrollController = GroupedItemScrollController();
 
   RxString message = "".obs;
 

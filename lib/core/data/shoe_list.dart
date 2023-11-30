@@ -5,7 +5,7 @@ Date: 24.05.2023
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xam_shoes_app/core/models/shoe_model.dart';
+import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 
 List<Shoe> shoeList = [
   Shoe(
@@ -59,11 +59,7 @@ List<Shoe> shoeList = [
     outerMaterial: "Suede, Synthetic",
     lining: "Textile",
     sole: "Rubber",
-    images: [
-      "assets/images/puma_shoe.png",
-      "assets/images/puma_shoe.png",
-      "assets/images/puma_shoe.png"
-    ],
+    images: ["assets/images/puma_shoe.png", "assets/images/puma_shoe.png", "assets/images/puma_shoe.png"],
     isFavorite: false.obs,
     isAddedToCartDone: false.obs,
   ),

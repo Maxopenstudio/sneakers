@@ -6,7 +6,7 @@ Date: 8.06.2023
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/models/colorful_icon_model.dart';
+import 'package:xam_shoes_app/core/models/content/colorful_icon_model.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/base/base_stateless.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
@@ -31,9 +31,7 @@ class CardsCardItem extends BaseStatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: CustomMaterialButton(
-        backgroundColor: BaseController.themeController.isDark.value
-            ? kDarkFieldColor
-            : kLightTextSecondaryColor.withOpacity(0.1),
+        backgroundColor: BaseController.themeController.isDark.value ? kDarkFieldColor : kLightTextSecondaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(24.0),
         onTap: onTap,
         child: Container(
@@ -51,9 +49,7 @@ class CardsCardItem extends BaseStatelessWidget {
               width: 36.0,
               colorFilter: !icon.hasColor
                   ? ColorFilter.mode(
-                      BaseController.themeController.isDark.value
-                          ? kDarkTextColor
-                          : kLightTextPrimaryColor,
+                      BaseController.themeController.isDark.value ? kDarkTextColor : kLightTextPrimaryColor,
                       BlendMode.srcIn,
                     )
                   : null,

@@ -4,9 +4,8 @@ Date: 7.06.2023
 */
 
 import 'package:latlong2/latlong.dart';
-
-import 'package:xam_shoes_app/core/models/order_location_model.dart';
-import 'package:xam_shoes_app/core/models/order_supplier_model.dart';
+import 'package:xam_shoes_app/core/models/content/order_location_model.dart';
+import 'package:xam_shoes_app/core/models/content/order_supplier_model.dart';
 
 List<OrderSupplier> orderSupplierList = [
   OrderSupplier(

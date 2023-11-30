@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
 import 'package:xam_shoes_app/core/data/message_list.dart';
-import 'package:xam_shoes_app/core/models/message_model.dart';
+import 'package:xam_shoes_app/core/models/content/message_model.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/base/base_stateless.dart';
 import 'package:xam_shoes_app/ui/views/chat/components/chat_date_text.dart';
@@ -32,8 +32,7 @@ class ChatList extends BaseStatelessWidget {
           element.timestamp.month,
           element.timestamp.day,
         ),
-        groupSeparatorBuilder: (Message element) =>
-            ChatDateText(date: element.timestamp),
+        groupSeparatorBuilder: (Message element) => ChatDateText(date: element.timestamp),
 
         itemBuilder: (context, Message element) {
           if (element.isSentByMe) {
@@ -42,9 +41,7 @@ class ChatList extends BaseStatelessWidget {
             return ChatMessageRow(message: element);
           }
         },
-        stickyHeaderBackgroundColor: BaseController.themeController.isDark.value
-            ? kDarkFieldColor
-            : kLightFieldColor,
+        stickyHeaderBackgroundColor: BaseController.themeController.isDark.value ? kDarkFieldColor : kLightFieldColor,
         itemComparator: (e1, e2) => e1.timestamp.compareTo(e2.timestamp),
         // optional
         reverse: true,

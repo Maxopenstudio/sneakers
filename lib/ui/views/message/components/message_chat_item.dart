@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/models/order_supplier_model.dart';
+import 'package:xam_shoes_app/core/models/content/order_supplier_model.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/chat/chat_screen.dart';
@@ -43,18 +43,14 @@ class MessageChatItem extends StatelessWidget {
                 height: DeviceUtils.getDynamicHeight(context, 0.08),
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: BaseController.themeController.isDark.value
-                      ? kDarkFieldColor
-                      : kLightFieldColor,
+                  color: BaseController.themeController.isDark.value ? kDarkFieldColor : kLightFieldColor,
                   shape: BoxShape.circle,
                 ),
                 child: SvgPicture.asset(
                   sender.logo,
                   colorFilter: !senderIconHasColor
                       ? ColorFilter.mode(
-                          BaseController.themeController.isDark.value
-                              ? kDarkTextColor
-                              : kLightTextPrimaryColor,
+                          BaseController.themeController.isDark.value ? kDarkTextColor : kLightTextPrimaryColor,
                           BlendMode.srcIn,
                         )
                       : null,
@@ -97,10 +93,7 @@ class MessageChatItem extends StatelessWidget {
                         child: Center(
                           child: Text(
                             newMessageCount.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: kWhiteColor,
                                 ),
                           ),
