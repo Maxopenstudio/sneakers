@@ -5,7 +5,6 @@ Date: 5.06.2023
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xam_shoes_app/core/data/category_list.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
@@ -28,9 +27,7 @@ class CategoriesTitle extends StatelessWidget {
           titleTop: TranslationKeys.categoryTitleLine1.tr,
           titleBottom: TranslationKeys.categoryTitleLine2.trParams(
             {
-              "shoe": categoryList[
-                      BaseController.categoriesController.categoryIndex.value]
-                  .title,
+              "shoe": BaseController.categoriesController.categories[BaseController.categoriesController.categoryIndex.value].name,
             },
           ),
         ),

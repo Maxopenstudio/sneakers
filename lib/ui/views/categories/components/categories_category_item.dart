@@ -7,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/data/category_list.dart';
+import 'package:xam_shoes_app/core/models/content/category_model.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/widgets/custom_material_button.dart';
 
 class CategoriesCategoryItem extends StatelessWidget {
   final int index;
+  final Category category;
 
   const CategoriesCategoryItem({
     required this.index,
+    required this.category,
     super.key,
   });
 
@@ -26,12 +28,11 @@ class CategoriesCategoryItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: CustomMaterialButton(
-            backgroundColor:
-                BaseController.categoriesController.categoryIndex.value == index
-                    ? kRedColor
-                    : BaseController.themeController.isDark.value
-                        ? kDarkFieldColor
-                        : kLightFieldColor,
+            backgroundColor: BaseController.categoriesController.categoryIndex.value == index
+                ? kRedColor
+                : BaseController.themeController.isDark.value
+                    ? kDarkFieldColor
+                    : kLightFieldColor,
             borderRadius: BorderRadius.circular(48.0),
             onTap: () {
               HapticFeedback.lightImpact();
@@ -43,11 +44,9 @@ class CategoriesCategoryItem extends StatelessWidget {
                 vertical: 24.0,
               ),
               child: Text(
-                categoryList[index].title,
+                category.name,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: BaseController
-                                  .categoriesController.categoryIndex.value ==
-                              index
+                      color: BaseController.categoriesController.categoryIndex.value == index
                           ? kWhiteColor
                           : BaseController.themeController.isDark.value
                               ? kWhiteColor

@@ -6,7 +6,7 @@ part 'api_response.g.dart';
 class ApiResponse {
   final int success;
   final List<String> error;
-  final Map<String, dynamic> data;
+  final dynamic data;
 
   const ApiResponse({required this.success, required this.error, required this.data});
 

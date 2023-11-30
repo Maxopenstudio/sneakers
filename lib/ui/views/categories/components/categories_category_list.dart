@@ -4,15 +4,22 @@ Date: 25.05.2023
 */
 
 import 'package:flutter/material.dart';
-
-import 'package:xam_shoes_app/core/data/category_list.dart';
+import 'package:get/get.dart';
+import 'package:xam_shoes_app/core/controllers/categories/categories_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/categories/components/categories_category_item.dart';
 
-class CategoriesCategoryList extends StatelessWidget {
+class CategoriesCategoryList extends StatefulWidget {
   const CategoriesCategoryList({
     super.key,
   });
+
+  @override
+  State<CategoriesCategoryList> createState() => _CategoriesCategoryListState();
+}
+
+class _CategoriesCategoryListState extends State<CategoriesCategoryList> {
+  CategoriesController categoriesController = Get.put(CategoriesController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class CategoriesCategoryList extends StatelessWidget {
       width: DeviceUtils.getWidth(context),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: categoryList.length,
+        itemCount: categoriesController.categories.length,
         itemBuilder: (context, index) {
           if (index == 0) {
             return Row(
@@ -28,11 +35,11 @@ class CategoriesCategoryList extends StatelessWidget {
                 SizedBox(
                   width: DeviceUtils.getDynamicWidth(context, 0.05),
                 ),
-                CategoriesCategoryItem(index: index),
+                CategoriesCategoryItem(index: index, category: categoriesController.categories[index]),
               ],
             );
           } else {
-            return CategoriesCategoryItem(index: index);
+            return CategoriesCategoryItem(index: index, category: categoriesController.categories[index]);
           }
         },
       ),
