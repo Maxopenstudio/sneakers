@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/models/auxiliary/api_response.dart';
 import 'package:xam_shoes_app/core/models/auxiliary/session.dart';
 import 'package:xam_shoes_app/core/models/content/category_model.dart';
+import 'package:xam_shoes_app/core/models/content/manufacturer_model.dart';
 import 'package:xam_shoes_app/core/providers/headers_constants.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 
@@ -54,14 +55,13 @@ class ApiService extends GetConnect implements GetxService {
       "",
       headers: HeadersConstants.session(_merchantId),
     );
-    print(response.status);
+
+    return Future.value(""); // TODO: Временная заглушка пока не пофиксят получение id сессии
 
     if (response.status.isOk) {
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        return Future.value(Session
-            .fromJson(apiResponse.data)
-            .session);
+        return Future.value(Session.fromJson(apiResponse.data).session);
       } else {
         return Future.error(Exception(apiResponse.error));
       }
@@ -76,12 +76,35 @@ class ApiService extends GetConnect implements GetxService {
       "${ProvidersConstants.baseUrl}/categories",
       headers: HeadersConstants.common(_merchantId, _session),
     );
+    print("${ProvidersConstants.baseUrl}/categories");
+    print(HeadersConstants.common(_merchantId, _session));
+
     print(response.status);
 
     if (response.status.isOk) {
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value((apiResponse.data as List).map((e) => Category.fromJson(e)).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } else if (response.status.hasError) {
+      return Future.error(Exception("Check your internet connection"));
+    }
+    return Future.error(Exception());
+  }
+
+  Future<List<Manufacturer>> getManufacturers() async {
+    final response = await get(
+      "${ProvidersConstants.baseUrl}/manufacturers",
+      headers: HeadersConstants.common(_merchantId, _session),
+    );
+    print(response.status);
+
+    if (response.status.isOk) {
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value((apiResponse.data as List).map((e) => Manufacturer.fromJson(e)).toList());
       } else {
         return Future.error(Exception(apiResponse.error));
       }

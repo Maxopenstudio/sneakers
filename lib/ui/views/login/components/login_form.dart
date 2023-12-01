@@ -37,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
             onTap: () async {
               if (BaseController.authController.formKey.currentState!.validate()) {
                 HapticFeedback.lightImpact();
-                final service = await Get.find<ApiService>().init("123"); // TODO: Делать инит на момент авторизации / чтения авторизированного пользователя
+                final service = await Get.find<ApiService>().init("rvY3e5EqayMAqFzuEAOMKEScou6DEaUy"); // TODO: Делать инит на момент авторизации / чтения авторизированного пользователя
                 print("Session: ${service.session} | Merchant: ${service.merchantId}");
                 Get.offAll(
                   () => const NavigationScreen(),
