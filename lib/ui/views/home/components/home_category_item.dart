@@ -36,19 +36,15 @@ class HomeCategoryItem extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                  DeviceUtils.getDynamicHeight(context, 0.04)),
-              color:
-                  BaseController.homeController.categoryIndex.value == category
-                      ? kLightBlueColor
-                      : BaseController.themeController.isDark.value
-                          ? kDarkFieldColor
-                          : kLightFieldColor,
+              borderRadius: BorderRadius.circular(DeviceUtils.getDynamicHeight(context, 0.04)),
+              color: BaseController.homeController.categoryIndex.value == category
+                  ? kLightBlueColor
+                  : BaseController.themeController.isDark.value
+                      ? kDarkFieldColor
+                      : kLightFieldColor,
             ),
             padding: const EdgeInsets.all(8.0),
-            width: BaseController.homeController.categoryIndex.value == category
-                ? DeviceUtils.getDynamicWidth(context, 0.35)
-                : DeviceUtils.getDynamicWidth(context, 0.2),
+            width: BaseController.homeController.categoryIndex.value == category ? DeviceUtils.getDynamicWidth(context, 0.35) : DeviceUtils.getDynamicWidth(context, 0.25),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,8 +54,7 @@ class HomeCategoryItem extends StatelessWidget {
                     icon,
                     width: 32.0,
                     colorFilter: ColorFilter.mode(
-                      BaseController.homeController.categoryIndex.value ==
-                              category
+                      BaseController.homeController.categoryIndex.value == category
                           ? kWhiteColor
                           : BaseController.themeController.isDark.value
                               ? kWhiteColor
@@ -67,18 +62,14 @@ class HomeCategoryItem extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                if (BaseController.homeController.categoryIndex.value ==
-                        category ||
-                    icon.isEmpty)
+                if (BaseController.homeController.categoryIndex.value == category || icon.isEmpty)
                   Flexible(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
                       child: Text(
                         title,
                         style: context.textTheme.bodyMedium?.copyWith(
-                          color: BaseController
-                                      .homeController.categoryIndex.value ==
-                                  category
+                          color: BaseController.homeController.categoryIndex.value == category
                               ? kWhiteColor
                               : BaseController.themeController.isDark.value
                                   ? kWhiteColor

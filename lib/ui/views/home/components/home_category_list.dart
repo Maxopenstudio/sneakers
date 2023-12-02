@@ -4,6 +4,7 @@ Date: 25.05.2023
 */
 
 import 'package:flutter/material.dart';
+import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/home/components/home_category_item.dart';
 
@@ -22,7 +23,14 @@ class HomeCategoryList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        children: const [
+        children: BaseController.categoriesController.categories.map((e) => HomeCategoryItem(category: e.category_id, icon: "", title: e.name)).toList(),
+      ),
+    );
+  }
+}
+
+/*
+const [
           HomeCategoryItem(
             category: 0,
             icon: "",
@@ -58,8 +66,5 @@ class HomeCategoryList extends StatelessWidget {
             icon: "assets/images/puma_logo.svg",
             title: "Puma",
           ),
-        ],
-      ),
-    );
-  }
-}
+        ]
+ */
