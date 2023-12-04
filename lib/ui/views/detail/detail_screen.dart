@@ -23,7 +23,7 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
-    BaseController.detailController.changeColor(widget.shoe.colors.first);
+    BaseController.detailController.changeColor(Colors.red);
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
         duration: const Duration(milliseconds: 800),
         child: DetailAddToCartButton(
           shoeId: widget.shoe.id,
-          retailPrice: widget.shoe.discountRate != null ? BaseController.homeController.calculateDiscount(widget.shoe.retailPrice, widget.shoe.discountRate!).toStringAsFixed(2) : widget.shoe.retailPrice.toString(),
+          retailPrice: widget.shoe.special == 0 ? widget.shoe.price_formated : widget.shoe.special_formated,
         ),
       ),
     );

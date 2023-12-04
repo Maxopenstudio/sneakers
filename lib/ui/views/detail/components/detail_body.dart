@@ -25,7 +25,7 @@ class DetailBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DetailShoeImage(shoe: shoe),
-          FadeInUp(from: 5, duration: const Duration(milliseconds: 400), child: DetailInfo(model: shoe.model, colors: shoe.colors)),
+          FadeInUp(from: 5, duration: const Duration(milliseconds: 400), child: DetailInfo(model: shoe.name, colors: [])),
           FadeInUp(from: 10, duration: const Duration(milliseconds: 600), child: DetailProperties(shoe: shoe)),
         ],
       ),

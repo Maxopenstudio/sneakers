@@ -23,12 +23,10 @@ class CartOrderItemImage extends StatelessWidget {
       height: DeviceUtils.getDynamicHeight(context, 0.15),
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: BaseController.themeController.isDark.value
-            ? kDarkFieldColor
-            : kLightFieldColor,
+        color: BaseController.themeController.isDark.value ? kDarkFieldColor : kLightFieldColor,
         borderRadius: BorderRadius.circular(24.0),
       ),
-      child: Image.asset(image),
+      child: Image.network(image),
     );
   }
 }

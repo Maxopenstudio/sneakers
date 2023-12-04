@@ -6,7 +6,6 @@ Date: 25.05.2023
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/detail/detail_screen.dart';
@@ -29,7 +28,7 @@ class ShoeItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.to(() => DetailScreen(shoe: shoeList[index])),
+      onTap: () => Get.to(() => DetailScreen(shoe: BaseController.productsController.products[index])),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,14 +40,10 @@ class ShoeItemView extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: BaseController.themeController.isDark.value
-                        ? kDarkStrokeColor
-                        : kLightTextSecondaryColor.withOpacity(0.2),
+                    color: BaseController.themeController.isDark.value ? kDarkStrokeColor : kLightTextSecondaryColor.withOpacity(0.2),
                     width: 1,
                   ),
-                  color: BaseController.themeController.isDark.value
-                      ? kDarkFieldColor
-                      : kLightFieldColor,
+                  color: BaseController.themeController.isDark.value ? kDarkFieldColor : kLightFieldColor,
                   borderRadius: BorderRadius.circular(24.0),
                 ),
                 child: Stack(
@@ -56,15 +51,16 @@ class ShoeItemView extends StatelessWidget {
                     ShoeItemImage(index: index),
                     ShoeItemFavButton(index: index),
                     ShoeItemCartButton(
-                      shoeModel: shoeList[index],
+                      shoeModel: BaseController.productsController.products[index],
                     ),
-                    if (shoeList[index].stock < 5) ShoeStockLeft(index: index),
+                    if (BaseController.productsController.products[index].quantity < 5) ShoeStockLeft(index: index),
                   ],
                 ),
               );
             },
           ),
           ShoePrice(shoeIndex: index),
+          /* // TODO: Придумать что-то с выбором цвета
           if (showColor)
             Row(
               children: shoeList[index]
@@ -82,6 +78,7 @@ class ShoeItemView extends StatelessWidget {
                   )
                   .toList(),
             ),
+           */
         ],
       ),
     );

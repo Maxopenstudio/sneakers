@@ -26,10 +26,10 @@ class _ShoeItemCartButtonState extends State<ShoeItemCartButton> {
           final result = BaseController.cartController.addItemToCart(widget.shoeModel.id);
           if (result) {
             HapticFeedback.lightImpact();
-            widget.shoeModel.isAddedToCartDone.value = true;
+            //widget.shoeModel.isAddedToCartDone.value = true; // TODO: Отработка добавления в корзину
           }
           await Future.delayed(const Duration(milliseconds: 500), () {
-            widget.shoeModel.isAddedToCartDone.value = false;
+            //widget.shoeModel.isAddedToCartDone.value = false;
           });
         },
         radius: 10,
@@ -40,7 +40,7 @@ class _ShoeItemCartButtonState extends State<ShoeItemCartButton> {
           child: Obx(() {
             return Center(
               child: SvgPicture.asset(
-                widget.shoeModel.isAddedToCartDone.value ? "assets/images/check.svg" : "assets/images/cart.svg",
+                "assets/images/check.svg", //widget.shoeModel.isAddedToCartDone.value ? "assets/images/check.svg" : "assets/images/cart.svg", //  TODO: Отработка добавления в корзину
                 height: 20,
                 width: 20,
                 colorFilter: ColorFilter.mode(

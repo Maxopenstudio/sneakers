@@ -3,13 +3,11 @@ Author: XamDesign
 Date: 25.05.2023
 */
 
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 
 class DetailController extends GetxController {
-  Rx<Color> selectedColor = shoeList.first.colors.first.obs;
+  Rx<Color> selectedColor = Colors.red.obs; //shoeList.first.colors.first.obs;
   RxBool showDetails = false.obs;
 
   void changeColor(Color color) {
@@ -17,6 +15,6 @@ class DetailController extends GetxController {
   }
 
   void reset() {
-    selectedColor.value = shoeList.first.colors.first;
+    selectedColor.value = Colors.red;
   }
 }

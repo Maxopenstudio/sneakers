@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 
 class ShoeItemFavButton extends StatefulWidget {
@@ -23,8 +22,10 @@ class _ShoeItemFavButtonState extends State<ShoeItemFavButton> {
       child: InkResponse(
         onTap: () {
           HapticFeedback.selectionClick();
+          /* //TODO: Добавлегие в избранное
           shoeList[widget.index].isFavorite.value =
               (!shoeList[widget.index].isFavorite.value);
+           */
         },
         radius: 10,
         containedInkWell: true,
@@ -34,13 +35,10 @@ class _ShoeItemFavButtonState extends State<ShoeItemFavButton> {
               height: 25,
               width: 25,
               child: Icon(
-                shoeList[widget.index].isFavorite.value
-                    ? Icons.favorite
-                    : Icons.favorite_border,
+                //shoeList[widget.index].isFavorite.value
+                false ? Icons.favorite : Icons.favorite_border,
                 size: 20,
-                color: BaseController.themeController.isDark.value
-                    ? kWhiteColor
-                    : kLightTextPrimaryColor,
+                color: BaseController.themeController.isDark.value ? kWhiteColor : kLightTextPrimaryColor,
               ),
             ),
           );

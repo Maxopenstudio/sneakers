@@ -27,24 +27,15 @@ class CartTotal extends StatelessWidget {
         children: [
           Text(
             TranslationKeys.total.tr,
-            style: Theme
-                .of(context)
-                .textTheme
-                .labelMedium
-                ?.copyWith(
-              color: kLightTextSecondaryColor,
-            ),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: kLightTextSecondaryColor,
+                ),
           ),
           Obx(
-                () =>
-                Text(
-                  "\$ ${BaseController.cartController.cartTotal.toStringAsFixed(
-                      2)}",
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium,
-                ),
+            () => Text(
+              "${BaseController.cartController.cartTotal.toStringAsFixed(2)}",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
         ],
       ),

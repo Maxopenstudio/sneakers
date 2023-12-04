@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
+import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 
 class ShoeStockLeft extends StatelessWidget {
   final int index;
@@ -24,7 +24,7 @@ class ShoeStockLeft extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          "${TranslationKeys.last.tr}: ${shoeList[index].stock}",
+          "${TranslationKeys.last.tr}: ${BaseController.productsController.products[index].quantity}",
           style: context.textTheme.labelSmall?.copyWith(
             color: kWhiteColor,
             fontWeight: FontWeight.w400,

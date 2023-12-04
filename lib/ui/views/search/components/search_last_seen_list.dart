@@ -5,8 +5,8 @@ Date: 25.05.2023
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
+import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/search/components/search_last_seen_item.dart';
 
@@ -37,7 +37,7 @@ class SearchLastSeenList extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: shoeList.length,
+              itemCount: BaseController.productsController.products.length,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Row(
@@ -46,13 +46,13 @@ class SearchLastSeenList extends StatelessWidget {
                         width: DeviceUtils.getDynamicWidth(context, 0.05),
                       ),
                       SearchLastSeenItem(
-                        shoe: shoeList[index],
+                        shoe: BaseController.productsController.products[index],
                       ),
                     ],
                   );
                 } else {
                   return SearchLastSeenItem(
-                    shoe: shoeList[index],
+                    shoe: BaseController.productsController.products[index],
                   );
                 }
               },

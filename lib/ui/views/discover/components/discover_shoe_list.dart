@@ -4,7 +4,7 @@ Date: 24.05.2023
 */
 
 import 'package:flutter/material.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
+import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/shoe/shoe_item.dart';
 
@@ -25,10 +25,9 @@ class DiscoverShoeList extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 0,
           crossAxisSpacing: 15,
-          childAspectRatio: DeviceUtils.getWidth(context) /
-              DeviceUtils.getDynamicHeight(context, 0.90),
+          childAspectRatio: DeviceUtils.getWidth(context) / DeviceUtils.getDynamicHeight(context, 0.90),
         ),
-        itemCount: shoeList.length,
+        itemCount: BaseController.productsController.products.length,
         itemBuilder: (context, index) => ShoeItemView(
           index: index,
           showColor: true,

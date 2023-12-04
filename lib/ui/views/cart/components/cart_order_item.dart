@@ -36,7 +36,7 @@ class CartOrderItem extends StatelessWidget {
             child: CartOrderItemInfo(
               index: index,
               model: cartItem.shoe.model,
-              retailPrice: cartItem.shoe.retailPrice,
+              retailPrice: cartItem.shoe.price.toDouble(),
             ),
           ),
           Expanded(

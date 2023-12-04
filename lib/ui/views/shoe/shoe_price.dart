@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:xam_shoes_app/core/constants/color_constants.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 
 class ShoePrice extends StatefulWidget {
@@ -27,7 +26,7 @@ class _ShoePriceState extends State<ShoePrice> {
             children: [
               Flexible(
                 child: Text(
-                  "${shoeList[widget.shoeIndex].model}",
+                  "${BaseController.productsController.products[widget.shoeIndex].name}",
                   style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w300,
                     overflow: TextOverflow.ellipsis,
@@ -35,8 +34,7 @@ class _ShoePriceState extends State<ShoePrice> {
                   maxLines: 1,
                 ),
               ),
-              if (shoeList[widget.shoeIndex].discountRate != null &&
-                  shoeList[widget.shoeIndex].discountRate != 0)
+              if (BaseController.productsController.products[widget.shoeIndex].special != 0)
                 Container(
                   decoration: BoxDecoration(
                     color: kLightBlueColor,
@@ -47,7 +45,7 @@ class _ShoePriceState extends State<ShoePrice> {
                     horizontal: 4.0,
                   ),
                   child: Text(
-                    "${shoeList[widget.shoeIndex].discountRate}%",
+                    "${BaseController.productsController.products[widget.shoeIndex].special_formated}%",
                     style: context.textTheme.labelSmall?.copyWith(
                       color: kWhiteColor,
                       fontSize: 12,
@@ -61,31 +59,19 @@ class _ShoePriceState extends State<ShoePrice> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (shoeList[widget.shoeIndex].discountRate != null &&
-                  shoeList[widget.shoeIndex].discountRate != 0)
+              if (BaseController.productsController.products[widget.shoeIndex].special != 0)
                 Text(
-                  "\$${(BaseController.homeController.calculateDiscount(shoeList[widget.shoeIndex].retailPrice, shoeList[widget.shoeIndex].discountRate!)).toStringAsFixed(2)}",
+                  BaseController.productsController.products[widget.shoeIndex].price_formated, //"\$${(BaseController.homeController.calculateDiscount(shoeList[widget.shoeIndex].retailPrice, shoeList[widget.shoeIndex].discountRate!)).toStringAsFixed(2)}",
                   style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               Text(
-                "\$${shoeList[widget.shoeIndex].retailPrice}",
+                "${BaseController.productsController.products[widget.shoeIndex].price_formated}",
                 style: context.textTheme.titleMedium?.copyWith(
-                  fontWeight:
-                      (shoeList[widget.shoeIndex].discountRate != null &&
-                              shoeList[widget.shoeIndex].discountRate != 0)
-                          ? FontWeight.w300
-                          : FontWeight.w600,
-                  decoration:
-                      (shoeList[widget.shoeIndex].discountRate != null &&
-                              shoeList[widget.shoeIndex].discountRate != 0)
-                          ? TextDecoration.lineThrough
-                          : null,
-                  fontSize: (shoeList[widget.shoeIndex].discountRate != null &&
-                          shoeList[widget.shoeIndex].discountRate != 0)
-                      ? 14
-                      : null,
+                  fontWeight: BaseController.productsController.products[widget.shoeIndex].special != 0 ? FontWeight.w300 : FontWeight.w600,
+                  decoration: BaseController.productsController.products[widget.shoeIndex].special != 0 ? TextDecoration.lineThrough : null,
+                  fontSize: BaseController.productsController.products[widget.shoeIndex].special != 0 ? 14 : null,
                 ),
               ),
             ],

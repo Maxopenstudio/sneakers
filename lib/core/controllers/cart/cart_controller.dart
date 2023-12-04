@@ -5,7 +5,6 @@ Date: 25.05.2023
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/models/content/cart_item_model.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
@@ -24,14 +23,14 @@ class CartController extends GetxController {
     if (shoeItem == null) {
       cartItemList.add(
         CartItem(
-          shoe: shoeList.firstWhere((shoe) => shoe.id == shoeId),
+          shoe: BaseController.productsController.products.firstWhere((shoe) => shoe.id == shoeId),
           piece: 1.obs,
         ),
       );
       calculateTotal();
       return true;
     } else {
-      if (shoeList.firstWhere((shoe) => shoe.id == shoeId).stock == shoeItem.piece.value) {
+      if (BaseController.productsController.products.firstWhere((shoe) => shoe.id == shoeId).price == shoeItem.piece.value) {
         calculateTotal();
         return false;
       }
@@ -42,7 +41,7 @@ class CartController extends GetxController {
   }
 
   void increaseCartItemPiece(int index) {
-    if (cartItemList[index].piece.value == cartItemList[index].shoe.stock) {
+    if (cartItemList[index].piece.value == cartItemList[index].shoe.price) {
       return;
     }
     cartItemList[index].piece++;
@@ -80,7 +79,7 @@ class CartController extends GetxController {
   void calculateTotal() {
     cartTotal.value = 0.0;
     for (final cartItem in cartItemList) {
-      cartTotal.value += (cartItem.shoe.discountRate != null ? calculateDiscount(cartItem.shoe.retailPrice, cartItem.shoe.discountRate!) : cartItem.shoe.retailPrice) * cartItem.piece.value;
+      cartTotal.value += (cartItem.shoe.special != 0 ? cartItem.shoe.special : cartItem.shoe.price) * cartItem.piece.value;
     }
     cartTotalWithShippingCost.value = cartTotal.value + shippingCost.value;
   }

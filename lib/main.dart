@@ -13,6 +13,7 @@ import 'package:xam_shoes_app/core/controllers/detail/detail_controller.dart';
 import 'package:xam_shoes_app/core/controllers/home/home_controller.dart';
 import 'package:xam_shoes_app/core/controllers/message/message_controller.dart';
 import 'package:xam_shoes_app/core/controllers/navigation/navigation_controller.dart';
+import 'package:xam_shoes_app/core/controllers/products/products_controller.dart';
 import 'package:xam_shoes_app/core/controllers/review/review_controller.dart';
 import 'package:xam_shoes_app/core/controllers/search/search_shoe_controller.dart';
 import 'package:xam_shoes_app/core/controllers/settings/settings_controller.dart';
@@ -47,7 +48,8 @@ void main() async {
     ..put(ReviewController())
     ..put(MessageController())
     ..put(SettingsController())
-    ..put(TrackLocationController());
+    ..put(TrackLocationController())
+    ..put(ProductsController());
   runApp(const MyApp());
 }
 

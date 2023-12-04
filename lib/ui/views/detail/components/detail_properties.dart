@@ -10,7 +10,6 @@ import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 import 'package:xam_shoes_app/core/translations/translation_keys.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
-import 'package:xam_shoes_app/ui/views/detail/components/detail_property_text.dart';
 
 class DetailProperties extends StatefulWidget {
   final Shoe shoe;
@@ -49,6 +48,7 @@ class _DetailPropertiesState extends State<DetailProperties> {
               ),
             ),
             const SizedBox(height: 16.0),
+            /*
             DetailPropertyText(
               title: "${TranslationKeys.outerMaterial.tr}:",
               description: widget.shoe.outerMaterial,
@@ -61,6 +61,8 @@ class _DetailPropertiesState extends State<DetailProperties> {
               title: "${TranslationKeys.sole.tr}:",
               description: widget.shoe.sole,
             ),
+             */
+            /*
             Offstage(
               offstage: !BaseController.detailController.showDetails.value,
               child: Column(
@@ -81,6 +83,7 @@ class _DetailPropertiesState extends State<DetailProperties> {
                 ],
               ),
             ),
+             */
             Offstage(
               offstage: BaseController.detailController.showDetails.value,
               child: Padding(

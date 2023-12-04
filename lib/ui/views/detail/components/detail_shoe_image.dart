@@ -40,7 +40,7 @@ class DetailShoeImage extends StatelessWidget {
                 autoPlayCurve: Curves.fastOutSlowIn,
               ),
               items: shoe.images.map((image) {
-                return Image.asset(
+                return Image.network(
                   image,
                   fit: BoxFit.fitWidth,
                 );

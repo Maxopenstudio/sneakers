@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:xam_shoes_app/core/models/auxiliary/api_response.dart';
 import 'package:xam_shoes_app/core/models/content/category_model.dart';
 import 'package:xam_shoes_app/core/models/content/manufacturer_model.dart';
+import 'package:xam_shoes_app/core/models/content/shoe_model.dart';
 import 'package:xam_shoes_app/core/providers/headers_constants.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 
@@ -38,6 +39,7 @@ class ApiService extends GetConnect implements GetxService {
 
     // TODO: Нужно убедиться что это самое подходящее место для фетчей данных после получения id сессии
     await BaseController.categoriesController.fetchCategories().whenComplete(() => print("Categories FETCHED"));
+    await BaseController.productsController.fetchProducts().whenComplete(() => print("Products FETCHED"));
     return this;
   }
 
@@ -97,6 +99,24 @@ class ApiService extends GetConnect implements GetxService {
       }
     } catch (e) {
       return Future.error(Exception("getManufacturers Request error: $e"));
+    }
+  }
+
+  Future<List<Shoe>> getAllProducts() async {
+    try {
+      final response = await _httpClient.get(
+        Uri.https(ProvidersConstants.baseUrl, "api/rest/products"),
+        headers: HeadersConstants.common(ProvidersConstants.merchantID, _session),
+      );
+      print("site: ${response.body} | ${response.statusCode}");
+      final apiResponse = ApiResponse.fromJson(jsonDecode(response.body));
+      if (apiResponse.isSuccess) {
+        return Future.value((apiResponse.data as List).map((e) => Shoe.fromJson(e)).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getAllProducts Request error: $e"));
     }
   }
 }

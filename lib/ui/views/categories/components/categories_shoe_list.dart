@@ -4,10 +4,10 @@ Date: 24.05.2023
 */
 
 import 'package:flutter/material.dart';
-
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
 import 'package:xam_shoes_app/ui/views/categories/components/categories_shoe_item.dart';
+
+import '../../../../core/utils/base/base_controller.dart';
 
 class CategoriesShoeList extends StatelessWidget {
   const CategoriesShoeList({
@@ -21,7 +21,7 @@ class CategoriesShoeList extends StatelessWidget {
         horizontal: DeviceUtils.getDynamicWidth(context, 0.07),
       ),
       child: ListView.builder(
-        itemCount: shoeList.length,
+        itemCount: BaseController.productsController.products.length,
         itemBuilder: (context, index) => CategoriesShoeItem(index: index),
       ),
     );

@@ -4,7 +4,6 @@ Date: 24.05.2023
 */
 
 import 'package:flutter/material.dart';
-import 'package:xam_shoes_app/core/data/shoe_list.dart';
 import 'package:xam_shoes_app/core/utils/base/base_controller.dart';
 import 'package:xam_shoes_app/core/utils/base/base_statefull.dart';
 import 'package:xam_shoes_app/core/utils/device_utils.dart';
@@ -24,8 +23,7 @@ class _HomeShoeListState extends BaseState<HomeShoeList> {
   @override
   void initState() {
     // hide item when scroll down
-    BaseController.homeController.shoeListController
-        .addListener(BaseController.homeController.scrollListenerShoesList);
+    BaseController.homeController.shoeListController.addListener(BaseController.homeController.scrollListenerShoesList);
     super.initState();
   }
 
@@ -47,10 +45,9 @@ class _HomeShoeListState extends BaseState<HomeShoeList> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 15,
-                childAspectRatio: DeviceUtils.getWidth(context) /
-                    DeviceUtils.getDynamicHeight(context, 0.79),
+                childAspectRatio: DeviceUtils.getWidth(context) / DeviceUtils.getDynamicHeight(context, 0.79),
               ),
-              itemCount: shoeList.length,
+              itemCount: BaseController.productsController.products.length,
               itemBuilder: (context, index) => ShoeItemView(index: index),
             ),
           ),
