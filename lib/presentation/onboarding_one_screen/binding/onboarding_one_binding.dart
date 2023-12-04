@@ -1,0 +1,10 @@
+import 'package:get/get.dart';
+
+import '../controller/onboarding_one_controller.dart';
+
+class OnboardingOneBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => OnboardingOneController());
+  }
+}

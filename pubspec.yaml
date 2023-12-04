@@ -1,0 +1,50 @@
+name: shoes_app
+description: A new Flutter project.
+version: 1.0.0+1
+environment:
+  sdk: '>=3.2.2 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.6.5
+  connectivity_plus: ^3.0.3
+  shared_preferences: ^2.0.20
+  cached_network_image: ^3.3.0
+  flutter_svg:
+  flutter_svg_provider: ^1.0.3
+  smooth_page_indicator: ^1.0.1
+  pin_code_fields: ^7.4.0
+  sms_autofill: ^2.3.0
+  pin_input_text_field: ^4.5.0
+  carousel_slider: ^4.2.1
+  dotted_border: 2.0.0+3
+  intl: ^0.18.0
+  flutter_rating_bar: ^4.0.1
+  expandable: ^5.0.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/
+  fonts:
+    - family: Berkshire Swash
+      fonts:
+        - asset: assets/fonts/BerkshireSwashRegular.ttf
+          weight: 400
+    - family: Gamja Flower
+      fonts:
+        - asset: assets/fonts/GamjaFlowerRegular.ttf
+          weight: 400
+    - family: SF UI Text
+      fonts:
+        - asset: assets/fonts/SFUIText-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SFUIText-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SFUIText-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/SFUIText-Bold.ttf
+          weight: 700
