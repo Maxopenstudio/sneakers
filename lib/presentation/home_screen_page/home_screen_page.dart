@@ -12,7 +12,6 @@ import '../home_screen_page/widgets/listname_item_widget.dart';
 import '../home_screen_page/widgets/listwalkingfitness_item_widget.dart';
 import '../home_screen_page/widgets/sliderlovelysportco_item_widget.dart';
 import 'controller/home_screen_controller.dart';
-import 'models/home_screen_model.dart';
 import 'models/homescreen_item_model.dart';
 import 'models/listname_item_model.dart';
 import 'models/listwalkingfitness_item_model.dart';
@@ -81,7 +80,6 @@ class HomeScreenPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding: getPadding(
-                  left: 20,
                   bottom: 5,
                 ),
                 child: Column(
@@ -96,6 +94,7 @@ class HomeScreenPage extends StatelessWidget {
                       hintText: "msg_search_for_shoes".tr,
                       margin: getMargin(
                         right: 20,
+                        left: 20,
                       ),
                       variant: TextFormFieldVariant.FillGray100,
                       padding: TextFormFieldPadding.PaddingT13_2,
@@ -143,7 +142,10 @@ class HomeScreenPage extends StatelessWidget {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: getPadding(right: 20),
+                        padding: getPadding(
+                          right: 20,
+                          left: 20,
+                        ),
                         child: Container(
                           height: getVerticalSize(
                             8,
@@ -174,6 +176,9 @@ class HomeScreenPage extends StatelessWidget {
                       height: getVerticalSize(24),
                     ),
                     Container(
+                      padding: getPadding(
+                        left: 20,
+                      ),
                       height: getVerticalSize(40),
                       child: ListView.separated(
                         separatorBuilder: (context, index) {
@@ -199,11 +204,11 @@ class HomeScreenPage extends StatelessWidget {
                               // ignore: unrelated_type_equality_checks
                               decoration: controller.categoryIndex == index
                                   ? AppDecoration.txtBlack.copyWith(
-                                borderRadius: BorderRadiusStyle.txtRoundedBorder8,
-                              )
+                                      borderRadius: BorderRadiusStyle.txtRoundedBorder8,
+                                    )
                                   : AppDecoration.txtWhite.copyWith(
-                                borderRadius: BorderRadiusStyle.txtRoundedBorder8,
-                              ),
+                                      borderRadius: BorderRadiusStyle.txtRoundedBorder8,
+                                    ),
                               child: Text(
                                 controller.homeScreenModelObj.value.categoryList[index].name,
                                 overflow: TextOverflow.ellipsis,
@@ -217,6 +222,9 @@ class HomeScreenPage extends StatelessWidget {
                       ),
                     ),
                     Container(
+                      padding: getPadding(
+                        left: 20,
+                      ),
                       height: getVerticalSize(
                         151,
                       ),
@@ -343,6 +351,7 @@ class HomeScreenPage extends StatelessWidget {
                       padding: getPadding(
                         top: 15,
                         right: 20,
+                        left: 20,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -377,6 +386,7 @@ class HomeScreenPage extends StatelessWidget {
                       padding: getPadding(
                         top: 13,
                         right: 20,
+                        left: 20,
                       ),
                       child: GridView.builder(
                         shrinkWrap: true,
@@ -411,6 +421,7 @@ class HomeScreenPage extends StatelessWidget {
                       padding: getPadding(
                         top: 24,
                         right: 20,
+                        left: 20,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -443,32 +454,33 @@ class HomeScreenPage extends StatelessWidget {
                           225,
                         ),
                         child: Obx(
-                              () =>
-                              ListView.separated(
-                                padding: getPadding(
-                                  top: 16,
+                          () => ListView.separated(
+                            padding: getPadding(
+                              top: 16,
+                              left: 20,
+
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: getVerticalSize(
+                                  18,
                                 ),
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: getVerticalSize(
-                                      18,
-                                    ),
-                                  );
+                              );
+                            },
+                            itemCount: controller.homeScreenModelObj.value.listnameItemList.length,
+                            itemBuilder: (context, index) {
+                              ListnameItemModel model = controller.homeScreenModelObj.value.listnameItemList[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.productDetailScreen);
                                 },
-                                itemCount: controller.homeScreenModelObj.value.listnameItemList.length,
-                                itemBuilder: (context, index) {
-                                  ListnameItemModel model = controller.homeScreenModelObj.value.listnameItemList[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.productDetailScreen);
-                                    },
-                                    child: ListnameItemWidget(
-                                      model,
-                                    ),
-                                  );
-                                },
-                              ),
+                                child: ListnameItemWidget(
+                                  model,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -476,6 +488,7 @@ class HomeScreenPage extends StatelessWidget {
                       padding: getPadding(
                         top: 24,
                         right: 20,
+                        left: 20,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -508,32 +521,32 @@ class HomeScreenPage extends StatelessWidget {
                           263,
                         ),
                         child: Obx(
-                              () =>
-                              ListView.separated(
-                                padding: getPadding(
-                                  top: 16,
+                          () => ListView.separated(
+                            padding: getPadding(
+                              top: 16,
+                              left: 20,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: getVerticalSize(
+                                  16,
                                 ),
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: getVerticalSize(
-                                      16,
-                                    ),
-                                  );
+                              );
+                            },
+                            itemCount: controller.homeScreenModelObj.value.listwalkingfitnessItemList.length,
+                            itemBuilder: (context, index) {
+                              ListwalkingfitnessItemModel model = controller.homeScreenModelObj.value.listwalkingfitnessItemList[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.blogDetailScreen);
                                 },
-                                itemCount: controller.homeScreenModelObj.value.listwalkingfitnessItemList.length,
-                                itemBuilder: (context, index) {
-                                  ListwalkingfitnessItemModel model = controller.homeScreenModelObj.value.listwalkingfitnessItemList[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.blogDetailScreen);
-                                    },
-                                    child: ListwalkingfitnessItemWidget(
-                                      model,
-                                    ),
-                                  );
-                                },
-                              ),
+                                child: ListwalkingfitnessItemWidget(
+                                  model,
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
