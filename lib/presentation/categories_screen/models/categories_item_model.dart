@@ -1,5 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'categories_item_model.g.dart';
+
+@JsonSerializable()
 class CategoriesItemModel {
+  @JsonKey(name: "category_id")
   int categoryId;
+  @JsonKey(name: "parent_id")
   int parentId;
   String image;
   String name;
@@ -7,23 +14,7 @@ class CategoriesItemModel {
 
   CategoriesItemModel({required this.image, required this.name, required this.categoryId, required this.parentId, required this.categories});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'categoryId': this.categoryId,
-      'parentId': this.parentId,
-      'image': this.image,
-      'name': this.name,
-      'categories': this.categories,
-    };
-  }
+  factory CategoriesItemModel.fromJson(Map<String, dynamic> json) => _$CategoriesItemModelFromJson(json);
 
-  factory CategoriesItemModel.fromMap(Map<String, dynamic> map) {
-    return CategoriesItemModel(
-      categoryId: map['categoryId'] as int,
-      parentId: map['parentId'] as int,
-      image: map['image'] as String,
-      name: map['name'] as String,
-      categories: map['categories'] as List<CategoriesItemModel>,
-    );
-  }
+  Map<String, dynamic> toJson() => _$CategoriesItemModelToJson(this);
 }

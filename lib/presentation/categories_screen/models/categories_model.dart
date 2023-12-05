@@ -2,6 +2,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import 'categories_item_model.dart';
 
+/*
 class CategoriesModel {
   RxList<CategoriesItemModel> categoryItemList = [
     CategoriesItemModel("cat1.png", "Running", 0, 0, []),
@@ -13,3 +14,4 @@ class CategoriesModel {
     CategoriesItemModel("cat7.png", "Basket Ball", 0, 0, []),
   ].obs;
 }
+ */

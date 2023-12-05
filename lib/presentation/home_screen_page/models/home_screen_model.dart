@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../categories_screen/models/categories_item_model.dart';
 import 'homescreen_item_model.dart';
 import 'listname_item_model.dart';
 import 'listwalkingfitness_item_model.dart';
@@ -7,7 +8,7 @@ import 'listwalkingfitness_item_model.dart';
 class HomeScreenModel {
   RxList<String> sliderlovelysportcoItemList = ["banner1.png", "banner2.png"].obs;
 
-  RxList<String> categoryList = ["Men", "Women", "Kids"].obs;
+  RxList<CategoriesItemModel> categoryList = List<CategoriesItemModel>.empty().obs;
 
   RxList<HomescreenItemModel> homescreenItemList = [
     new HomescreenItemModel("Campus", "\$10.00", "shoes1.png", ""),
@@ -26,7 +27,7 @@ class HomeScreenModel {
 
   HomeScreenModel copyWith({
     RxList<String>? sliderlovelysportcoItemList,
-    RxList<String>? categoryList,
+    RxList<CategoriesItemModel>? categoryList,
     RxList<HomescreenItemModel>? homescreenItemList,
     RxList<ListnameItemModel>? listnameItemList,
     RxList<ListwalkingfitnessItemModel>? listwalkingfitnessItemList,

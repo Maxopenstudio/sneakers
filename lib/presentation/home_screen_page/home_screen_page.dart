@@ -205,7 +205,7 @@ class HomeScreenPage extends StatelessWidget {
                                 borderRadius: BorderRadiusStyle.txtRoundedBorder8,
                               ),
                               child: Text(
-                                controller.homeScreenModelObj.value.categoryList[index],
+                                controller.homeScreenModelObj.value.categoryList[index].name,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 // ignore: unrelated_type_equality_checks

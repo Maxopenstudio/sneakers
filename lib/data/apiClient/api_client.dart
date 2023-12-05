@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
 
+import '../../presentation/categories_screen/models/categories_item_model.dart';
 import 'models/api_response.dart';
 
 class ApiClient extends GetConnect {
@@ -33,12 +34,16 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<List<String>?> getAllCategories() async {
+  Future<List<CategoriesItemModel>?> getAllCategories() async {
     try {
-      final response = await get(uri.replace(path: 'api/rest/categories').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final response = await get(uri.replace(path: 'api/rest/categories/level/2').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        return Future.value(((apiResponse.data) as List).map((category) => category["name"] as String).toList());
+        print(apiResponse.data[0]);
+        return Future.value(((apiResponse.data) as List).map((category) {
+          //print(category);
+          return CategoriesItemModel.fromJson(category);
+        }).toList());
       } else {
         return Future.error(Exception(apiResponse.error));
       }
