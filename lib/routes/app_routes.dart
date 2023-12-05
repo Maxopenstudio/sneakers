@@ -253,9 +253,6 @@ class AppRoutes {
     GetPage(
       name: bestSellingProductScreen,
       page: () => BestSellingProductScreen(),
-      bindings: [
-        BestSellingProductBinding(),
-      ],
     ),
     GetPage(
       name: categoryProductsScreen,

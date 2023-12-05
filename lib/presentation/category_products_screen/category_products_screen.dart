@@ -9,7 +9,7 @@ import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 import '../filter_bottomsheet/controller/filter_controller.dart';
 import '../filter_bottomsheet/filter_bottomsheet.dart';
 import '../home_screen_page/controller/home_screen_controller.dart';
-import '../home_screen_page/models/homescreen_item_model.dart';
+import '../home_screen_page/models/product_model.dart';
 import '../home_screen_page/widgets/homescreen_item_widget.dart';
 
 // ignore: must_be_immutable
@@ -66,7 +66,7 @@ class CategoryProductsScreen extends GetWidget<CategoryProductsController> {
               itemCount: 0,//controller.categoryProductsModelObj.value.homescreenItemList.length,
               itemBuilder: (context, index) {
                 /*
-                  HomescreenItemModel model = controller.categoryProductsModelObj.value.homescreenItemList[index];
+                  ProductModel model = controller.categoryProductsModelObj.value.homescreenItemList[index];
                   return GestureDetector(
                     onTap: () {
                       Get.toNamed(AppRoutes.productDetailScreen);

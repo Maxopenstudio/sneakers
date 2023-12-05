@@ -3,13 +3,13 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
 
 import '../controller/home_screen_controller.dart';
-import '../models/homescreen_item_model.dart';
+import '../models/product_model.dart';
 
 // ignore: must_be_immutable
 class HomescreenItemWidget extends StatelessWidget {
   HomescreenItemWidget(this.homescreenItemModelObj);
 
-  HomescreenItemModel homescreenItemModelObj;
+  ProductModel homescreenItemModelObj;
 
   var controller = Get.find<HomeScreenController>();
 
@@ -46,12 +46,12 @@ class HomescreenItemWidget extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          homescreenItemModelObj.originalPrice.isEmpty
+                          homescreenItemModelObj.special == 0
                               ? Container()
                               : Padding(
                                   padding: getPadding(top: 3, right: 6),
                                   child: Text(
-                                    homescreenItemModelObj.originalPrice,
+                                    homescreenItemModelObj.specialFormated,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFUITextRegular15Gray60001,
@@ -62,7 +62,7 @@ class HomescreenItemWidget extends StatelessWidget {
                               top: 3,
                             ),
                             child: Text(
-                              homescreenItemModelObj.price,
+                              homescreenItemModelObj.priceFormated,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: AppStyle.txtSFUITextRegular15Black900,
@@ -101,7 +101,7 @@ class HomescreenItemWidget extends StatelessWidget {
             ),
           ),
           CustomImageView(
-            imagePath: ImageConstant.imagePath + homescreenItemModelObj.image,
+            imagePath: ImageConstant.imagePath,
             height: getVerticalSize(
               167,
             ),

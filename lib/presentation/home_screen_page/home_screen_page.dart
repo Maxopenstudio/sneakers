@@ -1,20 +1,23 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/best_selling_product_screen/controller/best_selling_product_controller.dart';
 import 'package:shoes_app/presentation/home_screen_container_screen/controller/home_screen_container_controller.dart';
+import 'package:shoes_app/presentation/home_screen_page/widgets/product_item_widget.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:shoes_app/widgets/custom_text_form_field.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../home_screen_page/widgets/homescreen_item_widget.dart';
 import '../home_screen_page/widgets/listname_item_widget.dart';
 import '../home_screen_page/widgets/listwalkingfitness_item_widget.dart';
 import '../home_screen_page/widgets/sliderlovelysportco_item_widget.dart';
 import 'controller/home_screen_controller.dart';
-import 'models/homescreen_item_model.dart';
 import 'models/listname_item_model.dart';
 import 'models/listwalkingfitness_item_model.dart';
+import 'models/product_model.dart';
 
 // ignore_for_file: must_be_immutable
 class HomeScreenPage extends StatelessWidget {
@@ -388,34 +391,35 @@ class HomeScreenPage extends StatelessWidget {
                         right: 20,
                         left: 20,
                       ),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: getVerticalSize(
-                            246,
-                          ),
-                          crossAxisCount: 2,
-                          mainAxisSpacing: getHorizontalSize(
-                            16,
-                          ),
-                          crossAxisSpacing: getHorizontalSize(
-                            16,
-                          ),
-                        ),
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          HomescreenItemModel model = controller.homeScreenModelObj.value.homescreenItemList[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.productDetailScreen);
-                            },
-                            child: HomescreenItemWidget(
-                              model,
+                      child: GetBuilder<BestSellingProductController>(builder: (bestsellersController) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: getVerticalSize(
+                              246,
                             ),
-                          );
-                        },
-                      ),
+                            crossAxisCount: 2,
+                            mainAxisSpacing: getHorizontalSize(
+                              16,
+                            ),
+                            crossAxisSpacing: getHorizontalSize(
+                              16,
+                            ),
+                          ),
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: min(bestsellersController.bestsellingProducts.length, 4),
+                          itemBuilder: (context, index) {
+                            ProductModel product = bestsellersController.bestsellingProducts.value[index];
+                            print("BESTSELLER: ${product.name}");
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.productDetailScreen);
+                              },
+                              child: ProductItemWidget(product),
+                            );
+                          },
+                        );
+                      }),
                     ),
                     Padding(
                       padding: getPadding(
@@ -458,7 +462,6 @@ class HomeScreenPage extends StatelessWidget {
                             padding: getPadding(
                               top: 16,
                               left: 20,
-
                             ),
                             scrollDirection: Axis.horizontal,
                             separatorBuilder: (context, index) {

@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
+import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 
 import '../../presentation/categories_screen/models/categories_item_model.dart';
 import 'models/api_response.dart';
@@ -49,6 +48,39 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       return Future.error(Exception("getAllCategories Request error: $e"));
+    }
+  }
+
+  Future<List<ProductModel>?> getProductsByCategoryId(int id) async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/products/category/$id').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(apiResponse.data[0]);
+        return Future.value(((apiResponse.data) as List).map((category) {
+          return ProductModel.fromJson(category);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getProductsByCategoryId($id) Request error: $e"));
+    }
+  }
+
+  Future<List<ProductModel>?> getBestsellerProducts({int limit = 1}) async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(((apiResponse.data) as List).map((product) {
+          return ProductModel.fromJson(product);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getBestsellerProducts($limit) Request error: $e"));
     }
   }
 
