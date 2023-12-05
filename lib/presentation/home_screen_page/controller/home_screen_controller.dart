@@ -18,9 +18,11 @@ class HomeScreenController extends GetxController {
   Rx<int> categoryIndex = 0.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     homeScreenModelObj = HomeScreenModel().obs;
+    List<String> categories = await apiClient.getAllCategories() ?? [];
+    homeScreenModelObj = homeScreenModelObj.value.copyWith(categoryList: categories.obs).obs;
     super.onInit();
   }
 
