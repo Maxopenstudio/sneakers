@@ -43,7 +43,6 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                         padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
                         decoration: AppDecoration.white,
                         child: GetBuilder<HomeScreenController>(
-                          init: HomeScreenController(HomeScreenModel().obs),
                           builder: (controller) => Container(
                             height: getVerticalSize(40),
                             child: ListView.separated(

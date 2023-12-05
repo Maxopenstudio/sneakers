@@ -2,16 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/home_screen_model.dart';
 
+import '../../../data/apiClient/api_client.dart';
+
 class HomeScreenController extends GetxController {
-  HomeScreenController(this.homeScreenModelObj);
+  HomeScreenController(this.apiClient);
+
+  final ApiClient apiClient;
 
   TextEditingController groupThreeController = TextEditingController();
 
-  Rx<HomeScreenModel> homeScreenModelObj;
+  late Rx<HomeScreenModel> homeScreenModelObj;
 
   Rx<int> silderIndex = 0.obs;
 
   Rx<int> categoryIndex = 0.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    homeScreenModelObj = HomeScreenModel().obs;
+    super.onInit();
+  }
 
   @override
   void onReady() {

@@ -13,7 +13,6 @@ import '../home_screen_page/widgets/homescreen_item_widget.dart';
 
 // ignore: must_be_immutable
 class BestSellingProductScreen extends GetWidget<HomeScreenController> {
-  HomeScreenController controller = Get.put(HomeScreenController(HomeScreenModel().obs));
 
   @override
   Widget build(BuildContext context) {
