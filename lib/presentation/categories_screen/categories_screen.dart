@@ -6,7 +6,6 @@ import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 
 import '../home_screen_container_screen/controller/home_screen_container_controller.dart';
 import '../home_screen_page/controller/home_screen_controller.dart';
-import '../home_screen_page/models/home_screen_model.dart';
 import 'controller/categories_controller.dart';
 import 'models/categories_item_model.dart';
 
@@ -43,7 +42,6 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                         padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
                         decoration: AppDecoration.white,
                         child: GetBuilder<HomeScreenController>(
-                          init: HomeScreenController(HomeScreenModel().obs),
                           builder: (controller) => Container(
                             height: getVerticalSize(40),
                             child: ListView.separated(
@@ -75,7 +73,7 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                                             borderRadius: BorderRadiusStyle.txtRoundedBorder8,
                                           ),
                                     child: Text(
-                                      controller.homeScreenModelObj.value.categoryList[index],
+                                      controller.homeScreenModelObj.value.categoryList[index].name,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style:
@@ -89,32 +87,34 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView(
-                          primary: false,
-                          shrinkWrap: true,
-                          children: [
-                            Container(
-                                width: double.maxFinite,
-                                child: Container(
-                                    margin: getMargin(top: 10),
-                                    decoration: AppDecoration.white,
-                                    child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                                      CustomImageView(
-                                        imagePath: ImageConstant.img691,
-                                        height: getVerticalSize(200),
-                                        width: getHorizontalSize(428),
-                                        fit: BoxFit.fill,
-                                      )
-                                    ]))),
-                            GetBuilder<CategoriesController>(
-                              init: CategoriesController(),
-                              builder: (controller) => ListView.separated(
+                      GetBuilder<HomeScreenController>(builder: (controller) {
+                        int mainCategoryIndex = controller.categoryIndex.value;
+
+                        return Expanded(
+                          child: ListView(
+                            primary: false,
+                            shrinkWrap: true,
+                            children: [
+                              Container(
+                                  width: double.maxFinite,
+                                  child: Container(
+                                      margin: getMargin(top: 10),
+                                      decoration: AppDecoration.white,
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                                        CustomImageView(
+                                          url: controller.homeScreenModelObj.value.categoryList[mainCategoryIndex].image,
+                                          imagePath: ImageConstant.img691,
+                                          height: getVerticalSize(200),
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )
+                                      ]))),
+                              ListView.separated(
                                   padding: getPadding(top: 10),
                                   primary: false,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    CategoriesItemModel model = controller.categoriesModelObj.value.categoryItemList[index];
+                                    CategoriesItemModel model = controller.homeScreenModelObj.value.categoryList[mainCategoryIndex].categories[index];
                                     return Container(
                                       width: double.maxFinite,
                                       margin: getMargin(top: 1),
@@ -127,12 +127,7 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                                             margin: EdgeInsets.all(0),
                                             color: ColorConstant.gray100,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadiusStyle.roundedBorder8),
-                                            child: Container(
-                                                height: getSize(60),
-                                                width: getSize(60),
-                                                padding: getPadding(left: 4, top: 10, right: 4, bottom: 10),
-                                                decoration: AppDecoration.fillGray100.copyWith(borderRadius: BorderRadiusStyle.roundedBorder8),
-                                                child: CustomImageView(imagePath: ImageConstant.imagePath + model.image, height: getVerticalSize(40), width: getHorizontalSize(52), alignment: Alignment.center))),
+                                            child: Container(height: getSize(60), width: getSize(60), padding: getPadding(left: 4, top: 10, right: 4, bottom: 10), decoration: AppDecoration.fillGray100.copyWith(borderRadius: BorderRadiusStyle.roundedBorder8), child: CustomImageView(url: model.image, height: getVerticalSize(40), width: getHorizontalSize(52), alignment: Alignment.center))),
                                         Padding(padding: getPadding(left: 16, top: 20, bottom: 18), child: Text(model.name, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline)),
                                         Spacer(),
                                         CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24), margin: getMargin(top: 18, bottom: 18))
@@ -144,11 +139,11 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                                       height: getVerticalSize(1),
                                     );
                                   },
-                                  itemCount: controller.categoriesModelObj.value.categoryItemList.length),
-                            ),
-                          ],
-                        ),
-                      )
+                                  itemCount: controller.homeScreenModelObj.value.categoryList[mainCategoryIndex].categories.length),
+                            ],
+                          ),
+                        );
+                      })
                     ])))));
   }
 
