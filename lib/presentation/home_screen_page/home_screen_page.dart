@@ -415,7 +415,7 @@ class HomeScreenPage extends StatelessWidget {
                             ProductModel product = productsController.getProductById(bestSellingProductId);
                             return GestureDetector(
                               onTap: () {
-                                Get.toNamed(AppRoutes.productDetailScreen);
+                                Get.toNamed(AppRoutes.productDetailScreen, arguments: product);
                               },
                               child: ProductItemWidget(product),
                             );

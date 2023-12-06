@@ -2,7 +2,7 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/product_detail_screen/models/product_detail_model.dart';
 
 class ProductDetailController extends GetxController {
-  Rx<ProductDetailModel> productDetailModelObj = ProductDetailModel().obs;
+  //Rx<ProductDetailModel> productDetailModelObj = ProductDetailModel().obs;
 
   Rx<int> silderIndex = 0.obs;
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/home_screen_container_screen/controller/home_screen_container_controller.dart';
+import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:shoes_app/widgets/custom_button.dart';
@@ -14,11 +15,14 @@ import '../product_detail_screen/widgets/productdetail_item_widget.dart';
 import '../product_detail_screen/widgets/sliderrectangleseventyseven_item_widget.dart';
 import 'controller/product_detail_controller.dart';
 import 'models/productdetail_item_model.dart';
-import 'models/sliderrectangleseventyseven_item_model.dart';
 
 class ProductDetailScreen extends GetWidget<ProductDetailController> {
+  final ProductModel product = Get.arguments as ProductModel;
+
   @override
   Widget build(BuildContext context) {
+    final List<String> images = [product.image!, ...?product.images];
+
     return SafeArea(
         child: Scaffold(
             backgroundColor: ColorConstant.gray100,
@@ -39,9 +43,9 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                           decoration: AppDecoration.white,
                           padding: getPadding(bottom: 14),
                           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                            Obx(() => CarouselSlider.builder(
+                            CarouselSlider.builder(
                                 options: CarouselOptions(
-                                    height: getVerticalSize(270),
+                                    height: getVerticalSize(400),
                                     initialPage: 0,
                                     viewportFraction: 1.0,
                                     enableInfiniteScroll: false,
@@ -49,16 +53,12 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                     onPageChanged: (index, reason) {
                                       controller.silderIndex.value = index;
                                     }),
-                                itemCount: controller.productDetailModelObj.value.sliderrectangleseventysevenItemList.length,
+                                itemCount: images.length,
                                 itemBuilder: (context, index, realIndex) {
-                                  SliderrectangleseventysevenItemModel model = controller.productDetailModelObj.value.sliderrectangleseventysevenItemList[index];
-                                  return SliderrectangleseventysevenItemWidget(model);
-                                })),
+                                  return SliderrectangleseventysevenItemWidget(images[index]);
+                                }),
                             Obx(() => Container(
-                                height: getVerticalSize(8),
-                                margin: getMargin(top: 16),
-                                child: AnimatedSmoothIndicator(
-                                    activeIndex: controller.silderIndex.value, count: controller.productDetailModelObj.value.sliderrectangleseventysevenItemList.length, axisDirection: Axis.horizontal, effect: ScrollingDotsEffect(spacing: 8, activeDotColor: ColorConstant.black900, dotColor: ColorConstant.gray300, dotHeight: getVerticalSize(8), dotWidth: getVerticalSize(8)))))
+                                height: getVerticalSize(8), margin: getMargin(top: 16), child: AnimatedSmoothIndicator(activeIndex: controller.silderIndex.value, count: images.length, axisDirection: Axis.horizontal, effect: ScrollingDotsEffect(spacing: 8, activeDotColor: ColorConstant.black900, dotColor: ColorConstant.gray300, dotHeight: getVerticalSize(8), dotWidth: getVerticalSize(8)))))
                           ])),
                       Container(
                           width: double.maxFinite,
@@ -88,22 +88,49 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                           ),
                                           Padding(padding: getPadding(left: 8), child: Text("lbl_4_0".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900))
                                         ]),
-                                        Padding(padding: getPadding(top: 8), child: Text("lbl_sparx".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextSemibold27))
+                                        Padding(padding: getPadding(top: 8), child: Text(product.name, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextSemibold27)),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: getPadding(
+                                                top: 3,
+                                              ),
+                                              child: Text(
+                                                product.priceFormated,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.left,
+                                                style: product.special != 0 ? AppStyle.txtBodyGray600.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtBodyBlack900.copyWith(fontSize: 20),
+                                              ),
+                                            ),
+                                            if (product.special != 0) ...[
+                                              Padding(
+                                                padding: getPadding(top: 3, right: 6),
+                                                child: Text(
+                                                  product.specialFormated,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: AppStyle.txtBodyBlack900.copyWith(fontSize: 20),
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        )
                                       ]),
-                                      Text("lbl_12_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)
                                     ])),
-                                Container(
-                                    margin: getMargin(top: 16),
-                                    child: RichText(
-                                        text: TextSpan(children: [
-                                          TextSpan(text: "msg_lorem_ipsum_dolor2".tr, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400)),
-                                          TextSpan(text: "lbl_read_more".tr, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400)),
-                                          TextSpan(text: "lbl2".tr, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400))
-                                        ]),
-                                        textAlign: TextAlign.left)),
+                                if (product.description.isNotEmpty) ...[
+                                  Container(
+                                      margin: getMargin(top: 16),
+                                      child: RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(text: product.description, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400)),
+                                          ]),
+                                          textAlign: TextAlign.left)),
+                                ],
                                 Padding(
                                     padding: getPadding(top: 24, right: 45),
                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      /*
                                       Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
                                         Text("lbl_colors".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline),
                                         GetBuilder<ProductDetailController>(
@@ -141,6 +168,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                           ),
                                         )
                                       ]),
+                                       */
                                       Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
                                         Text("lbl_quantity".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline),
                                         GetBuilder<ProductDetailController>(
@@ -175,6 +203,9 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                 Padding(padding: getPadding(top: 24), child: Text("lbl_size".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline)),
                                 GetBuilder<ProductDetailController>(
                                   init: ProductDetailController(),
+                                  initState: (controller) {
+
+                                  },
                                   builder: (controller) => Container(
                                     margin: getMargin(top: 16),
                                     height: getSize(40),
@@ -183,7 +214,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                         primary: false,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
-                                          String size = controller.productDetailModelObj.value.sizeList[index];
+                                          String size = product.options!.first.optionValue[index].name;
                                           return GestureDetector(
                                             onTap: () {
                                               controller.changeSizeIndex(index);
@@ -200,15 +231,16 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                             width: getVerticalSize(16),
                                           );
                                         },
-                                        itemCount: controller.productDetailModelObj.value.sizeList.length),
+                                        itemCount: product.options!.first.optionValue.length),
                                   ),
                                 ),
+                                /*
                                 Padding(
                                     padding: getPadding(top: 24),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_reviews".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline), Padding(padding: getPadding(top: 2), child: Text("lbl_see_all_reviews".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900))])),
                                 Padding(
-                                    padding: getPadding(top: 16, bottom: 104),
+                                    padding: getPadding(top: 16),
                                     child: Obx(() => ListView.separated(
                                         physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
@@ -220,6 +252,10 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                           ProductdetailItemModel model = controller.productDetailModelObj.value.productdetailItemList[index];
                                           return ProductdetailItemWidget(model);
                                         }))),
+                                 */
+                                Container(
+                                  padding: getPadding(bottom: 104),
+                                )
                               ])))
                     ]))),
                 GetBuilder<HomeScreenContainerController>(

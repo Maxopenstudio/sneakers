@@ -42,37 +42,27 @@ class ProductItemWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              product.special == 0
-                                  ? Container()
-                                  : Padding(
-                                padding: getPadding(top: 3, right: 6),
-                                child: Text(
-                                  product.specialFormated,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: AppStyle.txtSFUITextRegular15Gray60001,
-                                ),
+                          if (product.special != 0) ...[
+                            Padding(
+                              padding: getPadding(top: 3, right: 6),
+                              child: Text(
+                                product.specialFormated,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtSFUITextRegular15Black900,
                               ),
-                              Padding(
-                                padding: getPadding(
-                                  top: 3,
-                                ),
-                                child: Text(
-                                  product.priceFormated,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: AppStyle.txtSFUITextRegular15Black900,
-                                ),
-                              ),
-                            ],
-                          ),
-                          CustomIconButton(
-                            height: 24,
-                            width: 24,
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgFavorite,
+                            ),
+                          ],
+
+                          Padding(
+                            padding: getPadding(
+                              top: 3,
+                            ),
+                            child: Text(
+                              product.priceFormated,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
                             ),
                           ),
                         ],
@@ -90,11 +80,27 @@ class ProductItemWidget extends StatelessWidget {
             width: double.infinity,
             child: ClipRRect(
               borderRadius: BorderRadiusStyle.roundedBorder8,
-              child: CustomImageView(
-                width: double.infinity,
-                url: product.image ?? product.thumb,
-                alignment: Alignment.bottomCenter,
-                fit: BoxFit.fitWidth,
+              child: Container(
+                child: Stack(
+                  children: [
+                    CustomImageView(
+                      width: double.infinity,
+                      url: product.image ?? product.thumb,
+                      alignment: Alignment.bottomCenter,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    Positioned(
+                      right: 4, top: 4,
+                      child: CustomIconButton(
+                        height: 24,
+                        width: 24,
+                        child: CustomImageView(
+                          svgPath: ImageConstant.imgFavorite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
