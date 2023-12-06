@@ -9,6 +9,7 @@ import 'package:shoes_app/presentation/cart_screen/binding/cart_binding.dart';
 import 'package:shoes_app/presentation/cart_screen/cart_screen.dart';
 import 'package:shoes_app/presentation/categories_screen/binding/categories_binding.dart';
 import 'package:shoes_app/presentation/categories_screen/categories_screen.dart';
+import 'package:shoes_app/presentation/category_products_screen/binding/category_products_binding.dart';
 import 'package:shoes_app/presentation/check_out_one_screen/binding/check_out_one_binding.dart';
 import 'package:shoes_app/presentation/check_out_one_screen/check_out_one_screen.dart';
 import 'package:shoes_app/presentation/check_out_three_screen/binding/check_out_three_binding.dart';
@@ -61,6 +62,8 @@ import 'package:shoes_app/presentation/splace_screen_two_screen/splace_screen_tw
 import 'package:shoes_app/presentation/varification_code_screen/binding/varification_code_binding.dart';
 import 'package:shoes_app/presentation/varification_code_screen/varification_code_screen.dart';
 
+import '../presentation/category_products_screen/category_products_screen.dart';
+
 class AppRoutes {
   static const String splaceScreenOneScreen = '/splace_screen_one_screen';
 
@@ -95,6 +98,8 @@ class AppRoutes {
   static const String searchScreen = '/search_screen';
 
   static const String bestSellingProductScreen = '/best_selling_product_screen';
+
+  static const String categoryProductsScreen = '/category_products_screen';
 
   static const String productDetailScreen = '/product_detail_screen';
 
@@ -248,8 +253,12 @@ class AppRoutes {
     GetPage(
       name: bestSellingProductScreen,
       page: () => BestSellingProductScreen(),
+    ),
+    GetPage(
+      name: categoryProductsScreen,
+      page: () => CategoryProductsScreen(),
       bindings: [
-        BestSellingProductBinding(),
+        CategoryProductsBinding(),
       ],
     ),
     GetPage(

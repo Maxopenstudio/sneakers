@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/category_products_screen/controller/category_products_controller.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
@@ -115,23 +116,28 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     CategoriesItemModel model = controller.homeScreenModelObj.value.categoryList[mainCategoryIndex].categories[index];
-                                    return Container(
-                                      width: double.maxFinite,
-                                      margin: getMargin(top: 1),
-                                      padding: getPadding(left: 20, top: 10, right: 20, bottom: 10),
-                                      decoration: AppDecoration.white,
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            elevation: 0,
-                                            margin: EdgeInsets.all(0),
-                                            color: ColorConstant.gray100,
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadiusStyle.roundedBorder8),
-                                            child: Container(height: getSize(60), width: getSize(60), padding: getPadding(left: 4, top: 10, right: 4, bottom: 10), decoration: AppDecoration.fillGray100.copyWith(borderRadius: BorderRadiusStyle.roundedBorder8), child: CustomImageView(url: model.image, height: getVerticalSize(40), width: getHorizontalSize(52), alignment: Alignment.center))),
-                                        Padding(padding: getPadding(left: 16, top: 20, bottom: 18), child: Text(model.name, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline)),
-                                        Spacer(),
-                                        CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24), margin: getMargin(top: 18, bottom: 18))
-                                      ]),
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.categoryProductsScreen, arguments: model);
+                                      }, // TODO: Добавить переход по категории
+                                      child: Container(
+                                        width: double.maxFinite,
+                                        margin: getMargin(top: 1),
+                                        padding: getPadding(left: 20, top: 10, right: 20, bottom: 10),
+                                        decoration: AppDecoration.white,
+                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                          Card(
+                                              clipBehavior: Clip.antiAlias,
+                                              elevation: 0,
+                                              margin: EdgeInsets.all(0),
+                                              color: ColorConstant.gray100,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadiusStyle.roundedBorder8),
+                                              child: Container(height: getSize(60), width: getSize(60), padding: getPadding(left: 4, top: 10, right: 4, bottom: 10), decoration: AppDecoration.fillGray100.copyWith(borderRadius: BorderRadiusStyle.roundedBorder8), child: CustomImageView(url: model.image, height: getVerticalSize(40), width: getHorizontalSize(52), alignment: Alignment.center))),
+                                          Padding(padding: getPadding(left: 16, top: 20, bottom: 18), child: Text(model.name, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline)),
+                                          Spacer(),
+                                          CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24), margin: getMargin(top: 18, bottom: 18))
+                                        ]),
+                                      ),
                                     );
                                   },
                                   separatorBuilder: (context, index) {

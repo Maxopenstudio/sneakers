@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/data/products_controller/products_controller.dart';
+import 'package:shoes_app/presentation/best_selling_product_screen/controller/best_selling_product_controller.dart';
+import 'package:shoes_app/presentation/home_screen_page/widgets/product_item_widget.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 
 import '../filter_bottomsheet/controller/filter_controller.dart';
 import '../filter_bottomsheet/filter_bottomsheet.dart';
-import '../home_screen_page/controller/home_screen_controller.dart';
-import '../home_screen_page/models/home_screen_model.dart';
-import '../home_screen_page/models/homescreen_item_model.dart';
-import '../home_screen_page/widgets/homescreen_item_widget.dart';
+import '../home_screen_page/models/product_model.dart';
 
 // ignore: must_be_immutable
-class BestSellingProductScreen extends GetWidget<HomeScreenController> {
+class BestSellingProductScreen extends GetWidget<BestSellingProductController> {
+
+  ProductsController productsController = Get.find<ProductsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class BestSellingProductScreen extends GetWidget<HomeScreenController> {
             ],
             styleType: Style.bgFillWhiteA700),
         body: Container(
+          height: double.infinity,
           margin: getMargin(top: 11),
           width: double.maxFinite,
           decoration: BoxDecoration(color: ColorConstant.whiteA700),
@@ -61,16 +64,15 @@ class BestSellingProductScreen extends GetWidget<HomeScreenController> {
                     16,
                   ),
                 ),
-                itemCount: controller.homeScreenModelObj.value.homescreenItemList.length,
+                itemCount: controller.bestsellingProducts.length,
                 itemBuilder: (context, index) {
-                  HomescreenItemModel model = controller.homeScreenModelObj.value.homescreenItemList[index];
+                  int bestSellingProductId = controller.bestsellingProducts.value[index].productId;
+                  ProductModel product = productsController.getProductById(bestSellingProductId);
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoutes.productDetailScreen);
+                      Get.toNamed(AppRoutes.productDetailScreen, arguments: product);
                     },
-                    child: HomescreenItemWidget(
-                      model,
-                    ),
+                    child: ProductItemWidget(product),
                   );
                 },
               ),
