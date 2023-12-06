@@ -8,8 +8,10 @@ part of 'product_options.dart';
 
 ProductOptions _$ProductOptionsFromJson(Map<String, dynamic> json) =>
     ProductOptions(
-      productOptionId: json['product_option_id'] as String,
-      optionValue: json['option_value'],
+      productOptionId: json['product_option_id'] as int,
+      optionValue: (json['option_value'] as List<dynamic>)
+          .map((e) => ProductOptionsValue.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ProductOptionsToJson(ProductOptions instance) =>

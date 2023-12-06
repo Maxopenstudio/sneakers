@@ -38,7 +38,6 @@ class ApiClient extends GetConnect {
       final response = await get(uri.replace(path: 'api/rest/categories/level/2').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        print(apiResponse.data[0]);
         return Future.value(((apiResponse.data) as List).map((category) {
           //print(category);
           return CategoriesItemModel.fromJson(category);
@@ -56,7 +55,6 @@ class ApiClient extends GetConnect {
       final response = await get(uri.replace(path: 'api/rest/products/category/$id').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        print(apiResponse.data[0]);
         return Future.value(((apiResponse.data) as List).map((category) {
           return ProductModel.fromJson(category);
         }).toList());
@@ -68,7 +66,7 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<List<ProductModel>?> getBestsellerProducts({int limit = 1}) async {
+  Future<List<ProductModel>?> getBestsellerProducts({int limit = 10}) async {
     try {
       final response = await get(uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
       final apiResponse = ApiResponse.fromJson(response.body);
@@ -81,6 +79,36 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       return Future.error(Exception("getBestsellerProducts($limit) Request error: $e"));
+    }
+  }
+
+  Future<ProductModel> getProduct(int productId) async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/products/$productId').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(ProductModel.fromJson(apiResponse.data));
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getProduct($productId) Request error: $e"));
+    }
+  }
+
+  Future<List<ProductModel>> getAllProducts() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/products').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(((apiResponse.data) as List).map((product) {
+          return ProductModel.fromJson(product);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getAllProducts() Request error: $e"));
     }
   }
 

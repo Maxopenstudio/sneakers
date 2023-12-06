@@ -4,6 +4,7 @@ part 'product_attribute.g.dart';
 
 @JsonSerializable()
 class ProductAttribute {
+  @JsonKey(name: "attribute_id")
   final String attributeId;
   final String name;
   final String text;

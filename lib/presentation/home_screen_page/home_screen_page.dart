@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/data/products_controller/products_controller.dart';
 import 'package:shoes_app/presentation/best_selling_product_screen/controller/best_selling_product_controller.dart';
 import 'package:shoes_app/presentation/home_screen_container_screen/controller/home_screen_container_controller.dart';
 import 'package:shoes_app/presentation/home_screen_page/widgets/product_item_widget.dart';
@@ -22,6 +23,7 @@ import 'models/product_model.dart';
 // ignore_for_file: must_be_immutable
 class HomeScreenPage extends StatelessWidget {
   HomeScreenContainerController homeScreenContainerController = Get.put(HomeScreenContainerController());
+  ProductsController productsController = Get.find<ProductsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -409,8 +411,8 @@ class HomeScreenPage extends StatelessWidget {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: min(bestsellersController.bestsellingProducts.length, 4),
                           itemBuilder: (context, index) {
-                            ProductModel product = bestsellersController.bestsellingProducts.value[index];
-                            print("BESTSELLER: ${product.name}");
+                            int bestSellingProductId = bestsellersController.bestsellingProducts.value[index].productId;
+                            ProductModel product = productsController.getProductById(bestSellingProductId);
                             return GestureDetector(
                               onTap: () {
                                 Get.toNamed(AppRoutes.productDetailScreen);

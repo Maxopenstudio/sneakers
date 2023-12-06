@@ -10,7 +10,11 @@ class ProductAttributeGroup {
   final String name;
   final List<ProductAttribute> attribute;
 
-  const ProductAttributeGroup({required this.attributeGroupId, required this.name, required this.attribute});
+  const ProductAttributeGroup({
+    required this.attributeGroupId,
+    required this.name,
+    required this.attribute,
+  });
 
   factory ProductAttributeGroup.fromJson(Map<String, dynamic> json) => _$ProductAttributeGroupFromJson(json);
 
