@@ -12,9 +12,8 @@ import '../filter_bottomsheet/filter_bottomsheet.dart';
 import '../home_screen_page/models/product_model.dart';
 
 // ignore: must_be_immutable
-class BestSellingProductScreen extends GetWidget<BestSellingProductController> {
+class FeaturedProductsScreen extends GetWidget<ProductsController> {
 
-  final ProductsController productsController = Get.find<ProductsController>();
   final FilterController filterController = FilterController();
 
   @override
@@ -26,7 +25,7 @@ class BestSellingProductScreen extends GetWidget<BestSellingProductController> {
             height: getVerticalSize(58),
             leadingWidth: 44,
             leading: AppbarImage(height: getSize(24), width: getSize(24), svgPath: ImageConstant.imgArrowleftBlack900, margin: getMargin(left: 20, top: 17, bottom: 17), onTap: onTapArrowleft1),
-            title: AppbarTitle(text: "msg_best_selling_product".tr, margin: getMargin(left: 16)),
+            title: AppbarTitle(text: "msg_featured_product".tr, margin: getMargin(left: 16)),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -51,8 +50,8 @@ class BestSellingProductScreen extends GetWidget<BestSellingProductController> {
           child: Padding(
             padding: getPadding(left: 20, top: 15, right: 20),
             child: StreamBuilder(stream: filterController.filterMode.stream, builder: (_,__) {
-              List<ProductModel> bestSellingProducts = controller.bestsellingProducts.map((product) => productsController.getProductById(product.productId)).toList();
-              bestSellingProducts = ProductsController.filterProducts(bestSellingProducts, filterController.filterMode.value);
+              List<ProductModel> featuredProducts = controller.featuredProducts.map((product) => controller.getProductById(product.productId)).toList();
+              featuredProducts = ProductsController.filterProducts(featuredProducts, filterController.filterMode.value);
               return GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,10 +66,10 @@ class BestSellingProductScreen extends GetWidget<BestSellingProductController> {
                     16,
                   ),
                 ),
-                itemCount: controller.bestsellingProducts.length,
+                itemCount: controller.featuredProducts.length,
                 itemBuilder: (context, index) {
-                  int bestSellingProductId = bestSellingProducts[index].productId;
-                  ProductModel product = productsController.getProductById(bestSellingProductId);
+                  int bestSellingProductId = featuredProducts[index].productId;
+                  ProductModel product = controller.getProductById(bestSellingProductId);
                   return GestureDetector(
                     onTap: () {
                       Get.toNamed(AppRoutes.productDetailScreen, arguments: product);

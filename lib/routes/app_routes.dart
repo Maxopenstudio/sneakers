@@ -20,6 +20,7 @@ import 'package:shoes_app/presentation/coupon_screen/binding/coupon_binding.dart
 import 'package:shoes_app/presentation/coupon_screen/coupon_screen.dart';
 import 'package:shoes_app/presentation/enter_new_password_screen/binding/enter_new_password_binding.dart';
 import 'package:shoes_app/presentation/enter_new_password_screen/enter_new_password_screen.dart';
+import 'package:shoes_app/presentation/featured_products_screen/featured_products_screen.dart';
 import 'package:shoes_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
 import 'package:shoes_app/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:shoes_app/presentation/home_screen_container_screen/binding/home_screen_container_binding.dart';
@@ -98,6 +99,8 @@ class AppRoutes {
   static const String searchScreen = '/search_screen';
 
   static const String bestSellingProductScreen = '/best_selling_product_screen';
+
+  static const String featuredProductsScreen = '/featured_products_screen';
 
   static const String categoryProductsScreen = '/category_products_screen';
 
@@ -253,6 +256,10 @@ class AppRoutes {
     GetPage(
       name: bestSellingProductScreen,
       page: () => BestSellingProductScreen(),
+    ),
+    GetPage(
+      name: featuredProductsScreen,
+      page: () => FeaturedProductsScreen(),
     ),
     GetPage(
       name: categoryProductsScreen,

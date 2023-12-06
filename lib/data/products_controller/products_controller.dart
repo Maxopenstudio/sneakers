@@ -9,6 +9,7 @@ class ProductsController extends GetxController {
   final ApiClient apiClient;
 
   RxList<ProductModel> allProducts = List<ProductModel>.empty().obs;
+  RxList<ProductModel> featuredProducts = List<ProductModel>.empty().obs;
 
   ProductModel getProductById(int productId) => allProducts.firstWhere((product) => product.productId == productId);
 
@@ -22,13 +23,13 @@ class ProductsController extends GetxController {
     });
 
     if (filterMode != null) {
-      categoryProducts = _filterProducts(categoryProducts, filterMode);
+      categoryProducts = filterProducts(categoryProducts, filterMode);
     }
 
     return categoryProducts;
   }
 
-  List<ProductModel> _filterProducts(List<ProductModel> products, FilterMode filterMode) {
+  static List<ProductModel> filterProducts(List<ProductModel> products, FilterMode filterMode) {
     List<ProductModel> filteredProducts = List.from(products);
     switch(filterMode) {
       case FilterMode.none:
@@ -47,6 +48,7 @@ class ProductsController extends GetxController {
 
   @override
   void onReady() async {
+    featuredProducts = (await apiClient.getFeaturedProducts()).obs;
     allProducts = (await apiClient.getAllProducts()).obs;
     print("ALL RPODUCTS FETHCED");
     super.onReady();

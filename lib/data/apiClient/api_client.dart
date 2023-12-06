@@ -112,4 +112,20 @@ class ApiClient extends GetConnect {
     }
   }
 
+  Future<List<ProductModel>> getFeaturedProducts() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/featured').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value((((apiResponse.data) as List).first["products"] as List).map((product) {
+          return ProductModel.fromJson(product);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getFeaturedProducts() Request error: $e"));
+    }
+  }
+
 }

@@ -53,7 +53,6 @@ class ProductItemWidget extends StatelessWidget {
                               ),
                             ),
                           ],
-
                           Padding(
                             padding: getPadding(
                               top: 3,
