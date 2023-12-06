@@ -443,11 +443,16 @@ class HomeScreenPage extends StatelessWidget {
                               top: 3,
                               bottom: 1,
                             ),
-                            child: Text(
-                              "lbl_view_all".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtSFUITextRegular15Black900,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.featuredProductsScreen);
+                              },
+                              child: Text(
+                                "lbl_view_all".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: AppStyle.txtSFUITextRegular15Black900,
+                              ),
                             ),
                           ),
                         ],
@@ -459,8 +464,8 @@ class HomeScreenPage extends StatelessWidget {
                         height: getVerticalSize(
                           225,
                         ),
-                        child: Obx(
-                          () => ListView.separated(
+                        child: StreamBuilder(stream: productsController.featuredProducts.stream, builder: (_,__) {
+                          return ListView.separated(
                             padding: getPadding(
                               top: 16,
                               left: 20,
@@ -473,20 +478,21 @@ class HomeScreenPage extends StatelessWidget {
                                 ),
                               );
                             },
-                            itemCount: controller.homeScreenModelObj.value.listnameItemList.length,
+                            itemCount: productsController.featuredProducts.length,
                             itemBuilder: (context, index) {
-                              ListnameItemModel model = controller.homeScreenModelObj.value.listnameItemList[index];
+                              int featuredProduct = productsController.featuredProducts.value[index].productId;
+                              ProductModel product = productsController.getProductById(featuredProduct);
                               return GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.productDetailScreen);
+                                  Get.toNamed(AppRoutes.productDetailScreen, arguments: product);
                                 },
                                 child: ListnameItemWidget(
-                                  model,
+                                  product,
                                 ),
                               );
                             },
-                          ),
-                        ),
+                          );
+                        }),
                       ),
                     ),
                     Padding(

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:html/parser.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/home_screen_container_screen/controller/home_screen_container_controller.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
@@ -123,7 +124,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                       margin: getMargin(top: 16),
                                       child: RichText(
                                           text: TextSpan(children: [
-                                            TextSpan(text: product.description, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400)),
+                                            TextSpan(text: parse(product.description).documentElement?.text, style: TextStyle(color: ColorConstant.black900, fontSize: getFontSize(17), fontFamily: 'SF UI Text', fontWeight: FontWeight.w400)),
                                           ]),
                                           textAlign: TextAlign.left)),
                                 ],
