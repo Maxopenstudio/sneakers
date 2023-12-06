@@ -11,6 +11,18 @@ class ProductsController extends GetxController {
 
   ProductModel getProductById(int productId) => allProducts.firstWhere((product) => product.productId == productId);
 
+  List<ProductModel> getProductsByCategory(int categoryId) {
+    List<ProductModel> categoryProducts = List.empty(growable: true);
+    allProducts.forEach((product) {
+      bool categoryIsMatch = product.category!.any((category) => category.id == categoryId);
+      if (categoryIsMatch) {
+        categoryProducts.add(product);
+      }
+    });
+
+    return categoryProducts;
+  }
+
   @override
   void onReady() async {
     allProducts = (await apiClient.getAllProducts()).obs;

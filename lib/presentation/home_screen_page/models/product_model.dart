@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_attribute_group.dart';
+import 'package:shoes_app/presentation/home_screen_page/models/product_category.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_options.dart';
 
 part 'product_model.g.dart';
@@ -24,6 +25,7 @@ class ProductModel {
   @JsonKey(name: "special_formated")
   final String specialFormated;
   final List<ProductOptions>? options;
+  final List<ProductCategory>? category;
 
   const ProductModel({
     required this.productId,
@@ -40,6 +42,7 @@ class ProductModel {
     required this.special,
     required this.specialFormated,
     required this.options,
+    required this.category,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);
