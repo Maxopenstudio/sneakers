@@ -30,6 +30,9 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       category: (json['category'] as List<dynamic>?)
           ?.map((e) => ProductCategory.fromJson(e as Map<String, dynamic>))
           .toList(),
+      dateAdded: json['date_added'] == null
+          ? null
+          : DateTime.parse(json['date_added'] as String),
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
@@ -49,4 +52,5 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'special_formated': instance.specialFormated,
       'options': instance.options,
       'category': instance.category,
+      'date_added': instance.dateAdded?.toIso8601String(),
     };

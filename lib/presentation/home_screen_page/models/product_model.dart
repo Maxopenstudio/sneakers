@@ -26,6 +26,8 @@ class ProductModel {
   final String specialFormated;
   final List<ProductOptions>? options;
   final List<ProductCategory>? category;
+  @JsonKey(name: "date_added")
+  final DateTime? dateAdded;
 
   const ProductModel({
     required this.productId,
@@ -43,6 +45,7 @@ class ProductModel {
     required this.specialFormated,
     required this.options,
     required this.category,
+    required this.dateAdded,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);

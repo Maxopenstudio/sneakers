@@ -19,11 +19,11 @@ class CategoryProductsScreen extends GetWidget<CategoryProductsController> {
 
   final CategoriesItemModel selectedCategory = Get.arguments as CategoriesItemModel;
   final ProductsController productsController = Get.find<ProductsController>();
+  final FilterController filterController = FilterController();
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> categoryProducts = productsController.getProductsByCategory(selectedCategory.categoryId);
-    print("FINDED PRODUCTS: ${categoryProducts.length}");
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorConstant.gray100,
@@ -38,7 +38,7 @@ class CategoryProductsScreen extends GetWidget<CategoryProductsController> {
                   Get.bottomSheet(
                     FilterBottomsheet(
                       Get.put(
-                        FilterController(),
+                        filterController,
                       ),
                     ),
                     isScrollControlled: true,
@@ -53,32 +53,41 @@ class CategoryProductsScreen extends GetWidget<CategoryProductsController> {
             margin: getMargin(top: 11),
             width: double.maxFinite,
             decoration: BoxDecoration(color: ColorConstant.whiteA700),
-            child: GridView.builder(
-              padding: getPadding(left: 20, top: 15, right: 20, bottom: 30),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisExtent: getVerticalSize(
-                  246,
-                ),
-                crossAxisCount: 2,
-                mainAxisSpacing: getHorizontalSize(
-                  16,
-                ),
-                crossAxisSpacing: getHorizontalSize(
-                  16,
-                ),
-              ),
-              itemCount: categoryProducts.length,
-              itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.productDetailScreen, arguments: categoryProducts[index]);
-                    },
-                    child: ProductItemWidget(
-                      categoryProducts[index],
+            child: StreamBuilder(
+              stream: filterController.filterMode.stream,
+              builder: (context, _) {
+                print('filter: ${filterController.filterMode.value.toString()}');
+                final List<ProductModel> categoryProducts = productsController.getProductsByCategory(selectedCategory.categoryId, filterMode: filterController.filterMode.value);
+                print("FINDED PRODUCTS: ${categoryProducts.length}");
+
+                return GridView.builder(
+                  padding: getPadding(left: 20, top: 15, right: 20, bottom: 30),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisExtent: getVerticalSize(
+                      246,
                     ),
-                  );
-              },
+                    crossAxisCount: 2,
+                    mainAxisSpacing: getHorizontalSize(
+                      16,
+                    ),
+                    crossAxisSpacing: getHorizontalSize(
+                      16,
+                    ),
+                  ),
+                  itemCount: categoryProducts.length,
+                  itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.productDetailScreen, arguments: categoryProducts[index]);
+                        },
+                        child: ProductItemWidget(
+                          categoryProducts[index],
+                        ),
+                      );
+                  },
+                );
+              }
             ),
           ),
         ),
