@@ -6,6 +6,7 @@ final Map<String, String> enUs = {
   "msg_lorem_ipsum_dolor3":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus ultrices in iaculis lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus ultrices in iaculis Ac auctor augue mauris augue neque gravida. Velit ut tortor pretium viverra suspendisse. Volutpat commodo sed egestas egestas fringilla phasellus faucibus. ",
   "lbl_email_address": "Email Address",
+  "lbl_telephone": "Phone number",
   "lbl_shipping": "Shipping",
   "lbl_12_00": "\$12.00",
   "lbl_coupon": "Coupon",
@@ -30,6 +31,7 @@ final Map<String, String> enUs = {
   "lbl_clear_all": "Clear All",
   "lbl_2_days_to_go": "2 Days to go",
   "msg_enter_email_address": "Enter email address",
+  "msg_enter_telephone": "Enter phone number",
   "lbl_watch123": "watch123",
   "lbl_return": "Return",
   "msg_6895_7852_5898_4200": "6895 7852 5898 4200",

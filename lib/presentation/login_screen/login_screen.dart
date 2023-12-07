@@ -8,6 +8,7 @@ import 'package:shoes_app/core/utils/validation_functions.dart';
 import 'package:shoes_app/widgets/custom_button.dart';
 import 'package:shoes_app/widgets/custom_text_form_field.dart';
 
+import '../../data/auth_controller/auth_controller.dart';
 import 'controller/login_controller.dart';
 
 class LoginScreen extends GetWidget<LoginController> {
@@ -89,7 +90,7 @@ class LoginScreen extends GetWidget<LoginController> {
                         ),
                         CustomTextFormField(
                           focusNode: FocusNode(),
-                          controller: controller.group110Controller,
+                          controller: controller.loginEmail,
                           hintText: "msg_enter_email_address".tr,
                           margin: getMargin(
                             top: 8,
@@ -138,7 +139,7 @@ class LoginScreen extends GetWidget<LoginController> {
                         ),
                         CustomTextFormField(
                           focusNode: FocusNode(),
-                          controller: controller.group111Controller,
+                          controller: controller.loginPassword,
                           hintText: "Enter password",
                           margin: getMargin(
                             top: 8,
@@ -163,7 +164,7 @@ class LoginScreen extends GetWidget<LoginController> {
                             ),
                           ),
                           validator: (value) {
-                            if (value == null || (!isValidPassword(value, isRequired: true))) {
+                            if (value == null) {
                               return "Please enter valid password";
                             }
                             return null;
@@ -192,10 +193,15 @@ class LoginScreen extends GetWidget<LoginController> {
                     ),
                   ),
                   CustomButton(
-                    onTap: () {
+                    onTap: () async {
                       if (_loginformKey.currentState!.validate()) {
-                        PrefUtils.setLogin(true);
-                        Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                        bool isSuccessful = await controller.login();
+                        if (isSuccessful) {
+                          Get.find<AuthController>().personalDataModel.value = controller.loginResult.value;
+                          Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                        } else {
+                          print("Login errors: ${controller.loginResult.value}");
+                        }
                       }
                     },
                     height: getVerticalSize(

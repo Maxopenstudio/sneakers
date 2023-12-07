@@ -469,6 +469,7 @@ class HomeScreenPage extends StatelessWidget {
                             padding: getPadding(
                               top: 16,
                               left: 20,
+                              bottom: 16,
                             ),
                             scrollDirection: Axis.horizontal,
                             separatorBuilder: (context, index) {
@@ -495,6 +496,7 @@ class HomeScreenPage extends StatelessWidget {
                         }),
                       ),
                     ),
+                    /*
                     Padding(
                       padding: getPadding(
                         top: 24,
@@ -561,6 +563,7 @@ class HomeScreenPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                     */
                   ],
                 ),
               ),

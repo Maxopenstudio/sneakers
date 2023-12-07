@@ -1,19 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
-import 'package:shoes_app/presentation/register_screen/models/register_model.dart';
+import 'package:shoes_app/data/apiClient/api_client.dart';
+import 'package:shoes_app/data/auth_controller/models/personal_data_model.dart';
 
 class RegisterController extends GetxController {
-  TextEditingController groupSixtySixController = TextEditingController();
+  RegisterController(this.apiClient);
 
-  TextEditingController groupSixtySevenController = TextEditingController();
+  ApiClient apiClient;
 
-  TextEditingController groupSixtyEightController = TextEditingController();
+  TextEditingController registerFirstname = TextEditingController();
 
-  TextEditingController groupSixtyNineController = TextEditingController();
+  TextEditingController registerLastname = TextEditingController();
 
-  TextEditingController groupSeventyController = TextEditingController();
+  TextEditingController registerEmail = TextEditingController();
 
-  Rx<RegisterModel> registerModelObj = RegisterModel().obs;
+  TextEditingController registerPhone = TextEditingController();
+
+  TextEditingController registerPassword = TextEditingController();
+
+  TextEditingController registerPasswordConfirm = TextEditingController();
+
+  Rx<bool> agreeTerms = false.obs;
+
+  Rx<PersonalDataModel?> registerResult = (null as PersonalDataModel?).obs;
+
+  RxList<String> errors = List<String>.empty().obs;
+
+  Future<bool> register() async {
+    final result = await apiClient.register(
+      firstname: registerFirstname.text,
+      lastname: registerLastname.text,
+      email: registerEmail.text,
+      password: registerPassword.text,
+      confirm: registerPasswordConfirm.text,
+      telephone: registerPhone.text,
+      agree: agreeTerms.value,
+    );
+    if (result.runtimeType == PersonalDataModel) {
+      registerResult.value = result;
+      return true;
+    }
+    errors = (result as List<String>).obs;
+    return false;
+  }
 
   @override
   void onReady() {
@@ -23,10 +52,11 @@ class RegisterController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    groupSixtySixController.dispose();
-    groupSixtySevenController.dispose();
-    groupSixtyEightController.dispose();
-    groupSixtyNineController.dispose();
-    groupSeventyController.dispose();
+    registerFirstname.dispose();
+    registerLastname.dispose();
+    registerEmail.dispose();
+    registerPhone.dispose();
+    registerPassword.dispose();
+    registerPasswordConfirm.dispose();
   }
 }
