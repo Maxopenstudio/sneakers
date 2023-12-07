@@ -1,5 +1,6 @@
 abstract class HeadersConstants {
-  static Map<String, String> common(String? merchantId, String? session) => {
+  static Map<String, String> common(String? merchantId, String? session, String? cookie) => {
+        'Cookie': cookie ?? "",
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-Oc-Merchant-Id': merchantId ?? "",

@@ -28,6 +28,7 @@ class SplaceScreenOneController extends GetxController {
       } else if (personalData != null) {
         Get.toNamed(AppRoutes.homeScreenContainerScreen);
       } else {
+        apiClient.regenerateSessionId();
         Get.toNamed(AppRoutes.loginScreen);
       }
     });

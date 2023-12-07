@@ -1,5 +1,6 @@
 //ignore: unused_import
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoes_app/core/app_export.dart';
@@ -28,6 +29,7 @@ class PrefUtils {
   static String isFirst = prefName + "ttsIsFirstIntro";
   static String isLogin = prefName + "ttsIsLogin";
   static String sessionId = prefName + "ttsSessionId";
+  static String savedCookie = prefName + "ttsCookie";
 
   static getIsIntro() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,5 +62,22 @@ class PrefUtils {
   static setSessionId(String session) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(sessionId, session);
+  }
+
+  static Future<Cookie?> getCookie() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? value = prefs.getString(savedCookie) ?? null;
+    if (value != null) {
+      print("LOADED COOKIE: ${Cookie.fromSetCookieValue(value)}");
+      return Cookie.fromSetCookieValue(value);
+    } else {
+      return null;
+    }
+  }
+
+  static setCookie(Cookie cookie) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(savedCookie, cookie.toString());
+    print("SET COOKIE: ${cookie.toString()}");
   }
 }

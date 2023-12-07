@@ -8,12 +8,10 @@ class PersonalDataModel {
   final String lastname;
   final String email;
   final String telephone;
-  @JsonKey(name: "tax_id")
-  final int taxId;
   @JsonKey(name: "customer_id")
-  final int customerId;
+  final String customerId;
 
-  PersonalDataModel({required this.firstname, required this.lastname, required this.email, required this.telephone, required this.taxId, required this.customerId});
+  PersonalDataModel({required this.firstname, required this.lastname, required this.email, required this.telephone, required this.customerId});
 
   factory PersonalDataModel.fromJson(Map<String, dynamic> json) => _$PersonalDataModelFromJson(json);
 
