@@ -79,3 +79,10 @@ bool isValidEmail(String? inputString, {bool isRequired = false}) {
 
   return isInputStringValid;
 }
+
+/// Checks if phone is valid.
+bool isValidPhone(String? input) {
+  if (input == null) return false;
+  RegExp phoneRegExp = RegExp(r'^\+38\d \(\d{2}\) \d{3} \d{2} \d{2}$');
+  return phoneRegExp.hasMatch(input);
+}

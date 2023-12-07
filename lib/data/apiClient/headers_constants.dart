@@ -4,6 +4,7 @@ abstract class HeadersConstants {
         'Content-Type': 'application/json',
         'X-Oc-Merchant-Id': merchantId ?? "",
         'X-Oc-Session': session ?? "",
+        'X-Oc-Merchant-Language': "ru",
       };
 
   static Map<String, String> session(String? merchantId) => {

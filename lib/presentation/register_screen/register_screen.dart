@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/core/utils/mask_formatter.dart';
 import 'package:shoes_app/core/utils/validation_functions.dart';
+import 'package:shoes_app/data/auth_controller/auth_controller.dart';
 import 'package:shoes_app/widgets/custom_button.dart';
 import 'package:shoes_app/widgets/custom_text_form_field.dart';
 
@@ -81,7 +83,7 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                   style: AppStyle.txtBodyBlack900,
                                 ),
                                 CustomTextFormField(
-                                  controller: controller.groupSixtySixController,
+                                  controller: controller.registerFirstname,
                                   hintText: "msg_enter_first_name".tr,
                                   margin: getMargin(
                                     top: 8,
@@ -128,7 +130,7 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                 ),
                                 CustomTextFormField(
                                   // focusNode: FocusNode(),
-                                  controller: controller.groupSixtySevenController,
+                                  controller: controller.registerLastname,
                                   hintText: "lbl_enter_last_name".tr,
                                   margin: getMargin(
                                     top: 8,
@@ -175,7 +177,7 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                 ),
                                 CustomTextFormField(
                                   // focusNode: FocusNode(),
-                                  controller: controller.groupSixtyEightController,
+                                  controller: controller.registerEmail,
                                   hintText: "msg_enter_email_address".tr,
                                   margin: getMargin(
                                     top: 8,
@@ -216,6 +218,55 @@ class RegisterScreen extends GetWidget<RegisterController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
+                                  "lbl_telephone".tr,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtBodyBlack900,
+                                ),
+                                CustomTextFormField(
+                                  inputFormatters: [MaskFormatter.phone],
+                                  // focusNode: FocusNode(),
+                                  controller: controller.registerPhone,
+                                  hintText: "msg_enter_telephone".tr,
+                                  margin: getMargin(
+                                    top: 8,
+                                  ),
+                                  textInputType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || (!isValidPhone(value))) {
+                                      return "Please enter valid phone";
+                                    }
+                                    return null;
+                                  },
+                                  suffix: Container(
+                                    margin: getMargin(
+                                      left: 12,
+                                      top: 12,
+                                      right: 16,
+                                      bottom: 12,
+                                    ),
+                                    child: SizedBox(),
+                                  ),
+                                  suffixConstraints: BoxConstraints(
+                                      maxHeight: getVerticalSize(
+                                        48,
+                                      ),
+                                      minHeight: getVerticalSize(
+                                        48,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(
+                              top: 24,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
                                   "lbl_password".tr,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
@@ -223,14 +274,15 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                 ),
                                 CustomTextFormField(
                                   // focusNode: FocusNode(),
-                                  controller: controller.groupSixtyNineController,
+                                  controller: controller.registerPassword,
                                   hintText: "lbl_enter_password".tr,
                                   margin: getMargin(
                                     top: 8,
                                   ),
                                   textInputType: TextInputType.visiblePassword,
                                   validator: (value) {
-                                    if (value == null || (!isValidPassword(value, isRequired: true))) {
+                                    //|| (!isValidPassword(value, isRequired: true))
+                                    if (value == null) {
                                       return "Please enter valid password";
                                     }
                                     return null;
@@ -272,7 +324,7 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                 ),
                                 CustomTextFormField(
                                   // focusNode: FocusNode(),
-                                  controller: controller.groupSeventyController,
+                                  controller: controller.registerPasswordConfirm,
                                   hintText: "msg_enter_confirm_password".tr,
                                   margin: getMargin(
                                     top: 8,
@@ -280,7 +332,7 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                   textInputAction: TextInputAction.done,
                                   textInputType: TextInputType.visiblePassword,
                                   validator: (value) {
-                                    if (value == null || (!isValidPassword(value, isRequired: true))) {
+                                    if (value == null && controller.registerPassword.text == value) {
                                       return "Please enter valid password";
                                     }
                                     return null;
@@ -323,19 +375,35 @@ class RegisterScreen extends GetWidget<RegisterController> {
                                     width: getSize(
                                       24,
                                     ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(
-                                          4,
-                                        ),
-                                      ),
-                                      border: Border.all(
-                                        color: ColorConstant.gray600,
-                                        width: getHorizontalSize(
-                                          1,
-                                        ),
-                                      ),
-                                    ),
+                                    child: StreamBuilder(
+                                        stream: controller.agreeTerms.stream,
+                                        builder: (context, snapshot) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                  getHorizontalSize(
+                                                    4,
+                                                  ),
+                                                ),
+                                                border: Border.all(
+                                                  color: ColorConstant.gray600,
+                                                  width: getHorizontalSize(
+                                                    1,
+                                                  ),
+                                                )),
+                                            child: Checkbox(
+                                              value: controller.agreeTerms.value,
+                                              onChanged: (value) {
+                                                print("value: $value");
+                                                if (value == null) return;
+                                                controller.agreeTerms.value = value;
+                                              },
+                                              checkColor: ColorConstant.black900,
+                                              fillColor: MaterialStatePropertyAll<Color>(Colors.transparent),
+                                              side: BorderSide.none,
+                                            ),
+                                          );
+                                        }),
                                   ),
                                   Expanded(
                                     child: Container(
@@ -389,10 +457,20 @@ class RegisterScreen extends GetWidget<RegisterController> {
                             ),
                           ),
                           CustomButton(
-                            onTap: () {
+                            onTap: () async {
                               if (_registrationformKey.currentState!.validate()) {
+                                bool isSuccessful = await controller.register();
+                                if (isSuccessful) {
+                                  Get.find<AuthController>().personalDataModel.value = controller.registerResult.value;
+                                  Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                                } else {
+                                  print("Register errors: ${controller.registerResult.value}");
+                                }
+
+                                /*
                                 PrefUtils.setLogin(true);
                                 Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                                 */
                               }
                             },
                             height: getVerticalSize(

@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
+import 'package:shoes_app/data/auth_controller/models/personal_data_model.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 
 import '../../presentation/categories_screen/models/categories_item_model.dart';
@@ -128,4 +129,28 @@ class ApiClient extends GetConnect {
     }
   }
 
+  // AUTH
+  Future<PersonalDataModel?> register({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String password,
+    required String confirm,
+    required String telephone,
+    required bool agree,
+  }) async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/register').toString(), {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "confirm": confirm, "telephone": telephone, "customer_group_id": 1, "agree": agree ? 1 : 0, "address_1": "qwe", "city": "zp", "country_id": 220, "zone_id": 3504}, headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+        return Future.value(PersonalDataModel.fromJson(apiResponse.data));
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        return Future.error(apiResponse.error);
+      }
+    } catch (e) {
+      return Future.error(Exception("getFeaturedProducts() Request error: $e"));
+    }
+  }
 }

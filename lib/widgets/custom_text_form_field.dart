@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoes_app/core/app_export.dart';
 
 // ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
-  CustomTextFormField({this.shape, this.padding, this.variant, this.fontStyle, this.alignment, this.width, this.margin, this.controller, this.focusNode, this.isObscureText = false, this.textInputAction = TextInputAction.next, this.textInputType = TextInputType.text, this.maxLines, this.hintText, this.prefix, this.prefixConstraints, this.suffix, this.suffixConstraints, this.validator, this.onTap});
+  CustomTextFormField(
+      {this.shape,
+      this.padding,
+      this.variant,
+      this.fontStyle,
+      this.alignment,
+      this.width,
+      this.margin,
+      this.controller,
+      this.focusNode,
+      this.isObscureText = false,
+      this.textInputAction = TextInputAction.next,
+      this.textInputType = TextInputType.text,
+      this.maxLines,
+      this.hintText,
+      this.prefix,
+      this.prefixConstraints,
+      this.suffix,
+      this.suffixConstraints,
+      this.validator,
+      this.onTap,
+      this.inputFormatters});
 
   TextFormFieldShape? shape;
 
@@ -45,6 +67,8 @@ class CustomTextFormField extends StatefulWidget {
 
   VoidCallback? onTap;
 
+  List<TextInputFormatter>? inputFormatters;
+
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
@@ -65,6 +89,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       width: widget.width ?? double.maxFinite,
       margin: widget.margin,
       child: TextFormField(
+        inputFormatters: widget.inputFormatters,
         onTap: widget.onTap,
         controller: widget.controller,
         focusNode: widget.focusNode,
