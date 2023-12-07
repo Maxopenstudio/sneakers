@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/data/apiClient/api_client.dart';
 
 class PrefUtils {
   static SharedPreferences? _sharedPreferences;
@@ -25,6 +27,7 @@ class PrefUtils {
   static String prefName = "com.shoesapp.app";
   static String isFirst = prefName + "ttsIsFirstIntro";
   static String isLogin = prefName + "ttsIsLogin";
+  static String sessionId = prefName + "ttsSessionId";
 
   static getIsIntro() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,5 +49,16 @@ class PrefUtils {
   static setLogin(bool login) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(isLogin, login);
+  }
+
+  static Future<String?> getSessionId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? value = prefs.getString(sessionId) ?? null;
+    return value;
+  }
+
+  static setSessionId(String session) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(sessionId, session);
   }
 }

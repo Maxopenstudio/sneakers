@@ -13,14 +13,23 @@ class ApiClient extends GetConnect {
   static String scheme = 'http';
   static Uri uri = Uri(scheme: scheme, host: dotenv.get('API_URL'));
 
+  Rx<String> get sessionIDStream => sessionID;
+
   @override
   void onInit() async {
-    await _getSessionID().then((session) => session != null ? sessionID = session.obs : null);
-    print("SESSION: $sessionID");
+    final String? loadedSession = await PrefUtils.getSessionId();
+    if (loadedSession == null) {
+      await getSessionID().then((session) => session != null ? sessionID = session.obs : null);
+      print("NEW SESSION: $sessionID");
+      PrefUtils.setSessionId(sessionID.value);
+    } else {
+      sessionID = loadedSession.obs;
+      print("LOADED SESSION: $loadedSession");
+    }
     super.onInit();
   }
 
-  Future<String?> _getSessionID() async {
+  Future<String?> getSessionID() async {
     try {
       final response = await post(uri.replace(path: 'api/rest/session').toString(), null, headers: HeadersConstants.session(merchantID));
       final apiResponse = ApiResponse.fromJson(response.body);
@@ -145,6 +154,45 @@ class ApiClient extends GetConnect {
       if (apiResponse.isSuccess) {
         print("response.body: ${response.body}");
         return Future.value(PersonalDataModel.fromJson(apiResponse.data));
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        return Future.error(apiResponse.error);
+      }
+    } catch (e) {
+      return Future.error(Exception("getFeaturedProducts() Request error: $e"));
+    }
+  }
+
+  Future<PersonalDataModel?> login() async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/login').toString(), {{
+        "email": "test@gmail.com",
+        "password": "1111"
+      }}, headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+        return Future.value(PersonalDataModel.fromJson(apiResponse.data));
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        return Future.error(apiResponse.error);
+      }
+    } catch (e) {
+      return Future.error(Exception("getFeaturedProducts() Request error: $e"));
+    }
+  }
+
+  Future<PersonalDataModel?> getAccount() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/account').toString(), headers: HeadersConstants.common(merchantID, sessionID.value));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      print("SESSION: ${sessionID.value}");
+      print("GET ACCOUNT: ${response.body}");
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+        return Future.value(PersonalDataModel.fromJson(apiResponse.data));
+      } else if (response.statusCode == 403){
+        return Future.value(null);
       } else {
         print("ERROR: ${apiResponse.error}");
         return Future.error(apiResponse.error);

@@ -13,6 +13,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
+    //Logout controller
     personalDataModel.listen((personalData) {
       if (personalData != null) {
         print("SET LOGIN");
