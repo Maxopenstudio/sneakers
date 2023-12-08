@@ -10,6 +10,8 @@ import 'package:shoes_app/presentation/cart_screen/cart_screen.dart';
 import 'package:shoes_app/presentation/categories_screen/binding/categories_binding.dart';
 import 'package:shoes_app/presentation/categories_screen/categories_screen.dart';
 import 'package:shoes_app/presentation/category_products_screen/binding/category_products_binding.dart';
+import 'package:shoes_app/presentation/change_password_screen/binding/change_password_binding.dart';
+import 'package:shoes_app/presentation/change_password_screen/change_password_screen.dart';
 import 'package:shoes_app/presentation/check_out_one_screen/binding/check_out_one_binding.dart';
 import 'package:shoes_app/presentation/check_out_one_screen/check_out_one_screen.dart';
 import 'package:shoes_app/presentation/check_out_three_screen/binding/check_out_three_binding.dart';
@@ -42,6 +44,8 @@ import 'package:shoes_app/presentation/privacy_policy_screen/binding/privacy_pol
 import 'package:shoes_app/presentation/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:shoes_app/presentation/product_detail_screen/binding/product_detail_binding.dart';
 import 'package:shoes_app/presentation/product_detail_screen/product_detail_screen.dart';
+import 'package:shoes_app/presentation/profile_settings_page/binding/profile_settings_binding.dart';
+import 'package:shoes_app/presentation/profile_settings_page/profile_settings_page.dart';
 import 'package:shoes_app/presentation/register_error_one_screen/binding/register_error_one_binding.dart';
 import 'package:shoes_app/presentation/register_error_one_screen/register_error_one_screen.dart';
 import 'package:shoes_app/presentation/register_error_screen/binding/register_error_binding.dart';
@@ -131,6 +135,10 @@ class AppRoutes {
   static const String myProfilePage = '/my_profile_page';
 
   static const String settingScreen = '/setting_screen';
+
+  static const String profileSettingsPage = '/profile_settings_page';
+
+  static const String changePasswordScreen = '/change_password_screen';
 
   static const String notificationPage = '/notification_page';
 
@@ -350,6 +358,20 @@ class AppRoutes {
       page: () => SettingScreen(),
       bindings: [
         SettingBinding(),
+      ],
+    ),
+    GetPage(
+      name: profileSettingsPage,
+      page: () => ProfileSettingsPage(),
+      bindings: [
+        ProfileSettingsBinding(),
+      ],
+    ),
+    GetPage(
+      name: changePasswordScreen,
+      page: () => ChangePasswordScreen(),
+      bindings: [
+        ChangePasswordBinding(),
       ],
     ),
     GetPage(
