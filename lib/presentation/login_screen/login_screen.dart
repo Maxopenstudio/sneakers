@@ -90,6 +90,7 @@ class LoginScreen extends GetWidget<LoginController> {
                         ),
                         CustomTextFormField(
                           focusNode: FocusNode(),
+                          errorText: controller.errors.isNotEmpty ? controller.errors.first : null,
                           controller: controller.loginEmail,
                           hintText: "msg_enter_email_address".tr,
                           margin: getMargin(
@@ -200,7 +201,7 @@ class LoginScreen extends GetWidget<LoginController> {
                           Get.find<AuthController>().personalDataModel.value = controller.loginResult.value;
                           Get.toNamed(AppRoutes.homeScreenContainerScreen);
                         } else {
-                          print("Login errors: ${controller.loginResult.value}");
+                          print("Login errors: ${controller.errors.first}");
                         }
                       }
                     },

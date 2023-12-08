@@ -14,7 +14,7 @@ import '../home_screen_container_screen/controller/home_screen_container_control
 
 // ignore_for_file: must_be_immutable
 class ChangePasswordScreen extends GetWidget<ChangePasswordController> {
-  static final GlobalKey<FormState> _profileSettingsFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _changePasswordFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class ChangePasswordScreen extends GetWidget<ChangePasswordController> {
             width: double.maxFinite,
             padding: getPadding(top: 10, bottom: 10),
             child: Form(
-              key: _profileSettingsFormKey,
+              key: _changePasswordFormKey,
               child: SingleChildScrollView(
                 child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Container(
@@ -155,7 +155,7 @@ class ChangePasswordScreen extends GetWidget<ChangePasswordController> {
                     color: ColorConstant.whiteA700,
                     child: CustomButton(
                       onTap: () async {
-                        if (_profileSettingsFormKey.currentState!.validate()) {
+                        if (_changePasswordFormKey.currentState!.validate()) {
                           /*
                           bool isSuccessful = await controller.register();
                           if (isSuccessful) {

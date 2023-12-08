@@ -114,6 +114,8 @@ final Map<String, String> enUs = {
   "lbl_submit": "Submit",
   "lbl_onboarding_two": "Onboarding Two",
   "msg_terms_condition2": "Terms & Condition",
+  "lbl_logout": "Logout",
+  "lbl_disable_account": "Disable Account",
   "msg_didn_t_have_an_account2": "Didn’t have an account?",
   "msg_varification_code": "Varification Code",
   "lbl_colors": "Colors",

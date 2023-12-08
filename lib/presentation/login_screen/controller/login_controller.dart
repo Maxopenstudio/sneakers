@@ -21,6 +21,7 @@ class LoginController extends GetxController {
     print("login: ${loginEmail.text}");
     print("password: ${loginPassword.text}");
 
+    errors.value = [];
     final result = await apiClient.login(
       email: loginEmail.text,
       password: loginPassword.text,
@@ -29,7 +30,7 @@ class LoginController extends GetxController {
       loginResult.value = result;
       return true;
     }
-    errors = (result as List<String>).obs;
+    errors.value = (result as List<String>);
     return false;
   }
   

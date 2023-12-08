@@ -184,4 +184,8 @@ class ImageConstant {
   static String imgFutsal1 = 'assets/images/img_futsal1.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+
+  static String deleteAccount = 'assets/images/delete_account.svg';
+
+  static String logout = 'assets/images/logout.svg';
 }

@@ -11,6 +11,8 @@ class AuthController extends GetxController {
 
   Rx<PersonalDataModel?> personalDataModel = (null as PersonalDataModel?).obs;
 
+  Future<bool> logout() => apiClient.logout();
+
   @override
   void onInit() {
     //Logout controller

@@ -180,7 +180,7 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<PersonalDataModel?> login({required String email, required String password}) async {
+  Future<dynamic> login({required String email, required String password}) async {
     try {
       final response = await post(uri.replace(path: 'api/rest/login').toString(), {
         "email": email,
@@ -193,7 +193,7 @@ class ApiClient extends GetConnect {
         return Future.value(PersonalDataModel.fromJson(apiResponse.data));
       } else {
         print("ERROR: ${apiResponse.error}");
-        return Future.error(apiResponse.error);
+        return Future.value(apiResponse.error);
       }
     } catch (e) {
       return Future.error(Exception("login() Request error: $e"));
@@ -218,6 +218,20 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       return Future.error(Exception("getAccount() Request error: $e"));
+    }
+  }
+
+  Future<bool> logout() async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/logout').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(true);
+      } else {
+        return Future.value(false);
+      }
+    } catch (e) {
+      return Future.error(Exception("logout() Request error: $e"));
     }
   }
 }
