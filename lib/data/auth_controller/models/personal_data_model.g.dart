@@ -12,7 +12,7 @@ PersonalDataModel _$PersonalDataModelFromJson(Map<String, dynamic> json) =>
       lastname: json['lastname'] as String,
       email: json['email'] as String,
       telephone: json['telephone'] as String,
-      customerId: json['customer_id'] as String,
+      customerId: json['customer_id'] as int,
     );
 
 Map<String, dynamic> _$PersonalDataModelToJson(PersonalDataModel instance) =>

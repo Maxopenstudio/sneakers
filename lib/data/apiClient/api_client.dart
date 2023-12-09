@@ -156,7 +156,7 @@ class ApiClient extends GetConnect {
   }
 
   // AUTH
-  Future<PersonalDataModel?> register({
+  Future<dynamic> register({
     required String firstname,
     required String lastname,
     required String email,
@@ -167,13 +167,14 @@ class ApiClient extends GetConnect {
   }) async {
     try {
       final response = await post(uri.replace(path: 'api/rest/register').toString(), {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "confirm": confirm, "telephone": telephone, "customer_group_id": 1, "agree": agree ? 1 : 0, "address_1": "qwe", "city": "zp", "country_id": 220, "zone_id": 3504}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      print(response.body);
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print("response.body: ${response.body}");
         return Future.value(PersonalDataModel.fromJson(apiResponse.data));
       } else {
         print("ERROR: ${apiResponse.error}");
-        return Future.error(apiResponse.error);
+        return Future.value(apiResponse.error);
       }
     } catch (e) {
       return Future.error(Exception("register() Request error: $e"));
