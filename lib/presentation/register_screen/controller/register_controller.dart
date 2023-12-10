@@ -24,9 +24,10 @@ class RegisterController extends GetxController {
 
   Rx<PersonalDataModel?> registerResult = (null as PersonalDataModel?).obs;
 
-  RxList<String> errors = List<String>.empty().obs;
+  RxMap<String, dynamic> errors = Map<String, dynamic>().obs;
 
   Future<bool> register() async {
+    errors.value = {};
     final result = await apiClient.register(
       firstname: registerFirstname.text,
       lastname: registerLastname.text,
@@ -36,11 +37,12 @@ class RegisterController extends GetxController {
       telephone: registerPhone.text,
       agree: agreeTerms.value,
     );
+    print("RUNTIME: ${result.runtimeType}");
     if (result.runtimeType == PersonalDataModel) {
       registerResult.value = result;
       return true;
     }
-    errors = (result as List<String>).obs;
+    errors.value = (result as Map<String, dynamic>);
     return false;
   }
 

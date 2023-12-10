@@ -15,12 +15,13 @@ class LoginController extends GetxController {
 
   Rx<PersonalDataModel?> loginResult = (null as PersonalDataModel?).obs;
 
-  RxList<String> errors = List<String>.empty().obs;
+  Rx<String?> errors = (null as String?).obs;
 
   Future<bool> login() async {
     print("login: ${loginEmail.text}");
     print("password: ${loginPassword.text}");
 
+    errors.value = null;
     final result = await apiClient.login(
       email: loginEmail.text,
       password: loginPassword.text,
@@ -29,7 +30,8 @@ class LoginController extends GetxController {
       loginResult.value = result;
       return true;
     }
-    errors = (result as List<String>).obs;
+    print("result: $result");
+    errors.value = (result as List<dynamic>).first;
     return false;
   }
   

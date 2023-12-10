@@ -25,7 +25,8 @@ class CustomTextFormField extends StatefulWidget {
       this.suffixConstraints,
       this.validator,
       this.onTap,
-      this.inputFormatters});
+      this.inputFormatters,
+      this.errorText});
 
   TextFormFieldShape? shape;
 
@@ -69,6 +70,8 @@ class CustomTextFormField extends StatefulWidget {
 
   List<TextInputFormatter>? inputFormatters;
 
+  String? errorText;
+
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
@@ -98,14 +101,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         textInputAction: widget.textInputAction,
         keyboardType: widget.textInputType,
         maxLines: widget.maxLines ?? 1,
-        decoration: _buildDecoration(),
+        decoration: _buildDecoration().copyWith(errorText: widget.errorText),
         validator: widget.validator,
       ),
     );
   }
 
-  _buildDecoration() {
+  InputDecoration _buildDecoration() {
     return InputDecoration(
+        errorMaxLines: 2,
         hintText: widget.hintText ?? "",
         hintStyle: _setFontStyle(TextFormFieldFontStyle.Body),
         border: _setBorderStyle(),

@@ -9,7 +9,7 @@ class PersonalDataModel {
   final String email;
   final String telephone;
   @JsonKey(name: "customer_id")
-  final String customerId;
+  final int customerId;
 
   PersonalDataModel({required this.firstname, required this.lastname, required this.email, required this.telephone, required this.customerId});
 

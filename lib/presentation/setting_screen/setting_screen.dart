@@ -17,16 +17,21 @@ class SettingScreen extends GetWidget<SettingController> {
                 width: double.maxFinite,
                 padding: getPadding(top: 10, bottom: 10),
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Container(
-                      width: double.maxFinite,
-                      padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
-                      decoration: AppDecoration.white,
-                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        CustomImageView(svgPath: ImageConstant.imgSettingsBlack900, height: getSize(24), width: getSize(24)),
-                        Padding(padding: getPadding(left: 15, top: 2, bottom: 3), child: Text("lbl_account".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
-                        Spacer(),
-                        CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
-                      ])),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.profileSettingsPage);
+                    },
+                    child: Container(
+                        width: double.maxFinite,
+                        padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
+                        decoration: AppDecoration.white,
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          CustomImageView(svgPath: ImageConstant.imgSettingsBlack900, height: getSize(24), width: getSize(24)),
+                          Padding(padding: getPadding(left: 15, top: 2, bottom: 3), child: Text("lbl_account".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
+                          Spacer(),
+                          CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
+                        ])),
+                  ),
                   Container(
                       width: double.maxFinite,
                       margin: getMargin(top: 1),

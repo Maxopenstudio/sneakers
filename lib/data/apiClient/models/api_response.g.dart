@@ -8,7 +8,7 @@ part of 'api_response.dart';
 
 ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
       success: json['success'] as int,
-      error: (json['error'] as List<dynamic>).map((e) => e as String).toList(),
+      error: json['error'],
       data: json['data'],
     );
 
