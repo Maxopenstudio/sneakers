@@ -49,7 +49,6 @@ class ApiClient extends GetConnect {
         if (response.headers?['set-cookie'] != null) {
           cookie = Cookie.fromSetCookieValue(response.headers!['set-cookie']!);
           PrefUtils.setCookie(cookie!);
-
         }
         return Future.value((apiResponse.data)['session']);
       } else {
@@ -166,7 +165,8 @@ class ApiClient extends GetConnect {
     required bool agree,
   }) async {
     try {
-      final response = await post(uri.replace(path: 'api/rest/register').toString(), {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "confirm": confirm, "telephone": telephone, "customer_group_id": 1, "agree": agree ? 1 : 0, "address_1": "qwe", "city": "zp", "country_id": 220, "zone_id": 3504}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/register').toString(), {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "confirm": confirm, "telephone": telephone, "customer_group_id": 1, "agree": agree ? 1 : 0, "address_1": "qwe", "city": "zp", "country_id": 220, "zone_id": 3504},
+          headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       print(response.body);
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
@@ -183,10 +183,7 @@ class ApiClient extends GetConnect {
 
   Future<dynamic> login({required String email, required String password}) async {
     try {
-      final response = await post(uri.replace(path: 'api/rest/login').toString(), {
-        "email": email,
-        "password": password
-      }, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/login').toString(), {"email": email, "password": password}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       print("login Set-Cookie: ${response.headers?['set-cookie']}");
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
@@ -211,7 +208,7 @@ class ApiClient extends GetConnect {
       if (apiResponse.isSuccess) {
         print("response.body: ${response.body}");
         return Future.value(PersonalDataModel.fromJson(apiResponse.data));
-      } else if (response.statusCode == 403){
+      } else if (response.statusCode == 403) {
         return Future.value(null);
       } else {
         print("ERROR: ${apiResponse.error}");
@@ -219,6 +216,24 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       return Future.error(Exception("getAccount() Request error: $e"));
+    }
+  }
+
+  Future<dynamic> updatePassword(String password, String confirm) async {
+    try {
+      final response = await put(uri.replace(path: 'api/rest/account/password').toString(), {"password": password, "confirm": confirm}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+        return Future.value(true);
+      } else if (response.statusCode == 403) {
+        return Future.value(false);
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        return Future.value(apiResponse.error);
+      }
+    } catch (e) {
+      return Future.error(Exception("updatePassword() Request error: $e"));
     }
   }
 

@@ -34,156 +34,154 @@ class ChangePasswordScreen extends GetWidget<ChangePasswordController> {
         body: Container(
             width: double.maxFinite,
             padding: getPadding(top: 10, bottom: 10),
-            child: Form(
-              key: _changePasswordFormKey,
-              child: SingleChildScrollView(
-                child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Container(
-                    color: ColorConstant.whiteA700,
-                    padding:getPadding(
-                      left: 20,
-                      top: 32,
-                      right: 20,
-                      bottom: 14,
-                    ),
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+            child: StreamBuilder(
+              stream: controller.errors.stream,
+              builder: (context, snapshot) {
+                return Form(
+                  key: _changePasswordFormKey,
+                  child: SingleChildScrollView(
+                    child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Container(
+                        color: ColorConstant.whiteA700,
+                        padding:getPadding(
+                          left: 20,
+                          top: 32,
+                          right: 20,
+                          bottom: 14,
+                        ),
+                        child: Column(
                           children: [
-                            Text(
-                              "lbl_new_password".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtBodyBlack900,
-                            ),
-                            CustomTextFormField(
-                              // focusNode: FocusNode(),
-                              controller: controller.profilePassword,
-                              hintText: "msg_enter_new_password".tr,
-                              margin: getMargin(
-                                top: 8,
-                              ),
-                              textInputType: TextInputType.visiblePassword,
-                              validator: (value) {
-                                //|| (!isValidPassword(value, isRequired: true))
-                                if (value == null) {
-                                  return "Please enter valid password";
-                                }
-                                return null;
-                              },
-                              suffix: Container(
-                                margin: getMargin(
-                                  left: 12,
-                                  top: 12,
-                                  right: 16,
-                                  bottom: 12,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "lbl_new_password".tr,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtBodyBlack900,
                                 ),
-                                child: SizedBox(),
-                              ),
-                              suffixConstraints: BoxConstraints(
-                                  maxHeight: getVerticalSize(
-                                    48,
+                                CustomTextFormField(
+                                  // focusNode: FocusNode(),
+                                  errorText: controller.errors.value.length > 0 ? controller.errors.value : null,
+                                  controller: controller.profilePassword,
+                                  hintText: "msg_enter_new_password".tr,
+                                  margin: getMargin(
+                                    top: 8,
                                   ),
-                                  minHeight: getVerticalSize(
-                                    48,
-                                  )),
-                              isObscureText: true,
+                                  textInputType: TextInputType.visiblePassword,
+                                  validator: (value) {
+                                    //|| (!isValidPassword(value, isRequired: true))
+                                    if (value == null) {
+                                      return "Please enter valid password";
+                                    }
+                                    return null;
+                                  },
+                                  suffix: Container(
+                                    margin: getMargin(
+                                      left: 12,
+                                      top: 12,
+                                      right: 16,
+                                      bottom: 12,
+                                    ),
+                                    child: SizedBox(),
+                                  ),
+                                  suffixConstraints: BoxConstraints(
+                                      maxHeight: getVerticalSize(
+                                        48,
+                                      ),
+                                      minHeight: getVerticalSize(
+                                        48,
+                                      )),
+                                  isObscureText: true,
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: getPadding(
+                                top: 24,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "msg_confirm_password".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtBodyBlack900,
+                                  ),
+                                  CustomTextFormField(
+                                    // focusNode: FocusNode(),
+                                    controller: controller.profilePasswordConfirm,
+                                    hintText: "msg_enter_confirm_password".tr,
+                                    margin: getMargin(
+                                      top: 8,
+                                    ),
+                                    textInputAction: TextInputAction.done,
+                                    textInputType: TextInputType.visiblePassword,
+                                    validator: (value) {
+                                      if (value == null && controller.profilePassword.text == value) {
+                                        return "Please enter valid password";
+                                      }
+                                      return null;
+                                    },
+                                    suffix: Container(
+                                      margin: getMargin(
+                                        left: 12,
+                                        top: 12,
+                                        right: 16,
+                                        bottom: 12,
+                                      ),
+                                      child: SizedBox(),
+                                    ),
+                                    suffixConstraints: BoxConstraints(
+                                        maxHeight: getVerticalSize(
+                                          48,
+                                        ),
+                                        minHeight: getVerticalSize(
+                                          48,
+                                        )),
+                                    isObscureText: true,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: getPadding(
-                            top: 24,
+                      ),
+                      Container(
+                        padding: getPadding(
+                          left: 20,
+                          right: 20,
+                          bottom: 14,
+                        ),
+                        color: ColorConstant.whiteA700,
+                        child: CustomButton(
+                          onTap: () async {
+                            if (_changePasswordFormKey.currentState!.validate()) {
+                              bool isSuccessful = await controller.updatePassword();
+                              if (isSuccessful) {
+                                Get.back();
+                              } else {
+                                print("updatePassword errors: ${controller.errors}");
+                              }
+                            }
+                          },
+                          height: getVerticalSize(
+                            48,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "msg_confirm_password".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: AppStyle.txtBodyBlack900,
-                              ),
-                              CustomTextFormField(
-                                // focusNode: FocusNode(),
-                                controller: controller.profilePasswordConfirm,
-                                hintText: "msg_enter_confirm_password".tr,
-                                margin: getMargin(
-                                  top: 8,
-                                ),
-                                textInputAction: TextInputAction.done,
-                                textInputType: TextInputType.visiblePassword,
-                                validator: (value) {
-                                  if (value == null && controller.profilePassword.text == value) {
-                                    return "Please enter valid password";
-                                  }
-                                  return null;
-                                },
-                                suffix: Container(
-                                  margin: getMargin(
-                                    left: 12,
-                                    top: 12,
-                                    right: 16,
-                                    bottom: 12,
-                                  ),
-                                  child: SizedBox(),
-                                ),
-                                suffixConstraints: BoxConstraints(
-                                    maxHeight: getVerticalSize(
-                                      48,
-                                    ),
-                                    minHeight: getVerticalSize(
-                                      48,
-                                    )),
-                                isObscureText: true,
-                              ),
-                            ],
+                          text: "lbl_change_password".tr,
+                          margin: getMargin(
+                            top: 36,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: getPadding(
-                      left: 20,
-                      right: 20,
-                      bottom: 14,
-                    ),
-                    color: ColorConstant.whiteA700,
-                    child: CustomButton(
-                      onTap: () async {
-                        if (_changePasswordFormKey.currentState!.validate()) {
-                          /*
-                          bool isSuccessful = await controller.register();
-                          if (isSuccessful) {
-                            Get.find<AuthController>().personalDataModel.value = controller.registerResult.value;
-                            Get.toNamed(AppRoutes.homeScreenContainerScreen);
-                          } else {
-                            print("Register errors: ${controller.registerResult.value}");
-                          }
-
-                          /*
-                                PrefUtils.setLogin(true);
-                                Get.toNamed(AppRoutes.homeScreenContainerScreen);
-                                 */
-                           */
-                        }
-                      },
-                      height: getVerticalSize(
-                        48,
                       ),
-                      text: "lbl_change_password".tr,
-                      margin: getMargin(
-                        top: 36,
-                      ),
-                    ),
-                  ),
 
-                ]),
-              ),
+                    ]),
+                  ),
+                );
+              }
             )),
       ),
     );

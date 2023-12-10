@@ -117,6 +117,7 @@ final Map<String, String> enUs = {
   "lbl_logout": "Logout",
   "lbl_disable_account": "Disable Account",
   "msg_didn_t_have_an_account2": "Didn’t have an account?",
+  "msg_have_an_account": "Do you have an account?",
   "msg_varification_code": "Varification Code",
   "lbl_colors": "Colors",
   "lbl_select_address": "Select Address",

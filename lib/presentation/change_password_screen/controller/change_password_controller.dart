@@ -14,6 +14,19 @@ class ChangePasswordController extends GetxController {
 
   TextEditingController profilePasswordConfirm = TextEditingController();
 
+  Rx<String> errors = "".obs;
+
+  Future<bool> updatePassword() async {
+    errors.value = "";
+    final result = await apiClient.updatePassword(profilePassword.text, profilePasswordConfirm.text);
+    print("RUNTIME: ${result} | ${result.runtimeType}");
+    if (result.runtimeType == bool && result == true) {
+      return true;
+    }
+    errors.value = (result as List).first;
+    return false;
+  }
+
   @override
   void onReady() {
     super.onReady();
