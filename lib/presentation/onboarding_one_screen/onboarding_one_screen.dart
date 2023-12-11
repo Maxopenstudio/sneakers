@@ -64,40 +64,49 @@ class OnboardingOneScreen extends GetWidget<OnboardingOneController> {
                       OnboardingOneModel model = controller.onboardingList[index];
                       return Column(
                         children: [
-                          CustomImageView(
-                            height: getVerticalSize(
-                              367,
+                          Expanded(
+                            flex: 9,
+                            child: CustomImageView(
+                              height: getVerticalSize(
+                                367,
+                              ),
+                              width: getHorizontalSize(
+                                375,
+                              ),
+                              margin: getMargin(
+                                top: 81,
+                              ),
+                              imagePath: ImageConstant.imagePath + model.image,
+                              fit: BoxFit.fill,
                             ),
-                            width: getHorizontalSize(
-                              375,
-                            ),
-                            margin: getMargin(
-                              top: 81,
-                            ),
-                            imagePath: ImageConstant.imagePath + model.image,
-                            fit: BoxFit.fill,
                           ),
                           SizedBox(height: getVerticalSize(71)),
-                          Padding(
-                            padding: getPadding(left: 43, right: 43),
-                            child: Text(
-                              model.name,
-                              maxLines: null,
-                              textAlign: TextAlign.center,
-                              style: AppStyle.txtSFUITextSemibold27,
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: getPadding(left: 43, right: 43),
+                              child: Text(
+                                model.name,
+                                maxLines: null,
+                                textAlign: TextAlign.center,
+                                style: AppStyle.txtSFUITextSemibold27,
+                              ),
                             ),
                           ),
                           SizedBox(height: getVerticalSize(16)),
-                          Container(
-                            margin: getMargin(
-                              left: 24,
-                              right: 24,
-                            ),
-                            child: Text(
-                              model.description,
-                              maxLines: null,
-                              textAlign: TextAlign.center,
-                              style: AppStyle.txtBody,
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: getMargin(
+                                left: 24,
+                                right: 24,
+                              ),
+                              child: Text(
+                                model.description,
+                                maxLines: null,
+                                textAlign: TextAlign.center,
+                                style: AppStyle.txtBody,
+                              ),
                             ),
                           ),
                           // SizedBox(height: getVerticalSize(56)),

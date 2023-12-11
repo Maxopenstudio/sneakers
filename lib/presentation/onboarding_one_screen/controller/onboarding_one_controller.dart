@@ -16,9 +16,9 @@ class OnboardingOneController extends GetxController {
   }
 
   List<OnboardingOneModel> onboardingList = [
-    new OnboardingOneModel("image1.png", "Get notified when new stock arrival", "Never miss a drop of your sneakers’s drop! our app provides a release calender with seccude."),
-    new OnboardingOneModel("image2.png", "Best collection of sparx of the drop", "Never miss a drop of your sneakers’s drop! our app provides a release calender with seccude."),
-    new OnboardingOneModel("image3.png", "Get Your Next a drop Kicks Now!", "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit official.")
+    new OnboardingOneModel("image1.png", "msg_get_notified_when".tr, "msg_never_miss_a_drop".tr),
+    new OnboardingOneModel("image2.png", "msg_best_collection".tr, "msg_never_miss_a_drop".tr),
+    new OnboardingOneModel("image3.png", "msg_get_your_next_a".tr, "msg_amet_minim_mollit".tr)
   ];
 
   @override

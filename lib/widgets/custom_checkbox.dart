@@ -79,8 +79,8 @@ class CustomCheckbox extends StatelessWidget {
   Widget getTextWidget() {
     return Text(
       text ?? "",
-      textAlign: TextAlign.center,
       style: _setFontStyle(),
+      maxLines: 2,
     );
   }
 
@@ -106,6 +106,7 @@ class CustomCheckbox extends StatelessWidget {
     switch (fontStyle) {
       default:
         return TextStyle(
+
           color: ColorConstant.black900,
           fontSize: getFontSize(
             15,
