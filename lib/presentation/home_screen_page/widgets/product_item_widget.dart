@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
 
+import '../../../data/apiClient/api_client.dart';
+import '../../../data/products_controller/products_controller.dart';
 import '../models/product_model.dart';
 
 // ignore: must_be_immutable
 class ProductItemWidget extends StatelessWidget {
-  const ProductItemWidget(this.product);
+   ProductItemWidget(
+    this.product,
+  );
 
   final ProductModel product;
+
+  final ProductsController productsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,12 @@ class ProductItemWidget extends StatelessWidget {
                               product.priceFormated,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
-                              style: product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
+                              style: product.special != 0
+                                  ? AppStyle.txtSFUITextRegular15Gray60001
+                                      .copyWith(
+                                          decoration:
+                                              TextDecoration.lineThrough)
+                                  : AppStyle.txtSFUITextRegular15Black900,
                             ),
                           ),
                         ],
@@ -89,12 +100,16 @@ class ProductItemWidget extends StatelessWidget {
                       fit: BoxFit.fitWidth,
                     ),
                     Positioned(
-                      right: 4, top: 4,
-                      child: CustomIconButton(
-                        height: 24,
-                        width: 24,
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgFavorite,
+                      right: 4,
+                      top: 4,
+                      child: Obx(()=>
+                         CustomIconButton(
+                          height: 24,
+                          width: 24,
+                          onTap: favorite,
+                          child: CustomImageView(
+                            svgPath: productsController.isProductInFavorites(product.productId) ? ImageConstant.imgFavoriteBlack900 : ImageConstant.imgFavorite,
+                          ),
                         ),
                       ),
                     ),
@@ -107,4 +122,10 @@ class ProductItemWidget extends StatelessWidget {
       ),
     );
   }
+   Future<void>favorite() async {
+     await productsController.addOrDeleteFavoriteProduct(product.productId);
+     productsController.favoriteProducts.value =  (await productsController.apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
+
+     print("ProductDetailScreen add/rem favorite");
+   }
 }

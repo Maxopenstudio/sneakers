@@ -1,6 +1,7 @@
 //ignore: unused_import
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoes_app/core/app_export.dart';
@@ -30,6 +31,9 @@ class PrefUtils {
   static String isLogin = prefName + "ttsIsLogin";
   static String sessionId = prefName + "ttsSessionId";
   static String savedCookie = prefName + "ttsCookie";
+
+  //Todo what is that?
+  static const String languageKey = 'language_key';
 
   static getIsIntro() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -79,5 +83,24 @@ class PrefUtils {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(savedCookie, cookie.toString());
     print("SET COOKIE: ${cookie.toString()}");
+  }
+
+  static Future<Locale?> onChangeLanguage(Locale locale) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(languageKey, locale.languageCode);
+    String? value = prefs.getString(languageKey) ?? null;
+    if (value != null) {
+      print("Language: ${value}");
+      return Locale(value);
+    } else {
+      return Locale('en', 'US');
+    }
+  }
+
+  static Future<Locale?> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final language = prefs.getString(languageKey);
+    print(language);
+    return await Locale(language ?? Get.deviceLocale!.languageCode);
   }
 }

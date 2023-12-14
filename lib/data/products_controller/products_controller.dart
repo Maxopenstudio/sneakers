@@ -10,6 +10,7 @@ class ProductsController extends GetxController {
 
   RxList<ProductModel> allProducts = List<ProductModel>.empty().obs;
   RxList<ProductModel> featuredProducts = List<ProductModel>.empty().obs;
+  RxList<ProductModel> favoriteProducts = List<ProductModel>.empty().obs;
 
   ProductModel getProductById(int productId) => allProducts.firstWhere((product) => product.productId == productId);
 
@@ -43,6 +44,20 @@ class ProductsController extends GetxController {
       case FilterMode.priceLow:
         filteredProducts.sort((a, b) => a.price.compareTo(b.price));
         return filteredProducts;
+    }
+  }
+  bool isProductInFavorites(int productId) {
+    return favoriteProducts.any((product) => product.productId == productId);
+  }
+  Future<void> addOrDeleteFavoriteProduct(int productId) async {
+    try {
+      if (!isProductInFavorites(productId)) {
+        await apiClient.addFavoriteProducts(productId);
+      } else {
+        await apiClient.removeFavoriteProducts(productId);
+      }
+    } catch (e) {
+      print("Problem in ProductsController - $e");
     }
   }
 

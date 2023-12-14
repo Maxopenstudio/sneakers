@@ -280,5 +280,10 @@ final Map<String, String> ukUa = {
   "msg_4517_washington": "4517 Вашингтон аве. Манчестер, Кентуккі 39495",
   "lbl_28_00": "\$28.00",
   "lbl_foot_ball": "Футбол",
-  "msg_delivery_address": "Адреса доставки"
+  "msg_delivery_address": "Адреса доставки",
+"lbl_update_profile": "Оновити профіль",
+"lbl_change_password": "Змінити пароль",
+  "lbl_new_password": "Новий пароль",
+  "lbl_logout": "Вийти",
+  "lbl_disable_account": "Деактивувати акаунт",
 };

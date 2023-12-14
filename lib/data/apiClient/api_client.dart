@@ -250,4 +250,48 @@ class ApiClient extends GetConnect {
       return Future.error(Exception("logout() Request error: $e"));
     }
   }
+
+  Future<List<int>> getFavoriteProducts() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/wishlist').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("favorite.body: ${response.body}");
+        return Future.value((((apiResponse.data) as List).map((product) {
+           print("favorite product - ${product["product_id"]}");
+          return int.parse(product["product_id"] as String);
+        }).toList()));
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(Exception("getFavoriteProducts() Request error: $e"));
+    }
+  }
+  Future<void> addFavoriteProducts(int productId) async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/wishlist/$productId').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print('Product with ID $productId added to favorites.');
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("addFavoriteProducts($productId) Request error: $e");
+    }
+  }
+  Future<void> removeFavoriteProducts(int productId) async {
+    try {
+      final response = await delete(uri.replace(path: 'api/rest/wishlist/$productId').toString(),headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print('Product with ID $productId deleted from favorites.');
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("removeFavoriteProducts($productId) Request error: $e");
+    }
+  }
 }
