@@ -50,6 +50,7 @@ class FeaturedProductsScreen extends GetWidget<ProductsController> {
           child: Padding(
             padding: getPadding(left: 20, top: 15, right: 20),
             child: StreamBuilder(stream: filterController.filterMode.stream, builder: (_,__) {
+              print("StreamBuilder - on FeaturedProductsScreen");
               List<ProductModel> featuredProducts = controller.featuredProducts.map((product) => controller.getProductById(product.productId)).toList();
               featuredProducts = ProductsController.filterProducts(featuredProducts, filterController.filterMode.value);
               return GridView.builder(

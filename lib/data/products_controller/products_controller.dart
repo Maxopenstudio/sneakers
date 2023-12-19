@@ -10,13 +10,17 @@ class ProductsController extends GetxController {
 
   RxList<ProductModel> allProducts = List<ProductModel>.empty().obs;
   RxList<ProductModel> featuredProducts = List<ProductModel>.empty().obs;
+  RxList<ProductModel> favoriteProducts = List<ProductModel>.empty().obs;
 
-  ProductModel getProductById(int productId) => allProducts.firstWhere((product) => product.productId == productId);
+  ProductModel getProductById(int productId) =>
+      allProducts.firstWhere((product) => product.productId == productId);
 
-  List<ProductModel> getProductsByCategory(int categoryId, {FilterMode? filterMode}) {
+  List<ProductModel> getProductsByCategory(int categoryId,
+      {FilterMode? filterMode}) {
     List<ProductModel> categoryProducts = List.empty(growable: true);
     allProducts.forEach((product) {
-      bool categoryIsMatch = product.category!.any((category) => category.id == categoryId);
+      bool categoryIsMatch =
+          product.category!.any((category) => category.id == categoryId);
       if (categoryIsMatch) {
         categoryProducts.add(product);
       }
@@ -43,6 +47,20 @@ class ProductsController extends GetxController {
       case FilterMode.priceLow:
         filteredProducts.sort((a, b) => a.price.compareTo(b.price));
         return filteredProducts;
+    }
+  }
+  bool isProductInFavorites(int productId) {
+    return favoriteProducts.any((product) => product.productId == productId);
+  }
+  Future<void> addOrDeleteFavoriteProduct(int productId) async {
+    try {
+      if (!isProductInFavorites(productId)) {
+        await apiClient.addFavoriteProduct(productId);
+      } else {
+        await apiClient.removeFavoriteProduct(productId);
+      }
+    } catch (e) {
+      print("Problem in ProductsController - $e");
     }
   }
 

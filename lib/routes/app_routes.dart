@@ -68,6 +68,8 @@ import 'package:shoes_app/presentation/varification_code_screen/binding/varifica
 import 'package:shoes_app/presentation/varification_code_screen/varification_code_screen.dart';
 
 import '../presentation/category_products_screen/category_products_screen.dart';
+import '../presentation/language_settings_page/binding/language_settings_binding.dart';
+import '../presentation/language_settings_page/language_settings_page.dart';
 
 class AppRoutes {
   static const String splaceScreenOneScreen = '/splace_screen_one_screen';
@@ -143,6 +145,8 @@ class AppRoutes {
   static const String notificationPage = '/notification_page';
 
   static const String privacyPolicyScreen = '/privacy_policy_screen';
+
+  static const String languageSettingsPage = '/language_settings_page';
 
   static const String appNavigationScreen = '/app_navigation_screen';
 
@@ -365,6 +369,13 @@ class AppRoutes {
       page: () => ProfileSettingsPage(),
       bindings: [
         ProfileSettingsBinding(),
+      ],
+    ),
+    GetPage(
+      name: languageSettingsPage,
+      page: () => LanguageSettingsPage(),
+      bindings: [
+        LanguageSettingsBinding(),
       ],
     ),
     GetPage(

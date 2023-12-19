@@ -11,15 +11,16 @@ import 'package:shoes_app/widgets/custom_button.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../data/products_controller/products_controller.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../product_detail_screen/widgets/productdetail_item_widget.dart';
+import '../cart_screen/controller/cart_controller.dart';
 import '../product_detail_screen/widgets/sliderrectangleseventyseven_item_widget.dart';
 import 'controller/product_detail_controller.dart';
 import 'models/productdetail_item_model.dart';
 
 class ProductDetailScreen extends GetWidget<ProductDetailController> {
   final ProductModel product = Get.arguments as ProductModel;
-
+  final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
     final List<String> images = [product.image!, ...?product.images];
@@ -31,7 +32,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                 height: getVerticalSize(49),
                 leadingWidth: 44,
                 leading: AppbarImage(height: getSize(24), width: getSize(24), svgPath: ImageConstant.imgArrowleftBlack900, margin: getMargin(left: 20, top: 17, bottom: 8), onTap: onTapArrowleft2),
-                actions: [AppbarImage(height: getSize(24), width: getSize(24), svgPath: ImageConstant.imgContrastWhiteA700, margin: getMargin(left: 20, right: 20, top: 17, bottom: 8))]),
+                actions: [Obx(() => AppbarImage(height: getSize(24), width: getSize(24), svgPath: productsController.isProductInFavorites(product.productId) ? ImageConstant.imgFavoriteBlack900 : ImageConstant.imgContrastWhiteA700, margin: getMargin(left: 20, right: 20, top: 17, bottom: 8), onTap:favorite,))]),
             body: Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -119,7 +120,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                         )
                                       ]),
                                     ])),
-                                if (product.description.isNotEmpty) ...[
+                                if (product.description.isEmpty) ...[
                                   Container(
                                       margin: getMargin(top: 16),
                                       child: RichText(
@@ -262,9 +263,12 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                 GetBuilder<HomeScreenContainerController>(
                   init: HomeScreenContainerController(),
                   builder: (controller) => CustomButton(
-                      onTap: () {
+                      onTap: () async {
                         controller.change(2);
                         Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                        final CartController cartController = Get.find();
+                      //  await cartController.addProductToCart(product);
+
                       },
                       height: getVerticalSize(48),
                       text: "lbl_add_to_cart".tr,
@@ -277,6 +281,12 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
   onTapArrowleft2() {
     Get.back();
   }
+  Future<void>favorite() async {
+  await productsController.addOrDeleteFavoriteProduct(product.productId);
+  productsController.favoriteProducts.value =  (await productsController.apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
+
+  print("ProductDetailScreen add/rem favorite");
+}
 
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {

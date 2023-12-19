@@ -1,6 +1,9 @@
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/product_detail_screen/models/product_detail_model.dart';
 
+import '../../../data/apiClient/api_client.dart';
+import '../../home_screen_page/models/product_model.dart';
+
 class ProductDetailController extends GetxController {
   //Rx<ProductDetailModel> productDetailModelObj = ProductDetailModel().obs;
 

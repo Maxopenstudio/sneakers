@@ -3,15 +3,22 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
 
+import '../../../data/products_controller/products_controller.dart';
 import '../controller/home_screen_controller.dart';
 import '../models/listname_item_model.dart';
 
 // ignore: must_be_immutable
-class ListnameItemWidget extends StatelessWidget {
+class ListnameItemWidget extends StatefulWidget {
   const ListnameItemWidget(this.product);
 
   final ProductModel product;
 
+  @override
+  State<ListnameItemWidget> createState() => _ListnameItemWidgetState();
+}
+
+class _ListnameItemWidgetState extends State<ListnameItemWidget> {
+  final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return IntrinsicWidth(
@@ -35,7 +42,7 @@ class ListnameItemWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: CustomImageView(
-                    url: product.image,
+                    url: widget.product.image,
                     height: getVerticalSize(
                       208,
                     ),
@@ -68,7 +75,7 @@ class ListnameItemWidget extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                product.name,
+                                widget.product.name,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtHeadline,
@@ -77,8 +84,14 @@ class ListnameItemWidget extends StatelessWidget {
                             CustomIconButton(
                               height: 24,
                               width: 24,
+                              onTap: () async {
+                                await productsController.addOrDeleteFavoriteProduct(widget.product.productId);
+                                productsController.favoriteProducts.value =  (await productsController.apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
+
+                                print("favoriteProducts.length - ${productsController.favoriteProducts.length}");
+                              },
                               child: CustomImageView(
-                                svgPath: ImageConstant.imgFavorite,
+                                svgPath: productsController.isProductInFavorites(widget.product.productId) ? ImageConstant.imgFavoriteBlack900 : ImageConstant.imgFavorite,
                               ),
                             ),
                           ],
@@ -95,17 +108,17 @@ class ListnameItemWidget extends StatelessWidget {
                                   top: 3,
                                 ),
                                 child: Text(
-                                  product.priceFormated,
+                                  widget.product.priceFormated,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
-                                  style: product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
+                                  style: widget.product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
                                 ),
                               ),
-                              if (product.special != 0) ...[
+                              if (widget.product.special != 0) ...[
                                 Padding(
                                   padding: getPadding(top: 3, right: 6),
                                   child: Text(
-                                    product.specialFormated,
+                                    widget.product.specialFormated,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFUITextRegular15Black900,

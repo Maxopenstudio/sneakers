@@ -11,12 +11,10 @@ import 'package:shoes_app/widgets/custom_text_form_field.dart';
 import '../cart_screen/widgets/cart_item_widget.dart';
 import '../home_screen_container_screen/controller/home_screen_container_controller.dart';
 import 'controller/cart_controller.dart';
-import 'models/cart_item_model.dart';
-import 'models/cart_model.dart';
+import 'models/cart_product_model.dart';
 
-class CartScreen extends StatelessWidget {
-  CartController controller = Get.put(CartController(CartModel().obs));
-
+class CartScreen extends GetWidget<CartController> {
+ // final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +35,9 @@ class CartScreen extends StatelessWidget {
                         controller.change(0);
                       }),
                 ),
-                title: AppbarTitle(text: "lbl_cart".tr, margin: getMargin(left: 16, top: 16, bottom: 16)),
+                title: AppbarTitle(
+                    text: "lbl_cart".tr,
+                    margin: getMargin(left: 16, top: 16, bottom: 16)),
                 styleType: Style.bgFillWhiteA700),
             body: Stack(
               alignment: Alignment.bottomCenter,
@@ -47,56 +47,163 @@ class CartScreen extends StatelessWidget {
                     padding: getPadding(top: 10),
                     child: ListView(
                       children: [
-                        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Obx(() => ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) {
-                                return SizedBox(height: getVerticalSize(10));
-                              },
-                              itemCount: controller.cartModelObj.value.cartItemList.length,
-                              itemBuilder: (context, index) {
-                                CartItemModel model = controller.cartModelObj.value.cartItemList[index];
-                                return CartItemWidget(model, index);
-                              })),
-                          Container(
-                              width: double.maxFinite,
-                              child: Container(
-                                  margin: getMargin(top: 10, bottom: 100),
-                                  padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
-                                  decoration: AppDecoration.white,
-                                  child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                                    CustomTextFormField(
-                                      // focusNode: FocusNode(),
-                                      controller: controller.group169Controller,
-                                      hintText: "lbl_enter_coupon".tr,
-                                      margin: getMargin(bottom: 6),
-                                      textInputAction: TextInputAction.done,
-                                      suffix: CustomButton(
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.couponScreen);
-                                          },
-                                          margin: getMargin(right: 8, top: 1, bottom: 1),
-                                          height: getVerticalSize(36),
-                                          width: getHorizontalSize(141),
-                                          text: "lbl_apply_coupon".tr,
-                                          padding: ButtonPadding.PaddingAll6,
-                                          fontStyle: ButtonFontStyle.SFUITextSemibold14WhiteA700),
-                                      suffixConstraints: BoxConstraints(
-                                        maxHeight: getVerticalSize(
-                                          36,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(top: 16),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_item_total".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text("lbl_43_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)]),
-                                    ),
-                                    Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_discount".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text("lbl_2_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                    Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_delivery_free".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text("lbl_0_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                    Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_subtotal".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline), Text("lbl_41_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)]))
-                                  ]))),
-                        ]),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Obx(() {
+                                List<CartProductModel> cartProducts = controller.cartProducts.map((product) => controller.getProductByKey(int.parse(product.key))).toList();
+                                print("on cart screen cartProducts - ${cartProducts.length}");
+                                return ListView.separated(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                          height: getVerticalSize(10));
+                                    },
+                                    itemCount: cartProducts.length,
+                                    itemBuilder: (context, index) {
+                                      CartProductModel model =
+                                         cartProducts[index];
+                                       return CartItemWidget(model, index,);
+                                    });
+                              }),
+                              Container(
+                                  width: double.maxFinite,
+                                  child: Container(
+                                      margin: getMargin(top: 10, bottom: 100),
+                                      padding: getPadding(
+                                          left: 20,
+                                          top: 16,
+                                          right: 20,
+                                          bottom: 16),
+                                      decoration: AppDecoration.white,
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            CustomTextFormField(
+                                              // focusNode: FocusNode(),
+                                              // controller:
+                                              //     controller.group169Controller,
+                                              hintText: "lbl_enter_coupon".tr,
+                                              margin: getMargin(bottom: 6),
+                                              textInputAction:
+                                                  TextInputAction.done,
+                                              suffix: CustomButton(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                        AppRoutes.couponScreen);
+                                                  },
+                                                  margin: getMargin(
+                                                      right: 8,
+                                                      top: 1,
+                                                      bottom: 1),
+                                                  height: getVerticalSize(36),
+                                                  width: getHorizontalSize(141),
+                                                  text: "lbl_apply_coupon".tr,
+                                                  padding:
+                                                      ButtonPadding.PaddingAll6,
+                                                  fontStyle: ButtonFontStyle
+                                                      .SFUITextSemibold14WhiteA700),
+                                              suffixConstraints: BoxConstraints(
+                                                maxHeight: getVerticalSize(
+                                                  36,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: getPadding(top: 16),
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text("lbl_item_total".tr,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: AppStyle
+                                                            .txtBodyBlack900),
+                                                    Text("lbl_43_00".tr,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: AppStyle
+                                                            .txtBodyBlack900)
+                                                  ]),
+                                            ),
+                                            Padding(
+                                                padding: getPadding(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text("lbl_discount".tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtBodyBlack900),
+                                                      Text("lbl_2_00".tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtBodyBlack900)
+                                                    ])),
+                                            Padding(
+                                                padding: getPadding(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                          "lbl_delivery_free"
+                                                              .tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtBodyBlack900),
+                                                      Text("lbl_0_00".tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtBodyBlack900)
+                                                    ])),
+                                            Padding(
+                                                padding: getPadding(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text("lbl_subtotal".tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtHeadline),
+                                                      Text("lbl_41_00".tr,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: AppStyle
+                                                              .txtBodyBlack900)
+                                                    ]))
+                                          ]))),
+                            ]),
                       ],
                     )),
                 CustomButton(
