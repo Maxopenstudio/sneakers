@@ -13,6 +13,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../data/products_controller/products_controller.dart';
 import '../../widgets/custom_bottom_bar.dart';
+import '../cart_screen/controller/cart_controller.dart';
 import '../product_detail_screen/widgets/sliderrectangleseventyseven_item_widget.dart';
 import 'controller/product_detail_controller.dart';
 import 'models/productdetail_item_model.dart';
@@ -119,7 +120,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                                         )
                                       ]),
                                     ])),
-                                if (product.description.isNotEmpty) ...[
+                                if (product.description.isEmpty) ...[
                                   Container(
                                       margin: getMargin(top: 16),
                                       child: RichText(
@@ -262,9 +263,12 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                 GetBuilder<HomeScreenContainerController>(
                   init: HomeScreenContainerController(),
                   builder: (controller) => CustomButton(
-                      onTap: () {
+                      onTap: () async {
                         controller.change(2);
                         Get.toNamed(AppRoutes.homeScreenContainerScreen);
+                        final CartController cartController = Get.find();
+                      //  await cartController.addProductToCart(product);
+
                       },
                       height: getVerticalSize(48),
                       text: "lbl_add_to_cart".tr,

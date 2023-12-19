@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shoes_app/core/utils/pref_utils.dart';
 import 'package:shoes_app/data/apiClient/api_client.dart';
 
+import '../../presentation/cart_screen/controller/cart_controller.dart';
 import '../products_controller/products_controller.dart';
 import 'models/personal_data_model.dart';
 
@@ -23,8 +24,12 @@ class AuthController extends GetxController {
         PrefUtils.setLogin(true);
         final productsController =  Get.find<ProductsController>();
         productsController.favoriteProducts.value =  (await apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
-
+        final cartController = Get.find<CartController>();
+        final fetchedCartProducts = (await apiClient.fetchCart()).products;
+        cartController.cartProducts.value = fetchedCartProducts;
+        print("cartProducts.length(Auth) - ${cartController.cartProducts.length}");
         print("favoriteProducts.length - ${productsController.favoriteProducts.length}");
+
       } else {
         print("SET LOGOUT");
         PrefUtils.setLogin(false);
