@@ -96,12 +96,12 @@ class CartItemWidget extends StatelessWidget {
                         top: 6,
                       ),
                     ),
-                    Padding(
+                    if(productModel.options.isNotEmpty)Padding(
                       padding: getPadding(
                         top: 6,
                       ),
                       child: Text(
-                        "${productModel.options.first.name} : ${productModel.options.first.value}",
+                        "${productModel.options.first.name??''} : ${productModel.options.first.value??''}",
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         style: AppStyle.txtSFUITextRegular15Black900,
