@@ -365,20 +365,36 @@ class ApiClient extends GetConnect {
       throw Exception("removeFavoriteProducts($productId) Request error: $e");
     }
   }
-
-  Future<Cart> fetchCart() async {
+  Future<List<CartProductModel>> fetchCart() async {
     try {
       final response = await get(
         uri.replace(path: 'api/rest/cart').toString(),
         headers: HeadersConstants.common(
-            merchantID, sessionID.value, cookie.toString()),
+          merchantID,
+          sessionID.value,
+          cookie.toString(),
+        ),
       );
+
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        print(response.body);
-        final Cart cart = Cart.fromJson(apiResponse.data);
-        print("fetchCart products - ${cart.products.length}");
-        return cart;
+        print("fetchCart - ${response.body}");
+        final dynamic responseData = apiResponse.data;
+
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('products') &&
+            responseData['products'] is List) {
+          List<dynamic> productsData = responseData['products'] as List<dynamic>;
+          List<CartProductModel> cartProducts = productsData
+              .map<CartProductModel>((product) => CartProductModel.fromJson(product))
+              .toList();
+
+          print("fetchCart products - ${cartProducts.length}");
+          return cartProducts;
+        } else {
+          print("fetchCart products - empty");
+          return <CartProductModel>[];
+        }
       } else {
         throw Exception(apiResponse.error);
       }
@@ -424,6 +440,29 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       throw Exception("changeCartProductQuantity() Request error: $e");
+    }
+  }
+  Future<void> addProductCart(int productId, int quantity, int productOptionId, int productOptionValueId) async {
+    try {
+      final Map<String, dynamic> requestBody = {
+        'product_id': productId.toString(),
+        'quantity': quantity.toString(),
+        'option':{
+          productOptionId.toString():productOptionValueId.toString()
+        }
+      };
+      final postUri = uri.replace(path: 'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
+      final response = await post(postUri.toString(), json.encode(requestBody),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print('Product with key $productId added to cart.');
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("addProductCart() Request error: $e");
     }
   }
 

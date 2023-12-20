@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/cart_screen/models/cart_product_model.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
+import '../../../data/products_controller/products_controller.dart';
 import '../controller/cart_controller.dart';
 
 // ignore: must_be_immutable
 class CartItemWidget extends StatelessWidget {
   CartItemWidget(
     this.productModel,
-    this.index,
   );
 
   CartProductModel productModel;
-  int index;
-  final CartController productsController = Get.find();
- // final ProductsController productsController = Get.find();
+  final CartController cartController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -115,13 +113,11 @@ class CartItemWidget extends StatelessWidget {
               Spacer(),
               Container(
                 margin: getMargin(top: 50, right: 8, bottom: 8),
-                child: GetBuilder<CartController>(
-                  init: productsController,
-                  builder: (controller) => Row(
+                child: Row(
                     children: [
                       CustomIconButton(
-                        onTap: () {
-                          // controller.removeQuantity(index);
+                        onTap: () async {
+                          await cartController.removeQuantity(int.parse(productModel.key), int.parse(productModel.quantity));
                         },
                         height: 32,
                         width: 32,
@@ -141,8 +137,8 @@ class CartItemWidget extends StatelessWidget {
                         ),
                       ),
                       CustomIconButton(
-                        onTap: () {
-                          //  controller.addQuantity(index);
+                        onTap: () async {
+                          await cartController.addQuantity(int.parse(productModel.key), int.parse(productModel.quantity));
                         },
                         height: 32,
                         width: 32,
@@ -157,7 +153,6 @@ class CartItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
               ),
             ],
           ),
@@ -175,10 +170,7 @@ class CartItemWidget extends StatelessWidget {
     );
   }
   Future<void>removeCartProduct() async {
-    await productsController.addOrDeleteCartProduct(int.parse(productModel.key));
-    final fetchedCartProducts = (await productsController.apiClient.fetchCart()).products;
-    productsController.cartProducts.value = fetchedCartProducts;
-
+    await cartController.deleteCartProduct(int.parse(productModel.key));
     print("ProductDetailScreen add/rem favorite");
   }
 }

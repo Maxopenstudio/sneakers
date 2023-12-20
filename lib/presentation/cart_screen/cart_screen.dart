@@ -14,7 +14,7 @@ import 'controller/cart_controller.dart';
 import 'models/cart_product_model.dart';
 
 class CartScreen extends GetWidget<CartController> {
-  // final ProductsController productsController = Get.find();
+ // final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,14 +51,8 @@ class CartScreen extends GetWidget<CartController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Obx(() {
-                                List<CartProductModel> cartProducts = controller
-                                    .cartProducts
-                                    .map((product) =>
-                                        controller.getProductByKey(
-                                            int.parse(product.key)))
-                                    .toList();
-                                print(
-                                    "on cart screen cartProducts - ${cartProducts.length}");
+                                List<CartProductModel> cartProducts = controller.cartProducts.map((product) => controller.getProductByKey(int.parse(product.key))).toList();
+                                print("on cart screen cartProducts - ${cartProducts.length}");
                                 return ListView.separated(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
@@ -66,14 +60,11 @@ class CartScreen extends GetWidget<CartController> {
                                       return SizedBox(
                                           height: getVerticalSize(10));
                                     },
-                                    itemCount: cartProducts.length,
+                                    itemCount:cartProducts.isNotEmpty ? cartProducts.length : 0,
                                     itemBuilder: (context, index) {
                                       CartProductModel model =
-                                          cartProducts[index];
-                                      return CartItemWidget(
-                                        model,
-                                        index,
-                                      );
+                                      cartProducts[index];
+                                      return CartItemWidget(model);
                                     });
                               }),
                               Container(

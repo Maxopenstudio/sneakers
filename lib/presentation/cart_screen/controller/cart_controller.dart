@@ -30,11 +30,51 @@ class CartController extends GetxController {
     }
   }
 
-  Future<void> addOrDeleteCartProduct(int productKey) async {
+  Future<void> deleteCartProduct(int productKey) async {
     try {
       await apiClient.removeProductFromCart(productKey);
+      print('delete product from cart  with product key $productKey');
+      cartProducts.value = (await apiClient.fetchCart());
+      print('fetch new product');
     } catch (e) {
       print("Problem in CartController - $e");
+    }
+  }
+  Future<void> addQuantity(int productKey, int quantity,
+      //TODO - maxQuantity
+      {int maxQuantity = 100}) async {
+    if(quantity < maxQuantity){
+      try {
+        await quantity++;
+        await apiClient.changeCartProductQuantity(productKey, quantity);
+        final fetchedCartProducts = (await apiClient.fetchCart());
+        cartProducts.value = fetchedCartProducts;
+      } catch (e) {}
+    }
+    else{
+      print("maxQuantity = 100");
+    }
+  }
+
+  Future<void> removeQuantity(
+    int productKey,
+    int quantity,
+  ) async {
+      try {
+        await quantity--;
+        await apiClient.changeCartProductQuantity(productKey, quantity);
+        final fetchedCartProducts = (await apiClient.fetchCart());
+        cartProducts.value = fetchedCartProducts;
+      } catch (e) {}
+  }
+  Future<void> addProductInCart(int productId, int quantity, int productOptionId, int productOptionValueId) async {
+    try {
+      await apiClient.addProductCart(productId, quantity, productOptionId, productOptionValueId);
+      cartProducts.value = (await apiClient.fetchCart());
+      print("product with productId:$productId, quantity: $quantity, productOptionId: $productOptionId, productOptionValueId - $productOptionValueId added");
+    } catch (e) {
+      print("Problem in CartController - $e");
+      print("Problem in addProductInCart - $e");
     }
   }
 
