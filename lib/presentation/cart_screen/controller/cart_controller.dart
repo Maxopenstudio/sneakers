@@ -10,20 +10,34 @@ class CartController extends GetxController {
   final ApiClient apiClient;
   TextEditingController group169Controller = TextEditingController();
   RxList<CartProductModel> cartProducts = List<CartProductModel>.empty().obs;
+  Rx<String?> errors = "".obs;
 
   bool isProductInCart(int productKey) {
     return cartProducts.any((product) => int.parse(product.key) == productKey);
   }
 
-  CartProductModel getProductByKey(int productKey) => cartProducts.firstWhere((product) => int.parse(product.key) == productKey);
+  CartProductModel getProductByKey(int productKey) => cartProducts
+      .firstWhere((product) => int.parse(product.key) == productKey);
+
+  Future<void> addCoupon() async {
+    try {
+      await apiClient.addCoupon(coupon: group169Controller.text);
+    } catch (e) {
+      print("Problem in CartController - $e");
+      var val = e.toString();
+      errors.value = val;
+
+    }
+  }
 
   Future<void> addOrDeleteCartProduct(int productKey) async {
     try {
       await apiClient.removeProductFromCart(productKey);
     } catch (e) {
-      print("Problem in ProductsController - $e");
+      print("Problem in CartController - $e");
     }
   }
+
   addQuantity(int index) {
     // cartModelObj.value.cartItemList[index].quantity++;
     update();

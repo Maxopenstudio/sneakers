@@ -426,6 +426,27 @@ class ApiClient extends GetConnect {
       throw Exception("changeCartProductQuantity() Request error: $e");
     }
   }
+
+  Future<dynamic> addCoupon(
+      { required String coupon}) async {
+    try {
+      final response = await post(
+          uri.replace(path: 'api/rest/coupon').toString(),
+          {"coupon": coupon},
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        throw apiResponse.error.first;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
 
 // Future<void> addCartProduct(CartProductModel productModel) async {

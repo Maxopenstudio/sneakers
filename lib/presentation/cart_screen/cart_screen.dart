@@ -14,7 +14,7 @@ import 'controller/cart_controller.dart';
 import 'models/cart_product_model.dart';
 
 class CartScreen extends GetWidget<CartController> {
- // final ProductsController productsController = Get.find();
+  // final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,8 +51,14 @@ class CartScreen extends GetWidget<CartController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Obx(() {
-                                List<CartProductModel> cartProducts = controller.cartProducts.map((product) => controller.getProductByKey(int.parse(product.key))).toList();
-                                print("on cart screen cartProducts - ${cartProducts.length}");
+                                List<CartProductModel> cartProducts = controller
+                                    .cartProducts
+                                    .map((product) =>
+                                        controller.getProductByKey(
+                                            int.parse(product.key)))
+                                    .toList();
+                                print(
+                                    "on cart screen cartProducts - ${cartProducts.length}");
                                 return ListView.separated(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
@@ -63,8 +69,11 @@ class CartScreen extends GetWidget<CartController> {
                                     itemCount: cartProducts.length,
                                     itemBuilder: (context, index) {
                                       CartProductModel model =
-                                         cartProducts[index];
-                                       return CartItemWidget(model, index,);
+                                          cartProducts[index];
+                                      return CartItemWidget(
+                                        model,
+                                        index,
+                                      );
                                     });
                               }),
                               Container(
@@ -72,44 +81,51 @@ class CartScreen extends GetWidget<CartController> {
                                   child: Container(
                                       margin: getMargin(top: 10, bottom: 100),
                                       padding: getPadding(
-                                          left: 20,
-                                          top: 16,
-                                          right: 20,
-                                          bottom: 16),
+                                        left: 20,
+                                        top: 16,
+                                        right: 20,
+                                        bottom: 16,
+                                      ),
                                       decoration: AppDecoration.white,
                                       child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            CustomTextFormField(
-                                              // focusNode: FocusNode(),
-                                              // controller:
-                                              //     controller.group169Controller,
-                                              hintText: "lbl_enter_coupon".tr,
-                                              margin: getMargin(bottom: 6),
-                                              textInputAction:
-                                                  TextInputAction.done,
-                                              suffix: CustomButton(
-                                                  onTap: () {
-                                                    Get.toNamed(
-                                                        AppRoutes.couponScreen);
-                                                  },
-                                                  margin: getMargin(
-                                                      right: 8,
-                                                      top: 1,
-                                                      bottom: 1),
-                                                  height: getVerticalSize(36),
-                                                  width: getHorizontalSize(141),
-                                                  text: "lbl_apply_coupon".tr,
-                                                  padding:
-                                                      ButtonPadding.PaddingAll6,
-                                                  fontStyle: ButtonFontStyle
-                                                      .SFUITextSemibold14WhiteA700),
-                                              suffixConstraints: BoxConstraints(
-                                                maxHeight: getVerticalSize(
-                                                  36,
-                                                ),
-                                              ),
+                                            Obx(
+                                              () {
+                                                final errors = controller.errors.value;
+                                                return CustomTextFormField(
+                                                  // focusNode: FocusNode(),
+                                                  controller:
+                                                      controller.group169Controller,
+                                                  hintText: "lbl_enter_coupon".tr,
+                                                  margin: getMargin(bottom: 6),
+                                                  textInputAction:
+                                                      TextInputAction.done,
+                                                  errorText:
+                                                      errors,
+                                                  suffix: CustomButton(
+                                                      onTap: () {
+                                                        controller.addCoupon();
+                                                      },
+                                                      margin: getMargin(
+                                                          right: 8,
+                                                          top: 1,
+                                                          bottom: 1),
+                                                      height: getVerticalSize(36),
+                                                      width: getHorizontalSize(141),
+                                                      text: "lbl_apply_coupon".tr,
+                                                      padding:
+                                                          ButtonPadding.PaddingAll6,
+                                                      fontStyle: ButtonFontStyle
+                                                          .SFUITextSemibold14WhiteA700),
+                                                  suffixConstraints: BoxConstraints(
+                                                    maxHeight: getVerticalSize(
+                                                      36,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
                                             ),
                                             Padding(
                                               padding: getPadding(top: 16),
