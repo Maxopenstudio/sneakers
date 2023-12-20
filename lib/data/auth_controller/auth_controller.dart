@@ -25,7 +25,7 @@ class AuthController extends GetxController {
         final productsController =  Get.find<ProductsController>();
         productsController.favoriteProducts.value =  (await apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
         final cartController = Get.find<CartController>();
-        final fetchedCartProducts = (await apiClient.fetchCart()).products;
+        final fetchedCartProducts = await apiClient.fetchCart();
         cartController.cartProducts.value = fetchedCartProducts;
         print("cartProducts.length(Auth) - ${cartController.cartProducts.length}");
         print("favoriteProducts.length - ${productsController.favoriteProducts.length}");
