@@ -78,16 +78,7 @@ class CartController extends GetxController {
     }
   }
 
-  addQuantity(int index) {
-    // cartModelObj.value.cartItemList[index].quantity++;
-    update();
-  }
 
-  removeQuantity(int index) {
-    // if (cartModelObj.value.cartItemList[index].quantity != 1) {
-    //   cartModelObj.value.cartItemList[index].quantity--;
-    update();
-  }
 
   @override
   void onReady() {
