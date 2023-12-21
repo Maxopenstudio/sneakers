@@ -8,16 +8,10 @@ import '../controller/home_screen_controller.dart';
 import '../models/listname_item_model.dart';
 
 // ignore: must_be_immutable
-class ListnameItemWidget extends StatefulWidget {
-  const ListnameItemWidget(this.product);
+class ListnameItemWidget extends StatelessWidget {
+   ListnameItemWidget(this.product);
 
   final ProductModel product;
-
-  @override
-  State<ListnameItemWidget> createState() => _ListnameItemWidgetState();
-}
-
-class _ListnameItemWidgetState extends State<ListnameItemWidget> {
   final ProductsController productsController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +36,7 @@ class _ListnameItemWidgetState extends State<ListnameItemWidget> {
                 Align(
                   alignment: Alignment.center,
                   child: CustomImageView(
-                    url: widget.product.image,
+                    url: product.image,
                     height: getVerticalSize(
                       208,
                     ),
@@ -75,24 +69,21 @@ class _ListnameItemWidgetState extends State<ListnameItemWidget> {
                           children: [
                             Expanded(
                               child: Text(
-                                widget.product.name,
+                                product.name,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtHeadline,
                               ),
                             ),
-                            CustomIconButton(
-                              height: 24,
-                              width: 24,
-                              onTap: () async {
-                                await productsController.addOrDeleteFavoriteProduct(widget.product.productId);
-                                productsController.favoriteProducts.value =  (await productsController.apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
-
-                                print("favoriteProducts.length - ${productsController.favoriteProducts.length}");
-                              },
-                              child: CustomImageView(
-                                svgPath: productsController.isProductInFavorites(widget.product.productId) ? ImageConstant.imgFavoriteBlack900 : ImageConstant.imgFavorite,
-                              ),
+                            Obx(() =>
+                                 CustomIconButton(
+                                  height: 24,
+                                  width: 24,
+                                  onTap: favorite,
+                                  child: CustomImageView(
+                                    svgPath: productsController.isProductInFavorites(product.productId) ? ImageConstant.imgFavoriteBlack900 : ImageConstant.imgFavorite,
+                                  ),
+                                ),
                             ),
                           ],
                         ),
@@ -108,17 +99,17 @@ class _ListnameItemWidgetState extends State<ListnameItemWidget> {
                                   top: 3,
                                 ),
                                 child: Text(
-                                  widget.product.priceFormated,
+                                  product.priceFormated,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
-                                  style: widget.product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
+                                  style: product.special != 0 ? AppStyle.txtSFUITextRegular15Gray60001.copyWith(decoration: TextDecoration.lineThrough) : AppStyle.txtSFUITextRegular15Black900,
                                 ),
                               ),
-                              if (widget.product.special != 0) ...[
+                              if (product.special != 0) ...[
                                 Padding(
                                   padding: getPadding(top: 3, right: 6),
                                   child: Text(
-                                    widget.product.specialFormated,
+                                    product.specialFormated,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
                                     style: AppStyle.txtSFUITextRegular15Black900,
@@ -139,4 +130,10 @@ class _ListnameItemWidgetState extends State<ListnameItemWidget> {
       ),
     );
   }
+   Future<void>favorite() async {
+     await productsController.addOrDeleteFavoriteProduct(product.productId);
+     productsController.favoriteProducts.value =  (await productsController.apiClient.getFavoriteProducts()).map((product) => productsController.getProductById(product)).toList();
+
+     print("ProductDetailScreen add/rem favorite");
+   }
 }
