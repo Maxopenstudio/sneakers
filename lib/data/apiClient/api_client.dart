@@ -365,35 +365,47 @@ class ApiClient extends GetConnect {
       throw Exception("removeFavoriteProducts($productId) Request error: $e");
     }
   }
-  Future<List<CartProductModel>> fetchCart() async {
+
+  Future<Cart> fetchCart() async {
     try {
       final response = await get(
         uri.replace(path: 'api/rest/cart').toString(),
         headers: HeadersConstants.common(
-          merchantID,
-          sessionID.value,
-          cookie.toString(),
-        ),
+            merchantID, sessionID.value, cookie.toString()),
       );
-
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        print("fetchCart - ${response.body}");
+        print(response.body);
         final dynamic responseData = apiResponse.data;
-
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('products') &&
-            responseData['products'] is List) {
-          List<dynamic> productsData = responseData['products'] as List<dynamic>;
-          List<CartProductModel> cartProducts = productsData
-              .map<CartProductModel>((product) => CartProductModel.fromJson(product))
-              .toList();
-
-          print("fetchCart products - ${cartProducts.length}");
-          return cartProducts;
-        } else {
-          print("fetchCart products - empty");
-          return <CartProductModel>[];
+        print("responseData in fetchCart - ${responseData}");
+        if(responseData is Map<String, dynamic> &&
+            responseData.containsKey('products')){
+          final Cart cart = Cart.fromJson(apiResponse.data);
+          print("fetchCart products - ${cart.products.length}");
+          return cart;
+        }else{
+          return Cart (weight: '',
+    products: [],
+    vouchers: [],
+    couponStatus: null,
+    coupon: '',
+    voucherStatus: null,
+    voucher: '',
+    rewardStatus: false,
+    reward: '',
+    totals: [],
+    total: '',
+    totalRaw: 0,
+    totalProductCount: 0,
+    hasShipping: 0,
+    hasDownload: 0,
+    hasRecurringProducts: 0,
+    currency: Currency(
+    currencyId: '',
+    symbolLeft: '',
+    symbolRight: '',
+    decimalPlace: '',
+    value: ''));
         }
       } else {
         throw Exception(apiResponse.error);
@@ -402,8 +414,6 @@ class ApiClient extends GetConnect {
       throw Exception("fetchCart() Request error: $e");
     }
   }
-
-
 
   Future<void> removeProductFromCart(int productKey) async {
     try {
