@@ -1,7 +1,8 @@
 final Map<String, String> enUs = {
   'msg_network_err': 'Network Error',
   'msg_something_went_wrong': 'Something Went Wrong!',
-  "msg_amet_minim_mollit": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit official.",
+  "msg_amet_minim_mollit":
+      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit official.",
   "lbl_continue": "Continue",
   "msg_lorem_ipsum_dolor3":
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus ultrices in iaculis lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus ultrices in iaculis Ac auctor augue mauris augue neque gravida. Velit ut tortor pretium viverra suspendisse. Volutpat commodo sed egestas egestas fringilla phasellus faucibus. ",
@@ -13,18 +14,22 @@ final Map<String, String> enUs = {
   "msg_register_error_one": "Register error One",
   "lbl_local_pickup": "Local Pickup",
   "lbl_payment_done": "Payment done",
-  "msg_lorem_ipsum_dolor2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. orci, sem feugiat ut nullam \n",
+  "msg_lorem_ipsum_dolor2":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. orci, sem feugiat ut nullam \n",
   "lbl_write_a_review": "Write a Review",
   "lbl_6_5": "6.5",
   "lbl_app_navigation": "App Navigation",
   "lbl_general": "General",
   "lbl_cvv": "CVV",
   "lbl_my_favorites": "My Favorites",
-  "msg_check_your_app_s": "Check your app's UI from the below demo screens of your app.",
-  "msg_ac_tincidunt_vitae": "Ac tincidunt vitae semper quis,\npellentesque adipiscing com",
+  "msg_check_your_app_s":
+      "Check your app's UI from the below demo screens of your app.",
+  "msg_ac_tincidunt_vitae":
+      "Ac tincidunt vitae semper quis,\npellentesque adipiscing com",
   "lbl_50": "50%",
   "lbl_proced": "Proced",
-  "msg_thank_you_for_shoping": "Thank you for shoping with us\nsee order details",
+  "msg_thank_you_for_shoping":
+      "Thank you for shoping with us\nsee order details",
   "lbl_pay_now": "Pay Now",
   "msg_order_id_5485124": "Order ID: 5485124",
   "lbl_20_off2": "20% Off",
@@ -50,7 +55,8 @@ final Map<String, String> enUs = {
   "lbl_cancel_order": "Cancel Order",
   "lbl_sort_by": "Sort by",
   "msg_3_disclosure_of": "3. Disclosure of your data",
-  "msg_per_conubia_nostra": "per conubia nostra, pe himenaeos. interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, pe himenaeos.",
+  "msg_per_conubia_nostra":
+      "per conubia nostra, pe himenaeos. interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, pe himenaeos.",
   "msg_johnabram_gmail_com": "johnabram@gmail.com",
   "lbl_stylish_shoes": "Stylish Shoes",
   "lbl_originals": "Originals",
@@ -60,7 +66,8 @@ final Map<String, String> enUs = {
   "lbl_blog": "Blog",
   "msg_best_collection": "Best collection of sparx of the drop",
   "lbl_login_screen": "Login Screen",
-  "msg_amet_minim_mollit2": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+  "msg_amet_minim_mollit2":
+      "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
   "lbl_card_number": "Card Number",
   "lbl_password": "Password",
   "lbl_new_password": "New Password",
@@ -68,17 +75,21 @@ final Map<String, String> enUs = {
   "msg_credit_debit_card": "Credit/Debit Card",
   "lbl_blog_details": "Blog Details",
   "msg_get_your_next_a": "Get Your Next a drop Kicks Now!",
-  "msg_qorem_ipsum_dolor": "Qorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.",
+  "msg_qorem_ipsum_dolor":
+      "Qorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.",
   "msg_card_holder_name": "Card Holder Name",
   "msg_please_enter_your": "Please enter your first name.",
   "lbl_41_00": "\$41.00",
   "lbl_product_detail": "Product Detail",
   "lbl_write_review": "Write Review",
-  "msg_borem_ipsum_dolor": "Borem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget",
-  "msg_borem_ipsum_dolor2": "Borem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.",
+  "msg_borem_ipsum_dolor":
+      "Borem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget",
+  "msg_borem_ipsum_dolor2":
+      "Borem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.",
   "msg_enter_confirm_password": "Enter confirm password",
   "lbl_item_total": "Item Total",
-  "msg_torem_ipsum_dolor": "Torem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum ",
+  "msg_torem_ipsum_dolor":
+      "Torem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum ",
   "lbl_apply": "Apply",
   "lbl_onboarding_one": "Onboarding One",
   "lbl_check_out": "Check Out",
@@ -97,10 +108,12 @@ final Map<String, String> enUs = {
   "lbl_color_pink": "Color : Pink",
   "lbl_setting": "Setting",
   "lbl_4_0": "4.0",
-  "msg_aside_from_that": "Aside from that, these shoes have a rubber sole incredibly.",
+  "msg_aside_from_that":
+      "Aside from that, these shoes have a rubber sole incredibly.",
   "lbl_2_00": "\$2.00",
   "lbl_get_started": "Get Started",
-  "msg_lorem_ipsum_dolor": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. orci, sem feugiat ut nullam \nRead More...",
+  "msg_lorem_ipsum_dolor":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. orci, sem feugiat ut nullam \nRead More...",
   "msg_home_screen_container": "Home screen - Container",
   "lbl_new_added": "New Added",
   "lbl_quantity": "Quantity",
@@ -139,18 +152,22 @@ final Map<String, String> enUs = {
   "lbl_shop_with_us": "Shop With Us!",
   "lbl_see_all_reviews": "See all reviews",
   "lbl_cart": "Cart",
-  "msg_we_have_sent_the": "We have sent the code verification to your registered email address.",
+  "msg_we_have_sent_the":
+      "We have sent the code verification to your registered email address.",
   "msg_popular_products": "Popular Products",
   "msg_1901_thornridge": "1901 Thornridge Cir. Shiloh, Hawaii 81063",
   "lbl_john2": "John",
   "lbl_ok": "Ok",
-  "msg_mauris_nunccongue": "Mauris  nunccongue nisi vitae\nsuscipit tellus mauris a",
+  "msg_mauris_nunccongue":
+      "Mauris  nunccongue nisi vitae\nsuscipit tellus mauris a",
   "lbl_view_invoice": "View Invoice",
   "lbl_4_00_pm": "4:00 PM",
   "lbl_settings": "Settings",
-  "msg_you_have_a_are_product": "You have a are product update for nike airmax.",
+  "msg_you_have_a_are_product":
+      "You have a are product update for nike airmax.",
   "lbl_get_off": "Get Off",
-  "msg_i_agree_to_the_terms": "I agree to the Terms & Condition & Privacy\nPolicy set out by this site.",
+  "msg_i_agree_to_the_terms":
+      "I agree to the Terms & Condition & Privacy\nPolicy set out by this site.",
   "msg_nike_air_jordan": "Nike air jordan XXIS",
   "msg_cash_on_delivery": "Cash On Delivery",
   "msg_best_selling_product2": "Best selling Product",
@@ -200,7 +217,8 @@ final Map<String, String> enUs = {
   "lbl_serach": "Search",
   "lbl_summary": "Summary",
   "lbl_20_off": "20%Off",
-  "msg_maecenas_eget_condimentum": "Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra,",
+  "msg_maecenas_eget_condimentum":
+      "Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra,",
   "msg_order_details_two": "Order Details Two",
   "lbl_view_all": "View all",
   "msg_your_nike_airmax": "Your nike airmax product delivered successfull",
@@ -222,9 +240,11 @@ final Map<String, String> enUs = {
   "lbl_account": "Account",
   "lbl_change_password": "Change Password",
   "msg_splace_screen_one": "Splace screen One",
-  "msg_never_miss_a_drop": "Never miss a drop of your sneakers’s drop! our app provides a release calender with seccude.",
+  "msg_never_miss_a_drop":
+      "Never miss a drop of your sneakers’s drop! our app provides a release calender with seccude.",
   "lbl_filter": "Filter",
-  "msg_select_which_contact": "Select which contact details should we \nuse to reset your password.",
+  "msg_select_which_contact":
+      "Select which contact details should we \nuse to reset your password.",
   "lbl_enter_last_name": "Enter last name",
   "msg_types_of_data_we": "1. Types of data we collect",
   "lbl_kids": "Kids",
@@ -252,7 +272,8 @@ final Map<String, String> enUs = {
   "lbl_1": "1",
   "lbl_3": "3",
   "msg_your_profile_picture": "Your profile picture updated successfully.",
-  "msg_your_password_has": "Your password has been changed successfully. use your new password to login",
+  "msg_your_password_has":
+      "Your password has been changed successfully. use your new password to login",
   "lbl_6": "6",
   "lbl_7": "7",
   "lbl_8": "8",
@@ -285,5 +306,6 @@ final Map<String, String> enUs = {
   "msg_4517_washington": "4517 washington ave. manchester, kentucky 39495",
   "lbl_28_00": "\$28.00",
   "lbl_foot_ball": "Foot Ball",
-  "msg_delivery_address": "Delivery Address"
+  "msg_delivery_address": "Delivery Address",
+  "currency": "\$"
 };
