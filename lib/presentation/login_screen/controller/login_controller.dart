@@ -16,6 +16,7 @@ class LoginController extends GetxController {
   Rx<PersonalDataModel?> loginResult = (null as PersonalDataModel?).obs;
 
   Rx<String?> errors = (null as String?).obs;
+  Rx<bool> passwordVisibility = true.obs;
 
   Future<bool> login() async {
     print("login: ${loginEmail.text}");
@@ -34,7 +35,11 @@ class LoginController extends GetxController {
     errors.value = (result as List<dynamic>).first;
     return false;
   }
-  
+
+  Future<void> switchVisibility() async {
+    passwordVisibility.value = !passwordVisibility.value;
+  }
+
   @override
   void onReady() {
     super.onReady();

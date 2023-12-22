@@ -6,6 +6,7 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
 import 'package:shoes_app/data/auth_controller/models/personal_data_model.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
+import 'package:shoes_app/presentation/search_screen/models/popular_product.dart';
 
 import '../../presentation/cart_screen/models/cart_product_model.dart';
 import '../../presentation/categories_screen/models/categories_item_model.dart';
@@ -483,6 +484,46 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<List<PopularProduct>?> fetchPopularProducts(int limit) async {
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(((apiResponse.data) as List).map((product) {
+          return PopularProduct.fromJson(product);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(
+          Exception("fetchPopularProducts($limit) Request error: $e"));
+    }
+  }
+
+  Future<List<ProductModel>?> fetchProductBySearch(String search) async {
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/products/search/$search').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return Future.value(((apiResponse.data) as List).map((product) {
+          return ProductModel.fromJson(product);
+        }).toList());
+      } else {
+        return Future.error(Exception(apiResponse.error));
+      }
+    } catch (e) {
+      return Future.error(
+          Exception("fetchProductBySearch($search) Request error: $e"));
     }
   }
 
