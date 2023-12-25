@@ -286,4 +286,5 @@ final Map<String, String> ukUa = {
   "lbl_new_password": "Новий пароль",
   "lbl_logout": "Вийти",
   "lbl_disable_account": "Деактивувати акаунт",
+  "currency": "₴"
 };

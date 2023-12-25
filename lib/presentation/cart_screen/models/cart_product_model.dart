@@ -138,9 +138,9 @@ class Cart {
   final String voucher;
   final bool rewardStatus;
   final String reward;
-  final List<dynamic> totals;
+  final List<Totals> totals;
   final String total;
-  final int totalRaw;
+  final double totalRaw;
   final int totalProductCount;
   final int hasShipping;
   final int hasDownload;
@@ -168,6 +168,10 @@ class Cart {
   });
 
   factory Cart.fromJson(Map<String, dynamic> json) {
+    List<dynamic> totalsJson = json['totals'];
+    List<Totals> totalsList = totalsJson.map((option) {
+      return Totals.fromJson(option);
+    }).toList();
     return Cart(
       weight: json['weight'],
       products: (json['products'] as List)
@@ -180,14 +184,34 @@ class Cart {
       voucher: json['voucher'],
       rewardStatus: json['reward_status'],
       reward: json['reward'],
-      totals: json['totals'],
+      totals: totalsList,
       total: json['total'],
-      totalRaw: json['total_raw'],
+      totalRaw: json['total_raw'].toDouble() ?? 0.0,
       totalProductCount: json['total_product_count'],
       hasShipping: json['has_shipping'],
       hasDownload: json['has_download'],
       hasRecurringProducts: json['has_recurring_products'],
       currency: Currency.fromJson(json['currency']),
+    );
+  }
+}
+
+class Totals {
+  final String title;
+  final String text;
+  final dynamic value;
+
+  Totals({
+    required this.title,
+    required this.text,
+    required this.value,
+  });
+
+  factory Totals.fromJson(Map<String, dynamic> json) {
+    return Totals(
+      title: json['title'],
+      text: json['text'],
+      value: json['value'],
     );
   }
 }
