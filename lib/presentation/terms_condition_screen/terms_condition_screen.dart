@@ -4,9 +4,10 @@ import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 
-import 'controller/privacy_policy_controller.dart';
+import 'controller/terms_condition_controller.dart';
 
-class PrivacyPolicyScreen extends GetWidget<PrivacyPolicyController> {
+
+class TermsConditionScreen extends GetWidget<TermsConditionController> {
   @override
   Widget build(BuildContext context) {
     print(controller.description);

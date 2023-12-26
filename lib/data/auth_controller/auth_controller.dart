@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:shoes_app/core/utils/pref_utils.dart';
 import 'package:shoes_app/data/apiClient/api_client.dart';
+import 'package:shoes_app/presentation/terms_condition_screen/controller/terms_condition_controller.dart';
 
 import '../../presentation/cart_screen/controller/cart_controller.dart';
+import '../../presentation/check_out_three_screen/controller/check_out_three_controller.dart';
+import '../../presentation/privacy_policy_screen/controller/privacy_policy_controller.dart';
 import '../products_controller/products_controller.dart';
 import 'models/personal_data_model.dart';
 
@@ -28,9 +31,12 @@ class AuthController extends GetxController {
          final cart =  await apiClient.fetchCart();
          cartController.cart.value = cart;
          cartController.cartProducts.value = cart.products;
-        print("cartProducts.length(Auth) - ${cartController.cartProducts.length}");
-        print("favoriteProducts.length - ${productsController.favoriteProducts.length}");
-        print("cart total -  ${cart.total}");
+        final orderController = Get.find<CheckOutThreeController>();
+        orderController.orders.value = await apiClient.fetchCustomerOrders();
+        final privacyPolicyController = Get.find<PrivacyPolicyController>();
+        privacyPolicyController.termsAndPolicyData.value = await apiClient.fetchTermsAndPolicyData();
+        final termsConditionController = Get.find<TermsConditionController>();
+        termsConditionController.termsAndPolicyData.value = await apiClient.fetchTermsAndPolicyData();
 
       } else {
         print("SET LOGOUT");

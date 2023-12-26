@@ -48,7 +48,6 @@ class MyProfilePage extends GetWidget<AuthController> {
                             padding: getPadding(left: 133, top: 16, right: 133, bottom: 16),
                             decoration: AppDecoration.white,
                             child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                              CustomImageView(imagePath: ImageConstant.imgEllipse150, height: getSize(80), width: getSize(80), radius: BorderRadius.circular(getHorizontalSize(40))),
                               Padding(padding: getPadding(top: 8), child: Text(controller.personalDataModel.value!.firstname + " " + controller.personalDataModel.value!.lastname, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)),
                               Padding(padding: getPadding(top: 6), child: Text(controller.personalDataModel.value!.email, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Gray600))
                             ]))),
@@ -65,22 +64,6 @@ class MyProfilePage extends GetWidget<AuthController> {
                           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                             CustomImageView(svgPath: ImageConstant.imgSettingsBlack900, height: getSize(24), width: getSize(24)),
                             Padding(padding: getPadding(left: 15, top: 3, bottom: 2), child: Text("lbl_settings".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
-                            Spacer(),
-                            CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
-                          ])),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.notificationPage);
-                      },
-                      child: Container(
-                          width: double.maxFinite,
-                          margin: getMargin(top: 1),
-                          padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
-                          decoration: AppDecoration.white,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            CustomImageView(svgPath: ImageConstant.imgLockBlack900, height: getSize(24), width: getSize(24)),
-                            Padding(padding: getPadding(left: 15, top: 2, bottom: 3), child: Text("lbl_notifications".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
                             Spacer(),
                             CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
                           ])),
@@ -118,17 +101,22 @@ class MyProfilePage extends GetWidget<AuthController> {
                             CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
                           ])),
                     ),
-                    Container(
-                        width: double.maxFinite,
-                        margin: getMargin(top: 1, bottom: 5),
-                        padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
-                        decoration: AppDecoration.white,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          CustomImageView(svgPath: ImageConstant.imgWarningBlack900, height: getSize(24), width: getSize(24)),
-                          Padding(padding: getPadding(left: 15, top: 2, bottom: 3), child: Text("msg_terms_condition2".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
-                          Spacer(),
-                          CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
-                        ])),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.termsConditionScreen);
+                      },
+                      child: Container(
+                          width: double.maxFinite,
+                          margin: getMargin(top: 1, bottom: 5),
+                          padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
+                          decoration: AppDecoration.white,
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            CustomImageView(svgPath: ImageConstant.imgWarningBlack900, height: getSize(24), width: getSize(24)),
+                            Padding(padding: getPadding(left: 15, top: 2, bottom: 3), child: Text("msg_terms_condition2".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Black900)),
+                            Spacer(),
+                            CustomImageView(svgPath: ImageConstant.imgArrowright, height: getSize(24), width: getSize(24))
+                          ])),
+                    ),
                     GestureDetector(
                       onTap: () async {
                         final bool result = await controller.logout();

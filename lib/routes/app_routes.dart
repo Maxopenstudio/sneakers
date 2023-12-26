@@ -64,12 +64,14 @@ import 'package:shoes_app/presentation/splace_screen_one_screen/binding/splace_s
 import 'package:shoes_app/presentation/splace_screen_one_screen/splace_screen_one_screen.dart';
 import 'package:shoes_app/presentation/splace_screen_two_screen/binding/splace_screen_two_binding.dart';
 import 'package:shoes_app/presentation/splace_screen_two_screen/splace_screen_two_screen.dart';
+import 'package:shoes_app/presentation/terms_condition_screen/binding/terms_condition_binding.dart';
 import 'package:shoes_app/presentation/varification_code_screen/binding/varification_code_binding.dart';
 import 'package:shoes_app/presentation/varification_code_screen/varification_code_screen.dart';
 
 import '../presentation/category_products_screen/category_products_screen.dart';
 import '../presentation/language_settings_page/binding/language_settings_binding.dart';
 import '../presentation/language_settings_page/language_settings_page.dart';
+import '../presentation/terms_condition_screen/terms_condition_screen.dart';
 
 class AppRoutes {
   static const String splaceScreenOneScreen = '/splace_screen_one_screen';
@@ -151,6 +153,8 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static String initialRoute = '/initialRoute';
+
+  static String termsConditionScreen = '/termsConditionScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -393,6 +397,13 @@ class AppRoutes {
       ],
     ),
     GetPage(
+      name: termsConditionScreen,
+      page: () => TermsConditionScreen(),
+      bindings: [
+        TermsConditionBinding(),
+      ],
+    ),
+    GetPage(
       name: appNavigationScreen,
       page: () => AppNavigationScreen(),
       bindings: [
@@ -405,6 +416,6 @@ class AppRoutes {
       bindings: [
         SplaceScreenOneBinding(),
       ],
-    )
+    ),
   ];
 }

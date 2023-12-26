@@ -1,8 +1,13 @@
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/check_out_three_screen/models/check_out_three_model.dart';
 
+import '../../../data/apiClient/api_client.dart';
+
 class CheckOutThreeController extends GetxController {
-  Rx<CheckOutThreeModel> checkOutThreeModelObj = CheckOutThreeModel().obs;
+  CheckOutThreeController(this.apiClient);
+
+  final ApiClient apiClient;
+  RxList<Order> orders = List<Order>.empty().obs;
 
   @override
   void onReady() {

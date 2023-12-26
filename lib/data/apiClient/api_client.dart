@@ -9,6 +9,9 @@ import 'package:shoes_app/presentation/home_screen_page/models/product_model.dar
 
 import '../../presentation/cart_screen/models/cart_product_model.dart';
 import '../../presentation/categories_screen/models/categories_item_model.dart';
+import '../../presentation/check_out_three_screen/models/check_out_three_model.dart';
+import '../../presentation/order_details_two_screen/models/order_details_two_model.dart';
+import '../../presentation/privacy_policy_screen/models/privacy_policy_model.dart';
 import 'models/api_response.dart';
 
 class ApiClient extends GetConnect {
@@ -378,34 +381,35 @@ class ApiClient extends GetConnect {
         print(response.body);
         final dynamic responseData = apiResponse.data;
         print("responseData in fetchCart - ${responseData}");
-        if(responseData is Map<String, dynamic> &&
-            responseData.containsKey('products')){
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('products')) {
           final Cart cart = Cart.fromJson(apiResponse.data);
           print("fetchCart products - ${cart.products.length}");
           return cart;
-        }else{
-          return Cart (weight: '',
-    products: [],
-    vouchers: [],
-    couponStatus: null,
-    coupon: '',
-    voucherStatus: null,
-    voucher: '',
-    rewardStatus: false,
-    reward: '',
-    totals: [],
-    total: '',
-    totalRaw: 0,
-    totalProductCount: 0,
-    hasShipping: 0,
-    hasDownload: 0,
-    hasRecurringProducts: 0,
-    currency: Currency(
-    currencyId: '',
-    symbolLeft: '',
-    symbolRight: '',
-    decimalPlace: '',
-    value: ''));
+        } else {
+          return Cart(
+              weight: '',
+              products: [],
+              vouchers: [],
+              couponStatus: null,
+              coupon: '',
+              voucherStatus: null,
+              voucher: '',
+              rewardStatus: false,
+              reward: '',
+              totals: [],
+              total: '',
+              totalRaw: 0,
+              totalProductCount: 0,
+              hasShipping: 0,
+              hasDownload: 0,
+              hasRecurringProducts: 0,
+              currency: Currency(
+                  currencyId: '',
+                  symbolLeft: '',
+                  symbolRight: '',
+                  decimalPlace: '',
+                  value: ''));
         }
       } else {
         throw Exception(apiResponse.error);
@@ -454,16 +458,18 @@ class ApiClient extends GetConnect {
       throw Exception("changeCartProductQuantity() Request error: $e");
     }
   }
-  Future<void> addProductCart(int productId, int quantity, int productOptionId, int productOptionValueId) async {
+
+  Future<void> addProductCart(int productId, int quantity, int productOptionId,
+      int productOptionValueId) async {
     try {
       final Map<String, dynamic> requestBody = {
         'product_id': productId.toString(),
         'quantity': quantity.toString(),
-        'option':{
-          productOptionId.toString():productOptionValueId.toString()
-        }
+        'option': {productOptionId.toString(): productOptionValueId.toString()}
       };
-      final postUri = uri.replace(path: 'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
+      final postUri = uri.replace(
+          path:
+              'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
       final response = await post(postUri.toString(), json.encode(requestBody),
           headers: HeadersConstants.common(
               merchantID, sessionID.value, cookie.toString()));
@@ -478,12 +484,10 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<dynamic> addCoupon(
-      { required String coupon}) async {
+  Future<dynamic> addCoupon({required String coupon}) async {
     try {
       final response = await post(
-          uri.replace(path: 'api/rest/coupon').toString(),
-          {"coupon": coupon},
+          uri.replace(path: 'api/rest/coupon').toString(), {"coupon": coupon},
           headers: HeadersConstants.common(
               merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
@@ -498,85 +502,153 @@ class ApiClient extends GetConnect {
     }
   }
 
+  Future<List<Order>> fetchCustomerOrders() async {
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/customerorders').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        print("responseData in fetchCustomerOrders - ${responseData}");
+        if (responseData is List<dynamic>) {
+          if (responseData.isEmpty) {
+            return <Order>[];
+          }
+          List<Order> orders = [];
+          for (var data in responseData) {
+            orders.add(Order.fromJson(data));
+          }
+          return orders;
+        } else {
+          return <Order>[];
+        }
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchCustomerOrders() Request error: $e");
+    }
+  }
+
+  Future<OrderDetail> fetchOrderDetails(int orderId) async {
+    try {
+      final response = await get(
+        uri.replace(path: 'api/rest/customerorders/$orderId').toString(),
+        headers: HeadersConstants.common(
+            merchantID, sessionID.value, cookie.toString()),
+      );
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        print("responseData in fetchOrderDetails - ${responseData}");
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('order_id')) {
+          final OrderDetail orderDetail =
+              OrderDetail.fromJson(apiResponse.data);
+          print("fetchOrderDetails products - ${orderDetail.products.length}");
+          return orderDetail;
+        } else {
+          return OrderDetail(
+            orderId: '',
+            invoiceNo: '',
+            invoicePrefix: '',
+            storeId: '',
+            storeName: '',
+            storeUrl: '',
+            customerId: '',
+            firstName: '',
+            lastName: '',
+            telephone: '',
+            email: '',
+            paymentFirstname: '',
+            paymentLastname: '',
+            paymentCompany: '',
+            paymentAddress1: '',
+            paymentAddress2: '',
+            paymentPostcode: '',
+            paymentCity: '',
+            paymentZoneId: '',
+            paymentZone: '',
+            paymentZoneCode: '',
+            paymentCountryId: '',
+            paymentCountry: '',
+            paymentIsoCode2: '',
+            paymentIsoCode3: '',
+            paymentAddressFormat: '',
+            paymentMethod: '',
+            shippingFirstname: '',
+            shippingLastname: '',
+            shippingCompany: '',
+            shippingAddress1: '',
+            shippingAddress2: '',
+            shippingPostcode: '',
+            shippingCity: '',
+            shippingZoneId: '',
+            shippingZone: '',
+            shippingZoneCode: '',
+            shippingCountryId: '',
+            shippingCountry: '',
+            shippingIsoCode2: '',
+            shippingIsoCode3: '',
+            shippingAddressFormat: '',
+            shippingMethod: '',
+            comment: '',
+            total: '',
+            orderStatusId: '',
+            languageId: '',
+            currencyId: '',
+            currencyCode: '',
+            currencyValue: '',
+            dateModified: '',
+            dateAdded: '',
+            ip: '',
+            paymentAddress: '',
+            shippingAddress: '',
+            products: [],
+            vouchers: [],
+            totals: [],
+            histories: [],
+            timestamp: DateTime(2009),
+            currency: CurrencyOrderDetails(
+                currencyId: '',
+                symbolLeft: '',
+                symbolRight: '',
+                decimalPlace: '',
+                value: ''),
+          );
+        }
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchOrderDetails() Request error: $e");
+    }
+  }
+
+  Future<List<PrivacyPolicyModel>> fetchTermsAndPolicyData() async {
+    try {
+      final response = await get(
+          uri.replace(path: '/index.php',query: 'route=rest/information').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        List<PrivacyPolicyModel> privacyPolicyList = [];
+        for (var data in responseData) {
+          privacyPolicyList.add(PrivacyPolicyModel.fromJson(data));
+        }
+        return privacyPolicyList;
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchPrivacyPolicy() Request error: $e");
+    }
+  }
 }
-
-// Future<void> addCartProduct(CartProductModel productModel) async {
-//   try {
-//     final productJson = json.encode(productModel.toJson());
-//     final response = await post(uri.replace(path: 'api/rest/cart').toString(), productJson, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
-//     final apiResponse = ApiResponse.fromJson(response.body);
-//     if (apiResponse.isSuccess) {
-//       print('Product added to cart.');
-//     } else {
-//       throw Exception(apiResponse.error);
-//     }
-//   } catch (e) {
-//     throw Exception("addCartProduct() Request error: $e");
-//   }
-// }
-
-// Future<List<ProductModel>> getCartProducts() async {
-//   try {
-//     final response = await get(uri.replace(path: 'api/rest/cart').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),);
-//     final apiResponse = ApiResponse.fromJson(response.body);
-//     if (apiResponse.isSuccess) {
-//       final Map<String, dynamic> responseData = apiResponse.data as Map<String, dynamic>;
-//       final List<dynamic> productsData = responseData['products'] as List<dynamic>;
-//
-//       print(response.body);
-//       print(productsData.length);
-//
-//       final List<ProductModel> products = productsData.map((product) {
-//         final int productId = int.tryParse(product['product_id'].toString()) ?? 0;
-//         final String? name = product['name'] as String?;
-//         final String? manufacturer = product['manufacturer'] as String?;
-//         final String? model = product['model'] as String?;
-//         final String? image = product['image'] as String?;
-//         final String? thumb = product['thumb'] as String?;
-//         final List<String>? images = product['images'] as List<String>?;
-//         final double price = (product['price'] != null) ? double.tryParse(product['price'].toString().replaceAll('\$', '')) ?? 0.0 : 0.0;
-//         final String? priceFormated = product['price_formated'] as String?;
-//         final String? description = product['description'] as String?;
-//         final List<ProductAttributeGroup>? attributeGroups = (product['attribute_groups'] != null)
-//             ? (product['attribute_groups'] as List<dynamic>).map((e) => ProductAttributeGroup.fromJson(e as Map<String, dynamic>)).toList()
-//             : null;
-//         final double special = (product['special'] != null) ? double.tryParse(product['special'].toString().replaceAll('\$', '')) ?? 0.0 : 0.0;
-//         final String? specialFormated = product['special_formated'] as String?;
-//         final List<ProductOptions>? options = (product['options'] != null)
-//             ? (product['options'] as List<dynamic>).map((e) => ProductOptions.fromJson(e as Map<String, dynamic>)).toList()
-//             : null;
-//         final List<ProductCategory>? category = (product['category'] != null)
-//             ? (product['category'] as List<dynamic>).map((e) => ProductCategory.fromJson(e as Map<String, dynamic>)).toList()
-//             : null;
-//         final DateTime? dateAdded = (product['date_added'] != null) ? DateTime.parse(product['date_added'] as String) : null;
-//
-//         return ProductModel(
-//           productId: productId,
-//           name: name ?? '',
-//           manufacturer: manufacturer,
-//           model: model,
-//           image: image,
-//           thumb: thumb,
-//           images: images,
-//           price: price,
-//           priceFormated: priceFormated ?? '',
-//           description: description ?? '',
-//           attributeGroups: attributeGroups,
-//           special: special,
-//           specialFormated: specialFormated ?? '',
-//           options: options,
-//           category: category,
-//           dateAdded: dateAdded,
-//         );
-//       }).toList();
-//
-//
-//       print('getCartProducts lenght - ${products.length}');
-//       return products;
-//     } else {
-//       throw Exception(apiResponse.error);
-//     }
-//   } catch (e) {
-//     throw Exception("getCartProducts() Request error: $e");
-//   }
-// }
