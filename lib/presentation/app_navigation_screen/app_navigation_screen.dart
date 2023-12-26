@@ -526,4 +526,7 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
   onTapPrivacyPolicy() {
     Get.toNamed(AppRoutes.privacyPolicyScreen);
   }
+  onTapTermsCondition() {
+    Get.toNamed(AppRoutes.termsConditionScreen);
+  }
 }

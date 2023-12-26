@@ -3,19 +3,19 @@ import 'package:shoes_app/presentation/privacy_policy_screen/models/privacy_poli
 import 'package:html/parser.dart' as htmlParser;
 import 'package:html/parser.dart';
 
-class PrivacyPolicyController extends GetxController {
+class TermsConditionController extends GetxController {
   RxList<PrivacyPolicyModel> termsAndPolicyData =
       List<PrivacyPolicyModel>.empty().obs;
 
   String? get title {
     final listData =
-        termsAndPolicyData.where((element) => element.type == 1).toList();
+    termsAndPolicyData.where((element) => element.type == 0).toList();
     return termsAndPolicyData.isEmpty ? "" : listData.first.title;
   }
 
   String? get description {
     final listData =
-        termsAndPolicyData.where((element) => element.type == 1).toList();
+    termsAndPolicyData.where((element) => element.type == 0).toList();
     return  termsAndPolicyData.isEmpty ? "" : parseHtml(listData.first.description);
   }
   String parseHtml(String htmlString) {

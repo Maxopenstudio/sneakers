@@ -168,32 +168,32 @@ class CartScreen extends GetWidget<CartController> {
                                                             style: AppStyle
                                                                 .txtBodyBlack900)
                                                       ])),
-                                              Padding(
-                                                  padding: getPadding(top: 16),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                            "lbl_delivery_free"
-                                                                .tr,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: AppStyle
-                                                                .txtBodyBlack900),
-                                                        Text("${"currency".tr} 0",
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: AppStyle
-                                                                .txtBodyBlack900)
-                                                      ])),
+                                              // Padding(
+                                              //     padding: getPadding(top: 16),
+                                              //     child: Row(
+                                              //         mainAxisAlignment:
+                                              //             MainAxisAlignment
+                                              //                 .spaceBetween,
+                                              //         children: [
+                                              //           Text(
+                                              //               "lbl_delivery_free"
+                                              //                   .tr,
+                                              //               overflow:
+                                              //                   TextOverflow
+                                              //                       .ellipsis,
+                                              //               textAlign:
+                                              //                   TextAlign.left,
+                                              //               style: AppStyle
+                                              //                   .txtBodyBlack900),
+                                              //           Text("${"currency".tr} 0",
+                                              //               overflow:
+                                              //                   TextOverflow
+                                              //                       .ellipsis,
+                                              //               textAlign:
+                                              //                   TextAlign.left,
+                                              //               style: AppStyle
+                                              //                   .txtBodyBlack900)
+                                              //         ])),
                                               Padding(
                                                   padding: getPadding(top: 16),
                                                   child: Row(
