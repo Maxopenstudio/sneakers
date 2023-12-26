@@ -12,6 +12,7 @@ import 'package:shoes_app/presentation/search_screen/models/popular_product.dart
 import '../../presentation/cart_screen/models/cart_product_model.dart';
 import '../../presentation/categories_screen/models/categories_item_model.dart';
 import '../../presentation/check_out_three_screen/models/check_out_three_model.dart';
+import '../../presentation/home_screen_page/models/slideshow_model.dart';
 import '../../presentation/order_details_two_screen/models/order_details_two_model.dart';
 import '../../presentation/privacy_policy_screen/models/privacy_policy_model.dart';
 import 'models/api_response.dart';
@@ -690,6 +691,28 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       throw Exception("fetchPrivacyPolicy() Request error: $e");
+    }
+  }
+  Future<List<SlideShow>> fetchSlideshow() async{
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/slideshows').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        List<SlideShow> slideShow = [];
+        for (var data in responseData) {
+          slideShow.add(SlideShow.fromJson(data));
+        }
+        return slideShow;
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchSlideshow() Request error: $e");
     }
   }
 }

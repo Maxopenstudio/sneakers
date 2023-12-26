@@ -116,9 +116,9 @@ class HomeScreenPage extends StatelessWidget {
                             controller.onChangeIndex(index);
                           },
                         ),
-                        itemCount: controller.homeScreenModelObj.value.sliderlovelysportcoItemList.length,
+                        itemCount: controller.slideShow.value.banners.length,
                         itemBuilder: (context, index, realIndex) {
-                          return SliderlovelysportcoItemWidget(controller.homeScreenModelObj.value.sliderlovelysportcoItemList[index]);
+                          return SliderlovelysportcoItemWidget(controller.slideShow.value.banners[index].image);
                         },
                       ),
                     ),
@@ -137,7 +137,7 @@ class HomeScreenPage extends StatelessWidget {
                             top: 8,
                           ),
                           child: AnimatedSmoothIndicator(
-                            activeIndex: controller.silderIndex.value,
+                            activeIndex: controller.slideShow.value.banners.length,
                             count: controller.homeScreenModelObj.value.sliderlovelysportcoItemList.length,
                             axisDirection: Axis.horizontal,
                             effect: ScrollingDotsEffect(
