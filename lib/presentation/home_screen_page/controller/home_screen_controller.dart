@@ -5,6 +5,7 @@ import 'package:shoes_app/presentation/home_screen_page/models/home_screen_model
 
 import '../../../data/apiClient/api_client.dart';
 import '../../categories_screen/models/categories_item_model.dart';
+import '../models/slideshow_model.dart';
 
 class HomeScreenController extends GetxController {
   HomeScreenController(this.apiClient);
@@ -14,7 +15,14 @@ class HomeScreenController extends GetxController {
   TextEditingController groupThreeController = TextEditingController();
 
   late Rx<HomeScreenModel> homeScreenModelObj;
-
+  Rx<SlideShow> slideShow = SlideShow(
+      moduleId: 0,
+      name: '',
+      bannerId: 0,
+      width: '',
+      height: '',
+      status: '',
+      banners: []).obs;
   Rx<int> silderIndex = 0.obs;
 
   Rx<int> categoryIndex = 0.obs;
@@ -23,10 +31,14 @@ class HomeScreenController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     homeScreenModelObj = HomeScreenModel().obs;
-    List<CategoriesItemModel>? categories = await apiClient.getAllCategories() ?? [];
-    Get.find<CategoriesController>().categoriesModelObj = categories.map((category) => category.categories).toList().obs;
-
-    homeScreenModelObj = homeScreenModelObj.value.copyWith(categoryList: categories.obs).obs;
+    List<CategoriesItemModel>? categories =
+        await apiClient.getAllCategories() ?? [];
+    Get.find<CategoriesController>().categoriesModelObj =
+        categories.map((category) => category.categories).toList().obs;
+    final listSlider = (await apiClient.fetchSlideshow()).where((element) => element.name == "Home Page").toList();
+    slideShow.value = listSlider.first;
+    homeScreenModelObj =
+        homeScreenModelObj.value.copyWith(categoryList: categories.obs).obs;
     super.onInit();
   }
 
