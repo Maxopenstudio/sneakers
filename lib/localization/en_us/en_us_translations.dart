@@ -307,5 +307,15 @@ final Map<String, String> enUs = {
   "lbl_28_00": "\$28.00",
   "lbl_foot_ball": "Foot Ball",
   "msg_delivery_address": "Delivery Address",
-  "currency": "\$"
+  "currency": "\$",
+  "add_new_address":"Add new address",
+  "add_new_city":"Add new city",
+  "add_new_first":"Add new first address",
+  "add_new_second":"Add new second address",
+  "add_new_countryId":"Add new countryId",
+  "add_new_postCode":"Add new Post Code",
+  "add_new_postCode":"Add new Post Code",
+  "add_new_zone_Id":"Add new zone id",
+  "add_new_company":"Add new company address",
+
 };

@@ -15,6 +15,7 @@ import '../../presentation/check_out_three_screen/models/check_out_three_model.d
 import '../../presentation/home_screen_page/models/slideshow_model.dart';
 import '../../presentation/order_details_two_screen/models/order_details_two_model.dart';
 import '../../presentation/privacy_policy_screen/models/privacy_policy_model.dart';
+import '../../presentation/select_address_screen/models/select_address_model.dart';
 import 'models/api_response.dart';
 
 class ApiClient extends GetConnect {
@@ -179,8 +180,8 @@ class ApiClient extends GetConnect {
         return Future.value(
             (((apiResponse.data) as List).first["products"] as List)
                 .map((product) {
-          return ProductModel.fromJson(product);
-        }).toList());
+              return ProductModel.fromJson(product);
+            }).toList());
       } else {
         return Future.error(Exception(apiResponse.error));
       }
@@ -472,13 +473,12 @@ class ApiClient extends GetConnect {
       };
       final postUri = uri.replace(
           path:
-              'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
+          'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
       final response = await post(postUri.toString(), json.encode(requestBody),
           headers: HeadersConstants.common(
               merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        print('Product with key $productId added to cart.');
       } else {
         throw Exception(apiResponse.error);
       }
@@ -504,6 +504,7 @@ class ApiClient extends GetConnect {
       rethrow;
     }
   }
+
   Future<List<PopularProduct>?> fetchPopularProducts(int limit) async {
     try {
       final response = await get(
@@ -554,7 +555,6 @@ class ApiClient extends GetConnect {
       if (apiResponse.isSuccess) {
         print(response.body);
         final dynamic responseData = apiResponse.data;
-        print("responseData in fetchCustomerOrders - ${responseData}");
         if (responseData is List<dynamic>) {
           if (responseData.isEmpty) {
             return <Order>[];
@@ -578,7 +578,8 @@ class ApiClient extends GetConnect {
   Future<OrderDetail> fetchOrderDetails(int orderId) async {
     try {
       final response = await get(
-        uri.replace(path: 'api/rest/customerorders/$orderId').toString(),
+        uri.replace(path: 'api/rest/customerorders/$orderId', scheme: 'http')
+            .toString(),
         headers: HeadersConstants.common(
             merchantID, sessionID.value, cookie.toString()),
       );
@@ -586,12 +587,10 @@ class ApiClient extends GetConnect {
       if (apiResponse.isSuccess) {
         print(response.body);
         final dynamic responseData = apiResponse.data;
-        print("responseData in fetchOrderDetails - ${responseData}");
         if (responseData is Map<String, dynamic> &&
             responseData.containsKey('order_id')) {
           final OrderDetail orderDetail =
-              OrderDetail.fromJson(apiResponse.data);
-          print("fetchOrderDetails products - ${orderDetail.products.length}");
+          OrderDetail.fromJson(apiResponse.data);
           return orderDetail;
         } else {
           return OrderDetail(
@@ -674,7 +673,8 @@ class ApiClient extends GetConnect {
   Future<List<PrivacyPolicyModel>> fetchTermsAndPolicyData() async {
     try {
       final response = await get(
-          uri.replace(path: '/index.php',query: 'route=rest/information').toString(),
+          uri.replace(path: '/index.php', query: 'route=rest/information')
+              .toString(),
           headers: HeadersConstants.common(
               merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
@@ -693,7 +693,8 @@ class ApiClient extends GetConnect {
       throw Exception("fetchPrivacyPolicy() Request error: $e");
     }
   }
-  Future<List<SlideShow>> fetchSlideshow() async{
+
+  Future<List<SlideShow>> fetchSlideshow() async {
     try {
       final response = await get(
           uri.replace(path: 'api/rest/slideshows').toString(),
@@ -715,4 +716,128 @@ class ApiClient extends GetConnect {
       throw Exception("fetchSlideshow() Request error: $e");
     }
   }
+
+  Future<AddressResponse> fetchUserAddresses() async {
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/shippingaddress').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        final dynamic responseData = apiResponse.data;
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('addresses')) {
+          final AddressResponse addressResponse = AddressResponse.fromJson(
+              apiResponse.data);
+          return addressResponse;
+        } else {
+          return AddressResponse(addressId: '', addresses: []);
+        }
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchUserAddresses() Request error: $e");
+    }
+  }
+
+  Future<dynamic> addNewUserAddress({
+    required String addressFirstname,
+    required String addressLastname,
+    required String addressCity,
+    required String addressFirst,
+    required String addressSecond,
+    required int countryId,
+    required String postCode,
+    required int zone_id,
+    required String addressCompany,
+  }) async {
+    try {
+      final response = await post(
+        uri.replace(path: 'api/rest/shippingaddress').toString(),
+        {
+          "firstname": addressFirstname,
+          "lastname": addressLastname,
+          "city": addressCity,
+          "address_1": addressFirst,
+          "address_2": addressSecond,
+          "country_id": countryId,
+          "postcode": postCode,
+          "zone_id": zone_id,
+          "company": addressCompany,
+          "custom_field": [],
+          "default": 0,
+        },
+        headers: HeadersConstants.common(
+          merchantID,
+          sessionID.value,
+          cookie.toString(),
+        ),
+      );
+
+      print(response.body);
+      final dynamic responseData = json.decode(response.body);
+
+      if (responseData is Map<String, dynamic>) {
+        final apiResponse = ApiResponse.fromJson(responseData);
+        if (apiResponse.isSuccess) {
+          return Address.fromJson(apiResponse.data);
+        } else {
+          print("ERROR: ${apiResponse.error}");
+          return apiResponse.error;
+        }
+      } else {
+        return Future.error(
+            Exception("Invalid data format for addNewUserAddress"));
+      }
+    } catch (e) {
+      return Future.error(Exception("addNewUserAddress() Request error: $e"));
+    }
+  }
+
+Future<List<Country>> fetchCountries() async {
+  try {
+    final response = await get(
+        uri.replace(path: 'api/rest/countries').toString(),
+        headers: HeadersConstants.common(
+            merchantID, sessionID.value, cookie.toString()));
+    final apiResponse = ApiResponse.fromJson(response.body);
+    if (apiResponse.isSuccess) {
+      print(response.body);
+      final dynamic responseData = apiResponse.data;
+      List<Country> country = [];
+      for (var data in responseData) {
+        country.add(Country.fromJson(data));
+      }
+      print(country.length);
+      return country;
+    } else {
+      throw Exception(apiResponse.error);
+    }
+  } catch (e) {
+    throw Exception("fetchCountries() Request error: $e");
+  }
+}
+  Future<CountryZone> fetchZones(int countryId) async {
+    try {
+      final response = await get(
+          uri.replace(path: 'api/rest/countries/$countryId').toString(),
+          headers: HeadersConstants.common(
+              merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        CountryZone zone = CountryZone.fromJson(responseData);
+        print("zones.length - ${zone.zones.length}");
+        return zone;
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchZones() Request error: $e");
+    }
+  }
+  // Todo zone fetcher in AddNewAddressController
 }

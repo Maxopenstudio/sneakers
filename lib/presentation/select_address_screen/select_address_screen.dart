@@ -7,7 +7,7 @@ import 'package:shoes_app/widgets/custom_button.dart';
 
 import '../select_address_screen/widgets/selectaddress_item_widget.dart';
 import 'controller/select_address_controller.dart';
-import 'models/selectaddress_item_model.dart';
+import 'models/select_address_model.dart';
 
 class SelectAddressScreen extends GetWidget<SelectAddressController> {
   @override
@@ -67,12 +67,13 @@ class SelectAddressScreen extends GetWidget<SelectAddressController> {
                                         separatorBuilder: (context, index) {
                                           return SizedBox(height: getVerticalSize(10));
                                         },
-                                        itemCount: controller.selectAddressModelObj.value.selectaddressItemList.length,
+                                        itemCount: controller.addresses.value.addresses.length,
                                         itemBuilder: (context, index) {
-                                          SelectaddressItemModel model = controller.selectAddressModelObj.value.selectaddressItemList[index];
-                                          return SelectaddressItemWidget(model);
+                                          Address model = controller.addresses.value.addresses[index];
+                                          controller.fullAddressSet = index;
+                                          return SelectaddressItemWidget(model, controller.fullAddress);
                                         }))),
-                                CustomButton(height: getVerticalSize(40), text: "msg_add_new_address".tr, margin: getMargin(left: 20, top: 16, right: 20, bottom: 104), variant: ButtonVariant.OutlineBlack900, fontStyle: ButtonFontStyle.SFUITextSemibold14),
+                                CustomButton(onTap: () => Get.toNamed(AppRoutes.addNewAddressScreen), height: getVerticalSize(40), text: "msg_add_new_address".tr, margin: getMargin(left: 20, top: 16, right: 20, bottom: 104), variant: ButtonVariant.OutlineBlack900, fontStyle: ButtonFontStyle.SFUITextSemibold14),
                               ],
                             ),
                           ],
