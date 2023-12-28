@@ -286,5 +286,13 @@ final Map<String, String> ukUa = {
   "lbl_new_password": "Новий пароль",
   "lbl_logout": "Вийти",
   "lbl_disable_account": "Деактивувати акаунт",
-  "currency": "₴"
+  "currency": "₴",
+  "add_new_address":"Додати нову адресу",
+  "add_new_city":"Місто",
+  "add_new_first":"Адреса 1",
+  "add_new_second":"Адреса 2",
+  "add_new_countryId":"Країна",
+  "add_new_postCode":"Індекс",
+  "add_new_zone_Id":"Регіон / Область",
+  "add_new_company":"Адреса Компанії",
 };

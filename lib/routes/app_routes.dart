@@ -56,6 +56,7 @@ import 'package:shoes_app/presentation/register_screen/binding/register_binding.
 import 'package:shoes_app/presentation/register_screen/register_screen.dart';
 import 'package:shoes_app/presentation/search_screen/binding/search_binding.dart';
 import 'package:shoes_app/presentation/search_screen/search_screen.dart';
+import 'package:shoes_app/presentation/select_address_screen/add_new_address_screen.dart';
 import 'package:shoes_app/presentation/select_address_screen/binding/select_address_binding.dart';
 import 'package:shoes_app/presentation/select_address_screen/select_address_screen.dart';
 import 'package:shoes_app/presentation/setting_screen/binding/setting_binding.dart';
@@ -71,6 +72,7 @@ import 'package:shoes_app/presentation/varification_code_screen/varification_cod
 import '../presentation/category_products_screen/category_products_screen.dart';
 import '../presentation/language_settings_page/binding/language_settings_binding.dart';
 import '../presentation/language_settings_page/language_settings_page.dart';
+import '../presentation/select_address_screen/binding/add_new_address_binding.dart';
 import '../presentation/terms_condition_screen/terms_condition_screen.dart';
 
 class AppRoutes {
@@ -155,6 +157,8 @@ class AppRoutes {
   static String initialRoute = '/initialRoute';
 
   static String termsConditionScreen = '/termsConditionScreen';
+
+  static String addNewAddressScreen = '/addNewAddressScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -415,6 +419,13 @@ class AppRoutes {
       page: () => SplaceScreenOneScreen(),
       bindings: [
         SplaceScreenOneBinding(),
+      ],
+    ),
+    GetPage(
+      name: addNewAddressScreen,
+      page: () => AddNewAddressesScreen(),
+      bindings: [
+        AddNewAddressBinding(),
       ],
     ),
   ];

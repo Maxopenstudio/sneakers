@@ -15,6 +15,8 @@ import '../../presentation/category_products_screen/controller/category_products
 import '../../presentation/check_out_three_screen/controller/check_out_three_controller.dart';
 import '../../presentation/order_details_two_screen/controller/order_details_two_controller.dart';
 import '../../presentation/privacy_policy_screen/controller/privacy_policy_controller.dart';
+import '../../presentation/select_address_screen/controller/add_new_address_controller.dart';
+import '../../presentation/select_address_screen/controller/select_address_controller.dart';
 
 class InitialBindings extends Bindings {
   @override
@@ -35,5 +37,7 @@ class InitialBindings extends Bindings {
     Get.put(TermsConditionController());
     Get.put(SearchProductController(
         Get.find<ApiClient>(), Get.find<HiveRepository>()));
+    Get.put(SelectAddressController(Get.find<ApiClient>()));
+    Get.put(AddNewAddressController(Get.find<ApiClient>()));
   }
 }

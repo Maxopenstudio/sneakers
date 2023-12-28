@@ -6,6 +6,8 @@ import 'package:shoes_app/presentation/terms_condition_screen/controller/terms_c
 import '../../presentation/cart_screen/controller/cart_controller.dart';
 import '../../presentation/check_out_three_screen/controller/check_out_three_controller.dart';
 import '../../presentation/privacy_policy_screen/controller/privacy_policy_controller.dart';
+import '../../presentation/select_address_screen/controller/add_new_address_controller.dart';
+import '../../presentation/select_address_screen/controller/select_address_controller.dart';
 import '../products_controller/products_controller.dart';
 import 'models/personal_data_model.dart';
 
@@ -37,7 +39,12 @@ class AuthController extends GetxController {
         privacyPolicyController.termsAndPolicyData.value = await apiClient.fetchTermsAndPolicyData();
         final termsConditionController = Get.find<TermsConditionController>();
         termsConditionController.termsAndPolicyData.value = await apiClient.fetchTermsAndPolicyData();
-
+        final selectAddressController = Get.find<SelectAddressController>();
+        selectAddressController.addresses.value = await apiClient.fetchUserAddresses();
+        final addNewAddressController = Get.find<AddNewAddressController>();
+        addNewAddressController.countries.value = await apiClient.fetchCountries();
+        // var zone = await apiClient.fetchZones(6);
+        // print(zone.zones.length);
       } else {
         print("SET LOGOUT");
         PrefUtils.setLogin(false);
