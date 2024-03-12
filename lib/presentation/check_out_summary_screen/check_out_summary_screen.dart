@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/widgets/checkouttwo_item_widget.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
@@ -7,13 +9,11 @@ import 'package:shoes_app/widgets/custom_button.dart';
 import 'package:shoes_app/widgets/custom_checkbox.dart';
 import 'package:shoes_app/widgets/custom_icon_button.dart';
 
-import '../check_out_two_screen/widgets/checkouttwo_item_widget.dart';
 import '../payment_done_dialog/controller/payment_done_controller.dart';
 import '../payment_done_dialog/payment_done_dialog.dart';
-import 'controller/check_out_two_controller.dart';
 import 'models/checkouttwo_item_model.dart';
 
-class CheckOutTwoScreen extends GetWidget<CheckOutTwoController> {
+class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -94,6 +94,7 @@ class CheckOutTwoScreen extends GetWidget<CheckOutTwoController> {
                                                   itemCount: controller.checkOutTwoModelObj.value.checkouttwoItemList.length,
                                                   itemBuilder: (context, index) {
                                                     CheckouttwoItemModel model = controller.checkOutTwoModelObj.value.checkouttwoItemList[index];
+                                                    print("CHECKOUT: ${model.name}");
                                                     return CheckouttwoItemWidget(model);
                                                   })))
                                         ]))),

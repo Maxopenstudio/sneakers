@@ -12,12 +12,12 @@ import 'package:shoes_app/presentation/categories_screen/categories_screen.dart'
 import 'package:shoes_app/presentation/category_products_screen/binding/category_products_binding.dart';
 import 'package:shoes_app/presentation/change_password_screen/binding/change_password_binding.dart';
 import 'package:shoes_app/presentation/change_password_screen/change_password_screen.dart';
-import 'package:shoes_app/presentation/check_out_one_screen/binding/check_out_one_binding.dart';
-import 'package:shoes_app/presentation/check_out_one_screen/check_out_one_screen.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/binding/check_out_payment_method_binding.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/check_out_payment_method_screen.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/binding/check_out_summary_binding.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/check_out_summary_screen.dart';
 import 'package:shoes_app/presentation/check_out_three_screen/binding/check_out_three_binding.dart';
 import 'package:shoes_app/presentation/check_out_three_screen/check_out_three_screen.dart';
-import 'package:shoes_app/presentation/check_out_two_screen/binding/check_out_two_binding.dart';
-import 'package:shoes_app/presentation/check_out_two_screen/check_out_two_screen.dart';
 import 'package:shoes_app/presentation/coupon_screen/binding/coupon_binding.dart';
 import 'package:shoes_app/presentation/coupon_screen/coupon_screen.dart';
 import 'package:shoes_app/presentation/enter_new_password_screen/binding/enter_new_password_binding.dart';
@@ -120,9 +120,9 @@ class AppRoutes {
 
   static const String selectAddressScreen = '/select_address_screen';
 
-  static const String checkOutOneScreen = '/check_out_one_screen';
+  static const String checkOutPaymentMethodScreen = '/check_out_payment_method_screen';
 
-  static const String checkOutTwoScreen = '/check_out_two_screen';
+  static const String checkOutSummaryScreen = '/check_out_summary_screen';
 
   static const String checkOutThreeScreen = '/check_out_three_screen';
 
@@ -310,17 +310,17 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: checkOutOneScreen,
-      page: () => CheckOutOneScreen(),
+      name: checkOutPaymentMethodScreen,
+      page: () => CheckOutPaymentMethodScreen(),
       bindings: [
-        CheckOutOneBinding(),
+        CheckOutPaymentMethodBinding(),
       ],
     ),
     GetPage(
-      name: checkOutTwoScreen,
-      page: () => CheckOutTwoScreen(),
+      name: checkOutSummaryScreen,
+      page: () => CheckOutSummaryScreen(),
       bindings: [
-        CheckOutTwoBinding(),
+        CheckOutSummaryBinding(),
       ],
     ),
     GetPage(

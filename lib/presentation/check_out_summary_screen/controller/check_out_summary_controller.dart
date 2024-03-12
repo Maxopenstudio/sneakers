@@ -1,7 +1,7 @@
 import 'package:shoes_app/core/app_export.dart';
-import 'package:shoes_app/presentation/check_out_two_screen/models/check_out_two_model.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/models/check_out_two_model.dart';
 
-class CheckOutTwoController extends GetxController {
+class CheckOutSummaryController extends GetxController {
   Rx<CheckOutTwoModel> checkOutTwoModelObj = CheckOutTwoModel().obs;
 
   RxBool checkbox = false.obs;

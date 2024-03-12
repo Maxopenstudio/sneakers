@@ -462,11 +462,11 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
   }
 
   onTapCheckOutOne() {
-    Get.toNamed(AppRoutes.checkOutOneScreen);
+    Get.toNamed(AppRoutes.checkOutPaymentMethodScreen);
   }
 
   onTapCheckoutTwo() {
-    Get.toNamed(AppRoutes.checkOutTwoScreen);
+    Get.toNamed(AppRoutes.checkOutSummaryScreen);
   }
 
   onTapPaymentdone() {

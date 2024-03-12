@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/data/apiClient/api_client.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/models/payment_method.dart';
 import 'package:shoes_app/widgets/custom_radio_button.dart';
 
 import '../../../widgets/custom_icon_button.dart';
-import '../controller/check_out_one_controller.dart';
-import '../models/checkoutone_item_model.dart';
 
 // ignore: must_be_immutable
-class CheckoutoneItemWidget extends StatelessWidget {
-  CheckoutoneItemWidget(this.checkoutoneItemModelObj);
+class CheckoutoneItemWidget extends StatefulWidget {
+  CheckoutoneItemWidget(this.paymentMethod);
 
-  CheckoutoneItemModel checkoutoneItemModelObj;
+  PaymentMethod paymentMethod;
 
-  var controller = Get.find<CheckOutOneController>();
+  @override
+  State<CheckoutoneItemWidget> createState() => _CheckoutoneItemWidgetState();
+}
+
+class _CheckoutoneItemWidgetState extends State<CheckoutoneItemWidget> {
+  var controller = Get.find<CheckOutPaymentMethodController>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CheckOutOneController>(
-      init: CheckOutOneController(),
+    return GetBuilder<CheckOutPaymentMethodController>(
       builder: (controller) => Container(
         width: double.maxFinite,
         padding: getPadding(
@@ -36,12 +46,12 @@ class CheckoutoneItemWidget extends StatelessWidget {
                 bottom: 8,
               ),
               child: CustomRadioButton(
-                text: checkoutoneItemModelObj.name,
+                text: widget.paymentMethod.title,
                 iconSize: getHorizontalSize(
                   24,
                 ),
-                value: checkoutoneItemModelObj.name,
-                groupValue: controller.radioGroup.value,
+                value: widget.paymentMethod.code,
+                groupValue: controller.paymentMethodCode.value,
                 margin: getMargin(
                   top: 8,
                   bottom: 8,
@@ -52,7 +62,7 @@ class CheckoutoneItemWidget extends StatelessWidget {
                 },
               ),
             ),
-            CustomIconButton(height: 40, width: 40, variant: IconButtonVariant.FillGray100, shape: IconButtonShape.RoundedBorder8, padding: IconButtonPadding.PaddingAll8, child: CustomImageView(svgPath: ImageConstant.imagePath + checkoutoneItemModelObj.image))
+            //CustomIconButton(height: 40, width: 40, variant: IconButtonVariant.FillGray100, shape: IconButtonShape.RoundedBorder8, padding: IconButtonPadding.PaddingAll8)
           ],
         ),
       ),

@@ -70,8 +70,10 @@ class SelectAddressScreen extends GetWidget<SelectAddressController> {
                                         itemCount: controller.addresses.value.addresses.length,
                                         itemBuilder: (context, index) {
                                           Address model = controller.addresses.value.addresses[index];
+                                          String selectedAddressId = controller.addresses.value.addressId;
+                                          bool isSelectedAddress = selectedAddressId == model.addressId;
                                           controller.fullAddressSet = index;
-                                          return SelectaddressItemWidget(model, controller.fullAddress);
+                                          return SelectaddressItemWidget(model, controller.fullAddress, initialSelected: isSelectedAddress);
                                         }))),
                                 CustomButton(onTap: () => Get.toNamed(AppRoutes.addNewAddressScreen), height: getVerticalSize(40), text: "msg_add_new_address".tr, margin: getMargin(left: 20, top: 16, right: 20, bottom: 104), variant: ButtonVariant.OutlineBlack900, fontStyle: ButtonFontStyle.SFUITextSemibold14),
                               ],
@@ -83,7 +85,7 @@ class SelectAddressScreen extends GetWidget<SelectAddressController> {
                     ])),
                 CustomButton(
                     onTap: () {
-                      Get.toNamed(AppRoutes.checkOutOneScreen);
+                      Get.toNamed(AppRoutes.checkOutPaymentMethodScreen);
                     },
                     height: getVerticalSize(48),
                     text: "lbl_next".tr,

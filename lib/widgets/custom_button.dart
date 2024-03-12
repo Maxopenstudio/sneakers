@@ -74,13 +74,14 @@ class CustomButton extends StatelessWidget {
   }
 
   _buildTextButtonStyle() {
+    Color? color = _setColor();
     return TextButton.styleFrom(
       fixedSize: Size(
         width ?? double.maxFinite,
         height ?? getVerticalSize(40),
       ),
       padding: _setPadding(),
-      backgroundColor: _setColor(),
+      backgroundColor: onTap != null ? color : (color?.withOpacity(0.5) ?? null),
       side: _setTextButtonBorder(),
       shape: RoundedRectangleBorder(
         borderRadius: _setBorderRadius(),

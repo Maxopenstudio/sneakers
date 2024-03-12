@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
 import 'package:shoes_app/data/auth_controller/models/personal_data_model.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/models/payment_method.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 import 'package:shoes_app/presentation/search_screen/models/popular_product.dart';
 
@@ -31,8 +32,7 @@ class ApiClient extends GetConnect {
   void onInit() async {
     final String? loadedSession = await PrefUtils.getSessionId();
     if (loadedSession == null) {
-      await getSessionID()
-          .then((session) => session != null ? sessionID = session.obs : null);
+      await getSessionID().then((session) => session != null ? sessionID = session.obs : null);
       print("NEW SESSION: $sessionID");
       PrefUtils.setSessionId(sessionID.value);
     } else {
@@ -44,17 +44,14 @@ class ApiClient extends GetConnect {
   }
 
   void regenerateSessionId() async {
-    await getSessionID()
-        .then((session) => session != null ? sessionID = session.obs : null);
+    await getSessionID().then((session) => session != null ? sessionID = session.obs : null);
     PrefUtils.setSessionId(sessionID.value);
     print("REGENERATE SESSION ID: ${sessionID.value}");
   }
 
   Future<String?> getSessionID() async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/session').toString(), null,
-          headers: HeadersConstants.session(merchantID));
+      final response = await post(uri.replace(path: 'api/rest/session').toString(), null, headers: HeadersConstants.session(merchantID));
       final apiResponse = ApiResponse.fromJson(response.body);
       print("SESSION Set-Cookie: ${response.headers}");
 
@@ -74,10 +71,7 @@ class ApiClient extends GetConnect {
 
   Future<List<CategoriesItemModel>?> getAllCategories() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/categories/level/2').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/categories/level/2').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((category) {
@@ -94,10 +88,7 @@ class ApiClient extends GetConnect {
 
   Future<List<ProductModel>?> getProductsByCategoryId(int id) async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/products/category/$id').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/products/category/$id').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((category) {
@@ -107,17 +98,13 @@ class ApiClient extends GetConnect {
         return Future.error(Exception(apiResponse.error));
       }
     } catch (e) {
-      return Future.error(
-          Exception("getProductsByCategoryId($id) Request error: $e"));
+      return Future.error(Exception("getProductsByCategoryId($id) Request error: $e"));
     }
   }
 
   Future<List<ProductModel>?> getBestsellerProducts({int limit = 10}) async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((product) {
@@ -127,17 +114,13 @@ class ApiClient extends GetConnect {
         return Future.error(Exception(apiResponse.error));
       }
     } catch (e) {
-      return Future.error(
-          Exception("getBestsellerProducts($limit) Request error: $e"));
+      return Future.error(Exception("getBestsellerProducts($limit) Request error: $e"));
     }
   }
 
   Future<ProductModel> getProduct(int productId) async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/products/$productId').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/products/$productId').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(ProductModel.fromJson(apiResponse.data));
@@ -145,17 +128,13 @@ class ApiClient extends GetConnect {
         return Future.error(Exception(apiResponse.error));
       }
     } catch (e) {
-      return Future.error(
-          Exception("getProduct($productId) Request error: $e"));
+      return Future.error(Exception("getProduct($productId) Request error: $e"));
     }
   }
 
   Future<List<ProductModel>> getAllProducts() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/products').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/products').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((product) {
@@ -171,17 +150,12 @@ class ApiClient extends GetConnect {
 
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/featured').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/featured').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
-        return Future.value(
-            (((apiResponse.data) as List).first["products"] as List)
-                .map((product) {
-              return ProductModel.fromJson(product);
-            }).toList());
+        return Future.value((((apiResponse.data) as List).first["products"] as List).map((product) {
+          return ProductModel.fromJson(product);
+        }).toList());
       } else {
         return Future.error(Exception(apiResponse.error));
       }
@@ -201,24 +175,8 @@ class ApiClient extends GetConnect {
     required bool agree,
   }) async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/register').toString(),
-          {
-            "firstname": firstname,
-            "lastname": lastname,
-            "email": email,
-            "password": password,
-            "confirm": confirm,
-            "telephone": telephone,
-            "customer_group_id": 1,
-            "agree": agree ? 1 : 0,
-            "address_1": "qwe",
-            "city": "zp",
-            "country_id": 220,
-            "zone_id": 3504
-          },
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/register').toString(), {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "confirm": confirm, "telephone": telephone, "customer_group_id": 1, "agree": agree ? 1 : 0, "address_1": "qwe", "city": "zp", "country_id": 220, "zone_id": 3504},
+          headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       print(response.body);
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
@@ -233,14 +191,9 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<dynamic> login(
-      {required String email, required String password}) async {
+  Future<dynamic> login({required String email, required String password}) async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/login').toString(),
-          {"email": email, "password": password},
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/login').toString(), {"email": email, "password": password}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       print("login Set-Cookie: ${response.headers?['set-cookie']}");
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
@@ -257,10 +210,7 @@ class ApiClient extends GetConnect {
 
   Future<PersonalDataModel?> getAccount() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/account').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/account').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       print("GET ACCOUNT Set-Cookie: ${response.headers?['set-cookie']}");
       print("GET ACCOUNT SESSION: ${sessionID.value}");
@@ -281,11 +231,7 @@ class ApiClient extends GetConnect {
 
   Future<dynamic> updatePassword(String password, String confirm) async {
     try {
-      final response = await put(
-          uri.replace(path: 'api/rest/account/password').toString(),
-          {"password": password, "confirm": confirm},
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await put(uri.replace(path: 'api/rest/account/password').toString(), {"password": password, "confirm": confirm}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print("response.body: ${response.body}");
@@ -303,10 +249,7 @@ class ApiClient extends GetConnect {
 
   Future<bool> logout() async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/logout').toString(), null,
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/logout').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(true);
@@ -320,10 +263,7 @@ class ApiClient extends GetConnect {
 
   Future<List<int>> getFavoriteProducts() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/wishlist').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/wishlist').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print("favorite.body: ${response.body}");
@@ -341,10 +281,7 @@ class ApiClient extends GetConnect {
 
   Future<void> addFavoriteProduct(int productId) async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/wishlist/$productId').toString(), null,
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/wishlist/$productId').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print('Product with ID $productId added to favorites.');
@@ -358,10 +295,7 @@ class ApiClient extends GetConnect {
 
   Future<void> removeFavoriteProduct(int productId) async {
     try {
-      final response = await delete(
-          uri.replace(path: 'api/rest/wishlist/$productId').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await delete(uri.replace(path: 'api/rest/wishlist/$productId').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print('Product with ID $productId deleted from favorites.');
@@ -377,43 +311,19 @@ class ApiClient extends GetConnect {
     try {
       final response = await get(
         uri.replace(path: 'api/rest/cart').toString(),
-        headers: HeadersConstants.common(
-            merchantID, sessionID.value, cookie.toString()),
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
       );
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
         final dynamic responseData = apiResponse.data;
         print("responseData in fetchCart - ${responseData}");
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('products')) {
+        if (responseData is Map<String, dynamic> && responseData.containsKey('products')) {
           final Cart cart = Cart.fromJson(apiResponse.data);
           print("fetchCart products - ${cart.products.length}");
           return cart;
         } else {
-          return Cart(
-              weight: '',
-              products: [],
-              vouchers: [],
-              couponStatus: null,
-              coupon: '',
-              voucherStatus: null,
-              voucher: '',
-              rewardStatus: false,
-              reward: '',
-              totals: [],
-              total: '',
-              totalRaw: 0,
-              totalProductCount: 0,
-              hasShipping: 0,
-              hasDownload: 0,
-              hasRecurringProducts: 0,
-              currency: Currency(
-                  currencyId: '',
-                  symbolLeft: '',
-                  symbolRight: '',
-                  decimalPlace: '',
-                  value: ''));
+          return Cart(weight: '', products: [], vouchers: [], couponStatus: null, coupon: '', voucherStatus: null, voucher: '', rewardStatus: false, reward: '', totals: [], total: '', totalRaw: 0, totalProductCount: 0, hasShipping: 0, hasDownload: 0, hasRecurringProducts: 0, currency: Currency(currencyId: '', symbolLeft: '', symbolRight: '', decimalPlace: '', value: ''));
         }
       } else {
         throw Exception(apiResponse.error);
@@ -428,8 +338,7 @@ class ApiClient extends GetConnect {
       final deleteUri = uri.replace(path: 'api/rest/cart/$productKey');
       final response = await delete(
         deleteUri.toString(),
-        headers: HeadersConstants.common(
-            merchantID, sessionID.value, cookie.toString()),
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
       );
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
@@ -449,9 +358,7 @@ class ApiClient extends GetConnect {
         'quantity': quantity.toString(),
       };
       final putUri = uri.replace(path: 'api/rest/cart/$productKey/$quantity');
-      final response = await put(putUri.toString(), json.encode(requestBody),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await put(putUri.toString(), json.encode(requestBody), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print('Product with key $productKey change quantity to $quantity.');
@@ -463,20 +370,15 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<void> addProductCart(int productId, int quantity, int productOptionId,
-      int productOptionValueId) async {
+  Future<void> addProductCart(int productId, int quantity, int productOptionId, int productOptionValueId) async {
     try {
       final Map<String, dynamic> requestBody = {
         'product_id': productId.toString(),
         'quantity': quantity.toString(),
         'option': {productOptionId.toString(): productOptionValueId.toString()}
       };
-      final postUri = uri.replace(
-          path:
-          'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
-      final response = await post(postUri.toString(), json.encode(requestBody),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final postUri = uri.replace(path: 'api/rest/cart/$productId/$quantity/$productOptionId/$productOptionValueId');
+      final response = await post(postUri.toString(), json.encode(requestBody), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
       } else {
@@ -489,10 +391,7 @@ class ApiClient extends GetConnect {
 
   Future<dynamic> addCoupon({required String coupon}) async {
     try {
-      final response = await post(
-          uri.replace(path: 'api/rest/coupon').toString(), {"coupon": coupon},
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await post(uri.replace(path: 'api/rest/coupon').toString(), {"coupon": coupon}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print("response.body: ${response.body}");
@@ -505,12 +404,93 @@ class ApiClient extends GetConnect {
     }
   }
 
-  Future<List<PopularProduct>?> fetchPopularProducts(int limit) async {
+  Future<dynamic> setCheckoutShippingAddress({required String id}) async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/shippingaddress/existing').toString(), {"address_id": id}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        throw apiResponse.error.first;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> setCheckoutPaymentAddress({required String id}) async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/paymentaddress/existing').toString(), {"address_id": id}, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print("response.body: ${response.body}");
+      } else {
+        print("ERROR: ${apiResponse.error}");
+        throw apiResponse.error.first;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<PaymentMethod>> fetchPaymentMethods() async {
     try {
       final response = await get(
-          uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+        uri.replace(path: 'api/rest/paymentmethods').toString(),
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
+      );
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        if (responseData is Map<String, dynamic> && responseData.containsKey('payment_methods')) {
+          List<PaymentMethod> paymentMethods = List.empty(growable: true);
+          (responseData['payment_methods'] as List).forEach((element) {
+            final PaymentMethod paymentMethod = PaymentMethod.fromJson(element);
+            paymentMethods.add(paymentMethod);
+          });
+          return paymentMethods;
+        } else {
+          return [];
+        }
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchPaymentMethods() Request error: $e");
+    }
+  }
+
+  Future<bool> setPaymentMethod(String code) async {
+    try {
+      final response = await post(
+        uri.replace(path: 'api/rest/paymentmethods').toString(),
+        {
+          "payment_method": code,
+          "agree": 1,
+          "comment": ""
+        },
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
+      );
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        if (apiResponse.data['code'] == code) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception("fetchPaymentMethods() Request error: $e");
+    }
+  }
+
+  Future<List<PopularProduct>?> fetchPopularProducts(int limit) async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/bestsellers/limit/$limit').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((product) {
@@ -520,17 +500,13 @@ class ApiClient extends GetConnect {
         return Future.error(Exception(apiResponse.error));
       }
     } catch (e) {
-      return Future.error(
-          Exception("fetchPopularProducts($limit) Request error: $e"));
+      return Future.error(Exception("fetchPopularProducts($limit) Request error: $e"));
     }
   }
 
   Future<List<ProductModel>?> fetchProductBySearch(String search) async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/products/search/$search').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/products/search/$search').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         return Future.value(((apiResponse.data) as List).map((product) {
@@ -540,17 +516,13 @@ class ApiClient extends GetConnect {
         return Future.error(Exception(apiResponse.error));
       }
     } catch (e) {
-      return Future.error(
-          Exception("fetchProductBySearch($search) Request error: $e"));
+      return Future.error(Exception("fetchProductBySearch($search) Request error: $e"));
     }
   }
 
   Future<List<Order>> fetchCustomerOrders() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/customerorders').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/customerorders').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
@@ -578,19 +550,15 @@ class ApiClient extends GetConnect {
   Future<OrderDetail> fetchOrderDetails(int orderId) async {
     try {
       final response = await get(
-        uri.replace(path: 'api/rest/customerorders/$orderId', scheme: 'http')
-            .toString(),
-        headers: HeadersConstants.common(
-            merchantID, sessionID.value, cookie.toString()),
+        uri.replace(path: 'api/rest/customerorders/$orderId', scheme: 'http').toString(),
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
       );
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
         final dynamic responseData = apiResponse.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('order_id')) {
-          final OrderDetail orderDetail =
-          OrderDetail.fromJson(apiResponse.data);
+        if (responseData is Map<String, dynamic> && responseData.containsKey('order_id')) {
+          final OrderDetail orderDetail = OrderDetail.fromJson(apiResponse.data);
           return orderDetail;
         } else {
           return OrderDetail(
@@ -654,12 +622,7 @@ class ApiClient extends GetConnect {
             totals: [],
             histories: [],
             timestamp: DateTime(2009),
-            currency: CurrencyOrderDetails(
-                currencyId: '',
-                symbolLeft: '',
-                symbolRight: '',
-                decimalPlace: '',
-                value: ''),
+            currency: CurrencyOrderDetails(currencyId: '', symbolLeft: '', symbolRight: '', decimalPlace: '', value: ''),
           );
         }
       } else {
@@ -672,11 +635,7 @@ class ApiClient extends GetConnect {
 
   Future<List<PrivacyPolicyModel>> fetchTermsAndPolicyData() async {
     try {
-      final response = await get(
-          uri.replace(path: '/index.php', query: 'route=rest/information')
-              .toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: '/index.php', query: 'route=rest/information').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
@@ -696,10 +655,7 @@ class ApiClient extends GetConnect {
 
   Future<List<SlideShow>> fetchSlideshow() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/slideshows').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/slideshows').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
@@ -719,17 +675,12 @@ class ApiClient extends GetConnect {
 
   Future<AddressResponse> fetchUserAddresses() async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/shippingaddress').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/shippingaddress').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         final dynamic responseData = apiResponse.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('addresses')) {
-          final AddressResponse addressResponse = AddressResponse.fromJson(
-              apiResponse.data);
+        if (responseData is Map<String, dynamic> && responseData.containsKey('addresses')) {
+          final AddressResponse addressResponse = AddressResponse.fromJson(apiResponse.data);
           return addressResponse;
         } else {
           return AddressResponse(addressId: '', addresses: []);
@@ -788,43 +739,37 @@ class ApiClient extends GetConnect {
           return apiResponse.error;
         }
       } else {
-        return Future.error(
-            Exception("Invalid data format for addNewUserAddress"));
+        return Future.error(Exception("Invalid data format for addNewUserAddress"));
       }
     } catch (e) {
       return Future.error(Exception("addNewUserAddress() Request error: $e"));
     }
   }
 
-Future<List<Country>> fetchCountries() async {
-  try {
-    final response = await get(
-        uri.replace(path: 'api/rest/countries').toString(),
-        headers: HeadersConstants.common(
-            merchantID, sessionID.value, cookie.toString()));
-    final apiResponse = ApiResponse.fromJson(response.body);
-    if (apiResponse.isSuccess) {
-      print(response.body);
-      final dynamic responseData = apiResponse.data;
-      List<Country> country = [];
-      for (var data in responseData) {
-        country.add(Country.fromJson(data));
+  Future<List<Country>> fetchCountries() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/countries').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        print(response.body);
+        final dynamic responseData = apiResponse.data;
+        List<Country> country = [];
+        for (var data in responseData) {
+          country.add(Country.fromJson(data));
+        }
+        print(country.length);
+        return country;
+      } else {
+        throw Exception(apiResponse.error);
       }
-      print(country.length);
-      return country;
-    } else {
-      throw Exception(apiResponse.error);
+    } catch (e) {
+      throw Exception("fetchCountries() Request error: $e");
     }
-  } catch (e) {
-    throw Exception("fetchCountries() Request error: $e");
   }
-}
+
   Future<CountryZone> fetchZones(int countryId) async {
     try {
-      final response = await get(
-          uri.replace(path: 'api/rest/countries/$countryId').toString(),
-          headers: HeadersConstants.common(
-              merchantID, sessionID.value, cookie.toString()));
+      final response = await get(uri.replace(path: 'api/rest/countries/$countryId').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
       final apiResponse = ApiResponse.fromJson(response.body);
       if (apiResponse.isSuccess) {
         print(response.body);
@@ -839,5 +784,5 @@ Future<List<Country>> fetchCountries() async {
       throw Exception("fetchZones() Request error: $e");
     }
   }
-  // Todo zone fetcher in AddNewAddressController
+// Todo zone fetcher in AddNewAddressController
 }

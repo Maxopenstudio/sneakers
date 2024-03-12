@@ -51,7 +51,7 @@ class CartController extends GetxController {
       await apiClient.addCoupon(coupon: group169Controller.text);
       await updateCartDetails();
     } catch (e) {
-      print("Problem in CartController - $e");
+      print("Problem in CartController - $e | ${group169Controller.text}");
       var val = e.toString();
       errors.value = val;
     }

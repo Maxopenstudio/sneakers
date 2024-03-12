@@ -7,14 +7,28 @@ import '../controller/select_address_controller.dart';
 import '../models/select_address_model.dart';
 
 // ignore: must_be_immutable
-class SelectaddressItemWidget extends StatelessWidget {
-  SelectaddressItemWidget(this.selectaddressItemModelObj,
-      this.fullAddress
-      );
+class SelectaddressItemWidget extends StatefulWidget {
+  SelectaddressItemWidget(this.selectaddressItemModelObj, this.fullAddress, {this.initialSelected = false});
 
+  final bool initialSelected;
   Address selectaddressItemModelObj;
   final String fullAddress;
+
+  @override
+  State<SelectaddressItemWidget> createState() => _SelectaddressItemWidgetState();
+}
+
+class _SelectaddressItemWidgetState extends State<SelectaddressItemWidget> {
   var controller = Get.find<SelectAddressController>();
+
+  @override
+  void initState() {
+    if (widget.initialSelected) {
+      controller.changeRadio(widget.selectaddressItemModelObj.addressId);
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +50,7 @@ class SelectaddressItemWidget extends StatelessWidget {
               iconSize: getHorizontalSize(
                 24,
               ),
-              value: selectaddressItemModelObj.addressId,
+              value: widget.selectaddressItemModelObj.addressId,
               groupValue: controller.radioGroup.value,
               fontStyle: RadioFontStyle.SFUITextRegular17,
               onChange: (value) {
@@ -46,9 +60,9 @@ class SelectaddressItemWidget extends StatelessWidget {
           ),
           Container(
             child: Text(
-              fullAddress,
+              widget.fullAddress,
               maxLines: null,
-             // textAlign: TextAlign.left,
+              // textAlign: TextAlign.left,
               style: AppStyle.txtBody,
             ),
           ),

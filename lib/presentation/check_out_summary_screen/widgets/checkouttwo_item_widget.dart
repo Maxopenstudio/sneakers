@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
 
-import '../controller/check_out_two_controller.dart';
 import '../models/checkouttwo_item_model.dart';
 
 // ignore: must_be_immutable
@@ -10,7 +10,7 @@ class CheckouttwoItemWidget extends StatelessWidget {
 
   CheckouttwoItemModel checkouttwoItemModelObj;
 
-  var controller = Get.find<CheckOutTwoController>();
+  var controller = Get.find<CheckOutSummaryController>();
 
   @override
   Widget build(BuildContext context) {

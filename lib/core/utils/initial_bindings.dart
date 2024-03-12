@@ -5,6 +5,7 @@ import 'package:shoes_app/data/apiClient/api_client.dart';
 import 'package:shoes_app/data/auth_controller/auth_controller.dart';
 import 'package:shoes_app/data/products_controller/products_controller.dart';
 import 'package:shoes_app/presentation/categories_screen/controller/categories_controller.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
 import 'package:shoes_app/presentation/home_screen_page/controller/home_screen_controller.dart';
 import 'package:shoes_app/presentation/terms_condition_screen/controller/terms_condition_controller.dart';
 import 'package:shoes_app/presentation/search_screen/controller/search_controller.dart';
@@ -39,5 +40,6 @@ class InitialBindings extends Bindings {
         Get.find<ApiClient>(), Get.find<HiveRepository>()));
     Get.put(SelectAddressController(Get.find<ApiClient>()));
     Get.put(AddNewAddressController(Get.find<ApiClient>()));
+    Get.put(CheckOutPaymentMethodController(Get.find<ApiClient>()));
   }
 }
