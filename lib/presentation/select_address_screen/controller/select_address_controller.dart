@@ -19,6 +19,11 @@ class SelectAddressController extends GetxController {
 
   String fullAddress = '';
 
+  String? get selectedAddressString {
+    Address? selectedAddress = addresses.value.addresses.firstWhere((address) => address.addressId == radioGroup.value);
+    return "${selectedAddress.address1}, ${selectedAddress.city}\n${selectedAddress.postcode}, ${selectedAddress.country}";;
+  }
+
   set fullAddressSet(int index) {
     this.fullAddress = "${addresses.value.addresses[index].address1}, ${addresses.value.addresses[index].city}\n${addresses.value.addresses[index].postcode}, ${addresses.value.addresses[index].country}";
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/widgets/checkouttwo_item_widget.dart';
+import 'package:shoes_app/presentation/select_address_screen/controller/select_address_controller.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
@@ -14,6 +15,8 @@ import '../payment_done_dialog/payment_done_dialog.dart';
 import 'models/checkouttwo_item_model.dart';
 
 class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
+  SelectAddressController addressController = Get.find<SelectAddressController>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -107,12 +110,12 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                                           Text("msg_delivery_address".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline),
                                           Padding(
-                                              padding: getPadding(top: 16),
-                                              child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [Padding(padding: getPadding(bottom: 8), child: Text("lbl_home".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)), CustomImageView(svgPath: ImageConstant.imgEdit, height: getSize(24), width: getSize(24), margin: getMargin(top: 5))])),
-                                          Container(margin: getMargin(right: 85), child: Text("msg_4517_washington".tr, maxLines: null, textAlign: TextAlign.left, style: AppStyle.txtBody))
+                                            padding: getPadding(top: 16),
+                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                              Container(margin: getMargin(right: 85), child: FittedBox(child: Text(addressController.selectedAddressString ?? "No address", maxLines: 3, textAlign: TextAlign.left, style: AppStyle.txtBody))),
+                                              //CustomImageView(svgPath: ImageConstant.imgEdit, height: getSize(24), width: getSize(24), margin: getMargin(top: 5)),
+                                            ]),
+                                          ),
                                         ]))),
                                 Container(
                                     width: double.maxFinite,
@@ -135,11 +138,7 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [Text("msg_credit_debit_card".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Padding(padding: getPadding(top: 2), child: Text("msg_6895_7852_5898_4200".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Gray600))])),
                                                 Spacer(),
-                                                CustomImageView(
-                                                  svgPath: ImageConstant.imgEdit,
-                                                  height: getSize(24),
-                                                  width: getSize(24),
-                                                )
+                                                //CustomImageView(svgPath: ImageConstant.imgEdit, height: getSize(24), width: getSize(24))
                                               ]))
                                         ]))),
                                 Container(

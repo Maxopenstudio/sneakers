@@ -207,6 +207,7 @@ class LoginScreen extends GetWidget<LoginController> {
                         ),
                         CustomButton(
                           onTap: () async {
+                            FocusScope.of(context).unfocus();
                             if (_loginformKey.currentState!.validate()) {
                               bool isSuccessful = await controller.login();
                               if (isSuccessful) {
