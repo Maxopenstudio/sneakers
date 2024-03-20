@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/widgets/checkouttwo_item_widget.dart';
 import 'package:shoes_app/presentation/select_address_screen/controller/select_address_controller.dart';
@@ -16,6 +17,7 @@ import 'models/checkouttwo_item_model.dart';
 
 class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
   SelectAddressController addressController = Get.find<SelectAddressController>();
+  CheckOutPaymentMethodController paymentMethodController = Get.find<CheckOutPaymentMethodController>();
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +130,8 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                           Padding(
                                               padding: getPadding(top: 16),
                                               child: Row(children: [
+                                                Text(paymentMethodController.selectedPaymentMethodString ?? "No payment method selected", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900),
+                                                /*
                                                 CustomIconButton(height: 40, width: 40, variant: IconButtonVariant.FillGray100, shape: IconButtonShape.RoundedBorder8, padding: IconButtonPadding.PaddingAll8, child: CustomImageView(svgPath: ImageConstant.imgVolume)),
                                                 Container(
                                                     // width: getHorizontalSize(
@@ -137,6 +141,8 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [Text("msg_credit_debit_card".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Padding(padding: getPadding(top: 2), child: Text("msg_6895_7852_5898_4200".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtSFUITextRegular15Gray600))])),
+
+                                                 */
                                                 Spacer(),
                                                 //CustomImageView(svgPath: ImageConstant.imgEdit, height: getSize(24), width: getSize(24))
                                               ]))

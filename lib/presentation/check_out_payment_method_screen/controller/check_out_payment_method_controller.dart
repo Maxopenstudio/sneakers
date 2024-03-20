@@ -24,6 +24,11 @@ class CheckOutPaymentMethodController extends GetxController {
 
   RxBool expand = true.obs;
 
+  String? get selectedPaymentMethodString {
+    PaymentMethod? selectedPaymentMethod = paymentMethods.firstWhere((paymentMethod) => paymentMethod.code == paymentMethodCode.value);
+    return selectedPaymentMethod.title;
+  }
+
   changeExpand() {
     expand.value = expand.value ? false : true;
     update();
