@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/cart_screen/models/cart_product_model.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
 
 import '../models/checkouttwo_item_model.dart';
 
 // ignore: must_be_immutable
 class CheckouttwoItemWidget extends StatelessWidget {
-  CheckouttwoItemWidget(this.checkouttwoItemModelObj);
+  CheckouttwoItemWidget(this.cartProductModel);
 
-  CheckouttwoItemModel checkouttwoItemModelObj;
+  CartProductModel cartProductModel;
 
   var controller = Get.find<CheckOutSummaryController>();
 
@@ -41,7 +42,7 @@ class CheckouttwoItemWidget extends StatelessWidget {
               borderRadius: BorderRadiusStyle.roundedBorder8,
             ),
             child: CustomImageView(
-              imagePath: ImageConstant.imagePath + checkouttwoItemModelObj.image,
+              url: cartProductModel.thumb,
               height: getVerticalSize(
                 82,
               ),
@@ -63,7 +64,7 @@ class CheckouttwoItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                checkouttwoItemModelObj.name,
+                cartProductModel.name,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: AppStyle.txtHeadline,
@@ -73,10 +74,21 @@ class CheckouttwoItemWidget extends StatelessWidget {
                   top: 9,
                 ),
                 child: Text(
-                  checkouttwoItemModelObj.price,
+                  cartProductModel.price,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtBodyBlack900,
+                ),
+              ),
+              if(cartProductModel.options.isNotEmpty)Padding(
+                padding: getPadding(
+                  top: 6,
+                ),
+                child: Text(
+                  "${cartProductModel.options.first.name??''} : ${cartProductModel.options.first.value??''}",
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: AppStyle.txtSFUITextRegular15Black900,
                 ),
               ),
               Padding(
@@ -84,7 +96,7 @@ class CheckouttwoItemWidget extends StatelessWidget {
                   top: 9,
                 ),
                 child: Text(
-                  "lbl_qty_1".tr,
+                  "${"lbl_qty_12".tr} ${cartProductModel.quantity}",
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: AppStyle.txtBodyGray600,

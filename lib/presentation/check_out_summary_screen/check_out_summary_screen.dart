@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/cart_screen/controller/cart_controller.dart';
+import 'package:shoes_app/presentation/cart_screen/models/cart_product_model.dart';
 import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/widgets/checkouttwo_item_widget.dart';
@@ -18,6 +20,7 @@ import 'models/checkouttwo_item_model.dart';
 class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
   SelectAddressController addressController = Get.find<SelectAddressController>();
   CheckOutPaymentMethodController paymentMethodController = Get.find<CheckOutPaymentMethodController>();
+  CartController cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +99,9 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                                   separatorBuilder: (context, index) {
                                                     return SizedBox(height: getVerticalSize(16));
                                                   },
-                                                  itemCount: controller.checkOutTwoModelObj.value.checkouttwoItemList.length,
+                                                  itemCount: cartController.cartProducts.length,
                                                   itemBuilder: (context, index) {
-                                                    CheckouttwoItemModel model = controller.checkOutTwoModelObj.value.checkouttwoItemList[index];
+                                                    CartProductModel model = cartController.cartProducts[index];
                                                     print("CHECKOUT: ${model.name}");
                                                     return CheckouttwoItemWidget(model);
                                                   })))
