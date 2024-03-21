@@ -152,6 +152,7 @@ final Map<String, String> enUs = {
   "lbl_shop_with_us": "Shop With Us!",
   "lbl_see_all_reviews": "See all reviews",
   "lbl_cart": "Cart",
+  "lbl_cart_empty": "Cart is empty",
   "msg_we_have_sent_the":
       "We have sent the code verification to your registered email address.",
   "msg_popular_products": "Popular Products",

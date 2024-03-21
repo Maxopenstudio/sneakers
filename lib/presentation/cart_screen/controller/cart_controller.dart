@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:shoes_app/core/app_export.dart';
 
 import '../../../data/apiClient/api_client.dart';
@@ -10,9 +12,8 @@ class CartController extends GetxController {
   final ApiClient apiClient;
   TextEditingController group169Controller = TextEditingController();
   RxList<CartProductModel> cartProducts = List<CartProductModel>.empty().obs;
-  Rx<String?> errors = "".obs;
-  Rx<String> discount = "".obs;
   Rx<String> couponDescription = "".obs;
+  Rx<String> discount = "".obs;
   Rx<Cart> cart = Cart(
     weight: '',
     products: [],
@@ -50,10 +51,9 @@ class CartController extends GetxController {
     try {
       await apiClient.addCoupon(coupon: group169Controller.text);
       await updateCartDetails();
+      update();
     } catch (e) {
       print("Problem in CartController - $e | ${group169Controller.text}");
-      var val = e.toString();
-      errors.value = val;
     }
   }
 
@@ -68,6 +68,7 @@ class CartController extends GetxController {
         discount.value = cart.value.totals[1].text;
         couponDescription.value = cart.value.totals[1].title;
       }
+      update();
     } catch (e) {
       print("Problem in updateCartDetails - $e");
     }

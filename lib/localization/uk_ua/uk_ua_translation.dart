@@ -136,6 +136,7 @@ final Map<String, String> ukUa = {
   "lbl_shop_with_us": "Купуйте у нас!",
   "lbl_see_all_reviews": "Подивитися всі відгуки",
   "lbl_cart": "Кошик",
+  "lbl_cart_empty": "Кошик пустий",
   "msg_we_have_sent_the": "Ми відправили код підтвердження на вашу зареєстровану адресу електронної пошти.",
   "msg_popular_products": "Популярні товари",
   "msg_1901_thornridge": "1901 Thornridge Cir. Shiloh, Hawaii 81063",

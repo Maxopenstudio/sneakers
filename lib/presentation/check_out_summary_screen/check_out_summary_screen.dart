@@ -3,7 +3,7 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:shoes_app/presentation/cart_screen/models/cart_product_model.dart';
 import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
-import 'package:shoes_app/presentation/check_out_summary_screen/controller/check_out_summary_controller.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/controller/shipping_method_controller.dart';
 import 'package:shoes_app/presentation/check_out_summary_screen/widgets/checkouttwo_item_widget.dart';
 import 'package:shoes_app/presentation/select_address_screen/controller/select_address_controller.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
@@ -11,16 +11,29 @@ import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
 import 'package:shoes_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:shoes_app/widgets/custom_button.dart';
 import 'package:shoes_app/widgets/custom_checkbox.dart';
-import 'package:shoes_app/widgets/custom_icon_button.dart';
 
 import '../payment_done_dialog/controller/payment_done_controller.dart';
 import '../payment_done_dialog/payment_done_dialog.dart';
-import 'models/checkouttwo_item_model.dart';
 
-class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
+class CheckOutSummaryScreen extends StatefulWidget {
+  @override
+  State<CheckOutSummaryScreen> createState() => _CheckOutSummaryScreenState();
+}
+
+class _CheckOutSummaryScreenState extends State<CheckOutSummaryScreen> {
   SelectAddressController addressController = Get.find<SelectAddressController>();
+
   CheckOutPaymentMethodController paymentMethodController = Get.find<CheckOutPaymentMethodController>();
+
   CartController cartController = Get.find<CartController>();
+
+  ShippingMethodController shippingMethodController = Get.find<ShippingMethodController>();
+
+  @override
+  void initState() {
+    shippingMethodController.updateShippingMethods();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,74 +171,62 @@ class CheckOutSummaryScreen extends GetWidget<CheckOutSummaryController> {
                                         decoration: AppDecoration.white,
                                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                                           Text("lbl_shipping".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline),
-                                          Obx(() => CustomCheckbox(
-                                              text: "lbl_flat_rate".tr,
-                                              iconSize: getHorizontalSize(24),
-                                              value: controller.checkbox.value,
-                                              margin: getMargin(top: 15),
-                                              fontStyle: CheckboxFontStyle.SFUITextRegular15,
-                                              onChange: (value) {
-                                                controller.checkbox.value = value;
-                                              })),
-                                          Obx(() => CustomCheckbox(
-                                              text: "lbl_local_pickup".tr,
-                                              iconSize: getHorizontalSize(24),
-                                              value: controller.checkbox1.value,
-                                              margin: getMargin(top: 16),
-                                              fontStyle: CheckboxFontStyle.SFUITextRegular15,
-                                              onChange: (value) {
-                                                controller.checkbox1.value = value;
-                                              })),
-                                          Obx(() => CustomCheckbox(
-                                              text: "msg_free_shipping_on".tr,
-                                              iconSize: getHorizontalSize(24),
-                                              value: controller.checkbox2.value,
-                                              margin: getMargin(top: 16, right: 82),
-                                              fontStyle: CheckboxFontStyle.SFUITextRegular15,
-                                              onChange: (value) {
-                                                controller.checkbox2.value = value;
-                                              })),
-                                          Padding(
-                                            padding: getPadding(top: 16),
-                                            child: Text("lbl_order_summary".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline),
-                                          ),
-                                          Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_subtotal".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline), Text("lbl_41_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                          Padding(
-                                              padding: getPadding(top: 16),
-                                              child: Divider(
-                                                thickness: getVerticalSize(1),
-                                                color: ColorConstant.gray300,
-                                                height: 0,
-                                              )),
-                                          Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_item_total".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text("lbl_43_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                          Padding(padding: getPadding(top: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_discount".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text("lbl_2_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                          Padding(
-                                              padding: getPadding(top: 17),
-                                              child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [Padding(padding: getPadding(top: 1), child: Text("lbl_delivery_free".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)), Padding(padding: getPadding(bottom: 1), child: Text("lbl_0_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900))])),
-                                          Padding(padding: getPadding(top: 15), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("lbl_total".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline), Text("lbl_63_00".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
+                                          GetBuilder<ShippingMethodController>(builder: (shpMethodController) {
+                                            return Column(
+                                              children: [
+                                                ...shpMethodController.shippingMethods.map((shippingMethod) {
+                                                  return CustomCheckbox(
+                                                      text: shippingMethod.title,
+                                                      iconSize: getHorizontalSize(24),
+                                                      value: shpMethodController.selectedShippingMethod.value == shippingMethod,
+                                                      margin: getMargin(top: 15),
+                                                      fontStyle: CheckboxFontStyle.SFUITextRegular15,
+                                                      onChange: (value) {
+                                                        shpMethodController.setShippingMethod(shippingMethod.code).whenComplete(() => cartController.updateCartDetails());
+                                                      });
+                                                }).toList(),
+                                              ],
+                                            );
+                                          }),
+                                          GetBuilder<CartController>(builder: (cartController) {
+                                            return Column(
+                                              children: [
+                                                ...cartController.cart.value.totals.map((total) {
+                                                  final bool isLast = total == cartController.cart.value.totals.last;
+                                                  return Center(
+                                                    child: Padding(
+                                                      padding: getPadding(top: 16),
+                                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(total.title, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: isLast ? AppStyle.txtHeadline : AppStyle.txtBodyBlack900), Text(total.text, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: isLast ? AppStyle.txtHeadline : AppStyle.txtBodyBlack900)]),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ],
+                                            );
+                                          }),
                                         ])))
                               ],
                             ),
                           )
                         ]))),
-                CustomButton(
-                    onTap: () {
-                      Get.dialog(AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        contentPadding: EdgeInsets.zero,
-                        insetPadding: EdgeInsets.only(left: 0),
-                        content: PaymentDoneDialog(
-                          Get.put(
-                            PaymentDoneController(),
+                GetBuilder<ShippingMethodController>(builder: (controller) {
+                  return CustomButton(
+                      onTap: controller.selectedShippingMethod.value != null ? () {
+                        Get.dialog(AlertDialog(
+                          backgroundColor: Colors.transparent,
+                          contentPadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.only(left: 0),
+                          content: PaymentDoneDialog(
+                            Get.put(
+                              PaymentDoneController(),
+                            ),
                           ),
-                        ),
-                      ));
-                    },
-                    height: getVerticalSize(48),
-                    text: "lbl_pay_now".tr,
-                    margin: getMargin(right: 20, left: 20, bottom: 24)),
+                        ));
+                      } : null,
+                      height: getVerticalSize(48),
+                      text: "lbl_pay_now".tr,
+                      margin: getMargin(right: 20, left: 20, bottom: 24));
+                }),
+
               ],
             )));
   }

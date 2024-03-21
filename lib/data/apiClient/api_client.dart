@@ -7,6 +7,7 @@ import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/apiClient/headers_constants.dart';
 import 'package:shoes_app/data/auth_controller/models/personal_data_model.dart';
 import 'package:shoes_app/presentation/check_out_payment_method_screen/models/payment_method.dart';
+import 'package:shoes_app/presentation/check_out_summary_screen/models/shipping_method.dart';
 import 'package:shoes_app/presentation/home_screen_page/models/product_model.dart';
 import 'package:shoes_app/presentation/search_screen/models/popular_product.dart';
 
@@ -743,6 +744,59 @@ class ApiClient extends GetConnect {
       }
     } catch (e) {
       return Future.error(Exception("addNewUserAddress() Request error: $e"));
+    }
+  }
+
+  Future<List<ShippingMethod>> fetchShippingMethods() async {
+    try {
+      final response = await get(uri.replace(path: 'api/rest/shippingmethods').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        final dynamic responseData = apiResponse.data;
+        if (responseData is Map<String, dynamic> && responseData.containsKey('shipping_methods')) {
+          List<ShippingMethod> shippingMethods = [];
+          if ((responseData['shipping_methods'] as List).isNotEmpty) {
+            (responseData['shipping_methods'] as List).forEach((method) {
+
+              print("FETCHED SHM: ${method["quote"].first}");
+              ShippingMethod _shippingMethod = ShippingMethod.fromJson(method["quote"].first);
+              shippingMethods.add(_shippingMethod);
+            });
+            return shippingMethods;
+          } else return shippingMethods;
+        } else {
+          return [];
+        }
+      } else {
+        throw Exception(apiResponse.error);
+      }
+    } catch (e) {
+      throw Exception("fetchShippingMethods() Request error: $e");
+    }
+  }
+
+  Future<ShippingMethod?> setShipmentMethod(String code) async {
+    try {
+      final response = await post(
+        uri.replace(path: 'api/rest/shippingmethods').toString(),
+        {
+          "shipping_method": code,
+          "comment": ""
+        },
+        headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()),
+      );
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        if (apiResponse.data['code'] == code) {
+          return ShippingMethod.fromJson(apiResponse.data);
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception("setShipmentMethod() Request error: $e");
     }
   }
 

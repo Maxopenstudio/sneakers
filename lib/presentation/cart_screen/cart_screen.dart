@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_image.dart';
 import 'package:shoes_app/widgets/app_bar/appbar_title.dart';
@@ -47,7 +49,7 @@ class CartScreen extends GetWidget<CartController> {
                   Container(
                       width: double.maxFinite,
                       padding: getPadding(top: 10),
-                      child: ListView(
+                      child: cartProducts.isNotEmpty ? ListView(
                         children: [
                           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                             ListView.separated(
@@ -61,88 +63,75 @@ class CartScreen extends GetWidget<CartController> {
                                   CartProductModel model = cartProducts[index];
                                   return CartItemWidget(model);
                                 }),
-                            Container(
-                                width: double.maxFinite,
-                                child: Container(
-                                    margin: getMargin(top: 10, bottom: 100),
-                                    padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
-                                    decoration: AppDecoration.white,
-                                    child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                                      CustomTextFormField(
-                                        focusNode: FocusNode(),
-                                        controller: controller.group169Controller,
-                                        hintText: "lbl_enter_coupon".tr,
-                                        margin: getMargin(bottom: 6),
-                                        textInputAction: TextInputAction.done,
-                                        suffix: CustomButton(
-                                            onTap: () {
-                                              controller.addCoupon();
-                                            },
-                                            margin: getMargin(right: 8, top: 1, bottom: 1),
-                                            height: getVerticalSize(36),
-                                            width: getHorizontalSize(141),
-                                            text: "lbl_apply_coupon".tr,
-                                            padding: ButtonPadding.PaddingAll6,
-                                            fontStyle: ButtonFontStyle.SFUITextSemibold14WhiteA700),
-                                        suffixConstraints: BoxConstraints(
-                                          maxHeight: getVerticalSize(
-                                            36,
+                            if (cartProducts.isNotEmpty) ...[
+                              Container(
+                                  width: double.maxFinite,
+                                  child: Container(
+                                      margin: getMargin(top: 10, bottom: 100),
+                                      padding: getPadding(left: 20, top: 16, right: 20, bottom: 16),
+                                      decoration: AppDecoration.white,
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                                        CustomTextFormField(
+                                          focusNode: FocusNode(),
+                                          controller: controller.group169Controller,
+                                          hintText: "lbl_enter_coupon".tr,
+                                          margin: getMargin(bottom: 6),
+                                          textInputAction: TextInputAction.done,
+                                          suffix: CustomButton(
+                                              onTap: () {
+                                                controller.addCoupon();
+                                              },
+                                              margin: getMargin(right: 8, top: 1, bottom: 1),
+                                              height: getVerticalSize(36),
+                                              width: getHorizontalSize(141),
+                                              text: "lbl_apply_coupon".tr,
+                                              padding: ButtonPadding.PaddingAll6,
+                                              fontStyle: ButtonFontStyle.SFUITextSemibold14WhiteA700),
+                                          suffixConstraints: BoxConstraints(
+                                            maxHeight: getVerticalSize(
+                                              36,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: getPadding(top: 16),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [Text("lbl_item_total".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text(cartProducts.isNotEmpty ? "${cart.currency.symbolLeft} ${cart.totals.first.value}" : "${"currency".tr} 0", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)]),
-                                      ),
-                                      Padding(
-                                          padding: getPadding(top: 16),
-                                          child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [Text("${"lbl_discount".tr}  ${controller.couponDescription}", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text(cartProducts.isNotEmpty ? controller.discount.value : "${"currency".tr} 0", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)])),
-                                      // Padding(
-                                      //     padding: getPadding(top: 16),
-                                      //     child: Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           Text(
-                                      //               "lbl_delivery_free"
-                                      //                   .tr,
-                                      //               overflow:
-                                      //                   TextOverflow
-                                      //                       .ellipsis,
-                                      //               textAlign:
-                                      //                   TextAlign.left,
-                                      //               style: AppStyle
-                                      //                   .txtBodyBlack900),
-                                      //           Text("${"currency".tr} 0",
-                                      //               overflow:
-                                      //                   TextOverflow
-                                      //                       .ellipsis,
-                                      //               textAlign:
-                                      //                   TextAlign.left,
-                                      //               style: AppStyle
-                                      //                   .txtBodyBlack900)
-                                      //         ])),
-                                      Padding(
-                                          padding: getPadding(top: 16),
-                                          child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [Text("lbl_subtotal".tr, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtHeadline), Text(cartProducts.isNotEmpty ? "${cart.currency.symbolLeft} ${cart.totalRaw.toString()}" : "${"currency".tr} 0", overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)]))
-                                    ]))),
+                                        ...cart.totals.map((total) {
+                                          return Center(
+                                            child: Padding(
+                                              padding: getPadding(top: 16),
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [Text(total.title, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900), Text(total.text, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: AppStyle.txtBodyBlack900)]),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ]))),
+                            ]
                           ]),
                         ],
+                      ) : Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Icon(Icons.shopping_cart, size: 100,),
+                            ),
+                            Text("lbl_cart_empty".tr, overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: AppStyle.txtSFProDisplaySemibold21Black900.copyWith(
+                                color: ColorConstant.black900,
+                              ),)
+                          ],
+                        ),
                       )),
-                  CustomButton(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.selectAddressScreen);
-                      },
-                      height: getVerticalSize(48),
-                      text: "lbl_check_out".tr,
-                      margin: getMargin(left: 20, bottom: 24, right: 20)),
+                 if (cartProducts.isNotEmpty) ...[
+                   CustomButton(
+                       onTap: () {
+                         Get.toNamed(AppRoutes.selectAddressScreen);
+                       },
+                       height: getVerticalSize(48),
+                       text: "lbl_check_out".tr,
+                       margin: getMargin(left: 20, bottom: 24, right: 20)),
+                 ],
                 ],
               );
             })));
