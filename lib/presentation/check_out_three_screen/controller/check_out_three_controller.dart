@@ -9,6 +9,11 @@ class CheckOutThreeController extends GetxController {
   final ApiClient apiClient;
   RxList<Order> orders = List<Order>.empty().obs;
 
+  Future<void> updateOrders() async {
+    orders = (await apiClient.fetchCustomerOrders()).obs;
+    update();
+  }
+
   @override
   void onReady() {
     super.onReady();

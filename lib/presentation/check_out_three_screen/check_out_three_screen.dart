@@ -12,6 +12,7 @@ import 'controller/check_out_three_controller.dart';
 class CheckOutThreeScreen extends GetWidget<CheckOutThreeController> {
   @override
   Widget build(BuildContext context) {
+    controller.updateOrders();
     return SafeArea(
         child: Scaffold(
             backgroundColor: ColorConstant.gray100,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/data/apiClient/api_client.dart';
 import 'package:shoes_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:shoes_app/presentation/cart_screen/models/cart_product_model.dart';
 import 'package:shoes_app/presentation/check_out_payment_method_screen/controller/check_out_payment_method_controller.dart';
@@ -28,6 +29,8 @@ class _CheckOutSummaryScreenState extends State<CheckOutSummaryScreen> {
   CartController cartController = Get.find<CartController>();
 
   ShippingMethodController shippingMethodController = Get.find<ShippingMethodController>();
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -210,17 +213,33 @@ class _CheckOutSummaryScreenState extends State<CheckOutSummaryScreen> {
                         ]))),
                 GetBuilder<ShippingMethodController>(builder: (controller) {
                   return CustomButton(
-                      onTap: controller.selectedShippingMethod.value != null ? () {
-                        Get.dialog(AlertDialog(
-                          backgroundColor: Colors.transparent,
-                          contentPadding: EdgeInsets.zero,
-                          insetPadding: EdgeInsets.only(left: 0),
-                          content: PaymentDoneDialog(
-                            Get.put(
-                              PaymentDoneController(),
-                            ),
-                          ),
-                        ));
+                      onTap: controller.selectedShippingMethod.value != null && !isLoading ? () {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        ApiClient apiClient = Get.find<ApiClient>();
+                        apiClient.confirmCart().then((value) async {
+                          await apiClient.confirmCartFinally().then((valueFinally) {
+                            if (valueFinally) {
+                              Get.dialog(AlertDialog(
+                                backgroundColor: Colors.transparent,
+                                contentPadding: EdgeInsets.zero,
+                                insetPadding: EdgeInsets.only(left: 0),
+                                content: PaymentDoneDialog(
+                                  Get.put(
+                                    PaymentDoneController(),
+                                  ),
+                                ),
+                              ));
+                              cartController.updateCartDetails();
+                            } else {
+                              //TODO: Реализовать вызов диалога с ошибкой в оплате
+                            }
+                          });
+                          setState(() {
+                            isLoading = false;
+                          });
+                        });
                       } : null,
                       height: getVerticalSize(48),
                       text: "lbl_pay_now".tr,

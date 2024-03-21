@@ -800,6 +800,34 @@ class ApiClient extends GetConnect {
     }
   }
 
+  Future<bool> confirmCart() async {
+    try {
+      final response = await post(uri.replace(path: 'api/rest/confirm').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception("confirmCart() Request error: $e");
+    }
+  }
+
+  Future<bool> confirmCartFinally() async {
+    try {
+      final response = await put(uri.replace(path: 'api/rest/confirm').toString(), null, headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
+      final apiResponse = ApiResponse.fromJson(response.body);
+      if (apiResponse.isSuccess) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception("confirmCartFinally() Request error: $e");
+    }
+  }
+
   Future<List<Country>> fetchCountries() async {
     try {
       final response = await get(uri.replace(path: 'api/rest/countries').toString(), headers: HeadersConstants.common(merchantID, sessionID.value, cookie.toString()));
