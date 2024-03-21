@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
+import 'package:shoes_app/presentation/home_screen_container_screen/controller/home_screen_container_controller.dart';
 import 'package:shoes_app/widgets/custom_button.dart';
 
 import 'controller/payment_done_controller.dart';
@@ -62,6 +63,7 @@ class PaymentDoneDialog extends StatelessWidget {
           ),
           CustomButton(
             onTap: () {
+              Get.find<HomeScreenContainerController>().change(0);
               Get.toNamed(AppRoutes.homeScreenContainerScreen);
             },
             height: getVerticalSize(
