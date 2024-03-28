@@ -36,7 +36,7 @@ class CustomBottomBar extends StatelessWidget {
     return GetBuilder<HomeScreenContainerController>(
       init: HomeScreenContainerController(),
       builder: (controller) => Container(
-        height: getVerticalSize(66),
+        height: getVerticalSize(76),
         decoration: BoxDecoration(color: ColorConstant.whiteA700, boxShadow: [BoxShadow(color: ColorConstant.shadowColor, offset: Offset(0, 4), blurRadius: 16)]),
         child: BottomNavigationBar(
           backgroundColor: Colors.transparent,

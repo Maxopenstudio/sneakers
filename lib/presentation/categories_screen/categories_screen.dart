@@ -30,8 +30,8 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
                         controller.change(0);
                       }),
                 ),
-                title: AppbarTitle(text: "lbl_category".tr, margin: getMargin(left: 16)),
-                actions: [AppbarImage(height: getSize(24), width: getSize(24), svgPath: ImageConstant.imgContrast, margin: getMargin(left: 20, top: 17, right: 20, bottom: 17))],
+                title: AppbarTitle(text: "lbl_category".tr, margin: getMargin(left: 16),),
+                actions: [AppbarImage(height: getSize(24), width: getSize(24), svgPath: ImageConstant.imgContrast, margin: getMargin(left: 20, top: 17, right: 20, bottom: 17),onTap: ()=> Get.toNamed(AppRoutes.searchScreen),)],
                 styleType: Style.bgFillWhiteA700),
             body: SizedBox(
                 width: size.width,

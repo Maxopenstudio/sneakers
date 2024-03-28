@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shoes_app/core/app_export.dart';
 import 'package:shoes_app/data/products_controller/products_controller.dart';
@@ -69,33 +70,33 @@ class HomeScreenPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CustomTextFormField(
-                      onTap: () {
+                    GestureDetector(
+                      onTap: (){
                         Get.toNamed(AppRoutes.searchScreen);
                       },
-                      controller: controller.groupThreeController,
-                      hintText: "msg_search_for_shoes".tr,
-                      margin: getMargin(
-                        right: 20,
-                        left: 20,
-                      ),
-                      variant: TextFormFieldVariant.FillGray100,
-                      padding: TextFormFieldPadding.PaddingT13_2,
-                      textInputAction: TextInputAction.done,
-                      prefix: Container(
+                      child: CustomTextFormField(
+                        enabled:false,
+                        hintText: "msg_search_for_shoes".tr,
                         margin: getMargin(
-                          left: 16,
-                          top: 12,
-                          right: 16,
-                          bottom: 12,
+                          right: 20,
+                          left: 20,
                         ),
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgContrast,
+                        padding: TextFormFieldPadding.PaddingT13_2,
+                        prefix: Container(
+                          margin: getMargin(
+                            left: 16,
+                            top: 12,
+                            right: 16,
+                            bottom: 12,
+                          ),
+                          child: CustomImageView(
+                            svgPath: ImageConstant.imgContrast,
+                          ),
                         ),
-                      ),
-                      prefixConstraints: BoxConstraints(
-                        maxHeight: getVerticalSize(
-                          48,
+                        prefixConstraints: BoxConstraints(
+                          maxHeight: getVerticalSize(
+                            48,
+                          ),
                         ),
                       ),
                     ),
