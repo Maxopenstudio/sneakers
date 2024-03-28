@@ -55,7 +55,7 @@ class SearchScreen extends GetWidget<SearchProductController> {
                             children: [
                               Expanded(
                                   child: CustomTextFormField(
-                                      focusNode: FocusNode(),
+                                      focusNode: controller.focusNode,
                                       controller:
                                           controller.groupFiftySixController,
                                       hintText: "msg_search_for_shoes".tr,
@@ -63,6 +63,9 @@ class SearchScreen extends GetWidget<SearchProductController> {
                                       padding:
                                           TextFormFieldPadding.PaddingT13_2,
                                       textInputAction: TextInputAction.done,
+                                      onEditingComplete: () {
+                                        controller.focusNode.unfocus();
+                                      },
                                       prefix: Container(
                                           margin: getMargin(
                                               left: 16,
@@ -81,6 +84,7 @@ class SearchScreen extends GetWidget<SearchProductController> {
                                 child: GestureDetector(
                                   onTap: () {
                                     controller.clear();
+                                    controller.focusNode.unfocus();
                                   },
                                   child: Text("lbl_cancel".tr,
                                       overflow: TextOverflow.ellipsis,
@@ -147,7 +151,7 @@ class SearchScreen extends GetWidget<SearchProductController> {
                 Expanded(
                   child: Obx(() {
                     if (controller.searchResults.isEmpty) {
-                     return Container();
+                      return Container();
                     } else {
                       return ListView.builder(
                         shrinkWrap: true,

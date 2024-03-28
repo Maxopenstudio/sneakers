@@ -18,6 +18,7 @@ class SearchProductController extends GetxController {
   final HiveRepository hiveRepository;
 
   TextEditingController groupFiftySixController = TextEditingController();
+  FocusNode focusNode = FocusNode();
   Timer? _searchDelayTimer;
   String? _prev;
 
@@ -69,7 +70,7 @@ class SearchProductController extends GetxController {
     updateSearchItems();
   }
 
-  void clear(){
+  void clear() {
     searchResults.clear();
     groupFiftySixController.text = '';
   }
@@ -79,17 +80,21 @@ class SearchProductController extends GetxController {
 
     // Start a new timer for 2 seconds
     _searchDelayTimer = Timer(Duration(seconds: 1), () {
-      if (groupFiftySixController.text.isNotEmpty && groupFiftySixController.text!=_prev) {
+      if (groupFiftySixController.text.isNotEmpty &&
+          groupFiftySixController.text != _prev) {
         _prev = groupFiftySixController.text;
         search(groupFiftySixController.text);
+
       }
     });
   }
 
   @override
   void onClose() {
-    super.onClose();
     groupFiftySixController.dispose();
     _searchDelayTimer?.cancel();
+    focusNode.dispose();
+    super.onClose();
   }
 }
+

@@ -4,29 +4,30 @@ import 'package:shoes_app/core/app_export.dart';
 
 // ignore: must_be_immutable
 class CustomTextFormField extends StatefulWidget {
-  CustomTextFormField(
-      {this.shape,
-      this.padding,
-      this.variant,
-      this.fontStyle,
-      this.alignment,
-      this.width,
-      this.margin,
-      this.controller,
-      this.focusNode,
-      this.isObscureText = false,
-      this.textInputAction = TextInputAction.next,
-      this.textInputType = TextInputType.text,
-      this.maxLines,
-      this.hintText,
-      this.prefix,
-      this.prefixConstraints,
-      this.suffix,
-      this.suffixConstraints,
-      this.validator,
-      this.onTap,
-      this.inputFormatters,
-      this.errorText});
+  CustomTextFormField({this.shape,
+    this.padding,
+    this.variant,
+    this.fontStyle,
+    this.alignment,
+    this.width,
+    this.margin,
+    this.controller,
+    this.focusNode,
+    this.isObscureText = false,
+    this.textInputAction = TextInputAction.next,
+    this.textInputType = TextInputType.text,
+    this.maxLines,
+    this.hintText,
+    this.prefix,
+    this.prefixConstraints,
+    this.suffix,
+    this.suffixConstraints,
+    this.validator,
+    this.onTap,
+    this.enabled = true,
+    this.inputFormatters,
+    this.onEditingComplete,
+    this.errorText});
 
   TextFormFieldShape? shape;
 
@@ -47,6 +48,8 @@ class CustomTextFormField extends StatefulWidget {
   FocusNode? focusNode;
 
   bool? isObscureText;
+
+  bool enabled;
 
   TextInputAction? textInputAction;
 
@@ -72,6 +75,8 @@ class CustomTextFormField extends StatefulWidget {
 
   String? errorText;
 
+  void Function()? onEditingComplete;
+
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
@@ -81,9 +86,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     return widget.alignment != null
         ? Align(
-            alignment: widget.alignment ?? Alignment.center,
-            child: _buildTextFormFieldWidget(),
-          )
+      alignment: widget.alignment ?? Alignment.center,
+      child: _buildTextFormFieldWidget(),
+    )
         : _buildTextFormFieldWidget();
   }
 
@@ -92,6 +97,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       width: widget.width ?? double.maxFinite,
       margin: widget.margin,
       child: TextFormField(
+        enabled: widget.enabled,
         inputFormatters: widget.inputFormatters,
         onTap: widget.onTap,
         controller: widget.controller,
@@ -103,6 +109,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         maxLines: widget.maxLines ?? 1,
         decoration: _buildDecoration().copyWith(errorText: widget.errorText),
         validator: widget.validator,
+        onEditingComplete: widget.onEditingComplete,
       ),
     );
   }
